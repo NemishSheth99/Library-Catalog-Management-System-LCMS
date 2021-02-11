@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E72F26D9-CBDE-4255-B265-DD76D4C5D17F}</ProjectGuid>
+    <ProjectGuid>{F92B05FA-F1AF-4FBA-9F04-6B57D95BD6DD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LCMS.DAL</RootNamespace>
-    <AssemblyName>LCMS.DAL</AssemblyName>
+    <RootNamespace>LCMS.Models</RootNamespace>
+    <AssemblyName>LCMS.Models</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
