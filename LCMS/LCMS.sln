@@ -3,7 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCMS.DAL", "LCMS.DAL\LCMS.DAL.csproj", "{E72F26D9-CBDE-4255-B265-DD76D4C5D17F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCMS.BAL", "LCMS.BAL\LCMS.BAL.csproj", "{E5D5BCE4-2D49-40AC-8BAC-FFA448C8B2A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCMS.Models", "LCMS.Models\LCMS.Models.csproj", "{F92B05FA-F1AF-4FBA-9F04-6B57D95BD6DD}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E72F26D9-CBDE-4255-B265-DD76D4C5D17F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E72F26D9-CBDE-4255-B265-DD76D4C5D17F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E72F26D9-CBDE-4255-B265-DD76D4C5D17F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E72F26D9-CBDE-4255-B265-DD76D4C5D17F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5D5BCE4-2D49-40AC-8BAC-FFA448C8B2A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5D5BCE4-2D49-40AC-8BAC-FFA448C8B2A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5D5BCE4-2D49-40AC-8BAC-FFA448C8B2A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5D5BCE4-2D49-40AC-8BAC-FFA448C8B2A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F92B05FA-F1AF-4FBA-9F04-6B57D95BD6DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F92B05FA-F1AF-4FBA-9F04-6B57D95BD6DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F92B05FA-F1AF-4FBA-9F04-6B57D95BD6DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F92B05FA-F1AF-4FBA-9F04-6B57D95BD6DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
