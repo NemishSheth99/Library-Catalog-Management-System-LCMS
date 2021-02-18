@@ -63,6 +63,8 @@
     <Compile Include="ServiceProxyBase.cs" />
     <Compile Include="ServiceProxySettings.cs" />
     <Compile Include="ServiceRequestType.cs" />
+    <Compile Include="UserRole\IUserRoleServiceProxy.cs" />
+    <Compile Include="UserRole\UserRoleServiceProxy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LCMS.Models\LCMS.Models.csproj">

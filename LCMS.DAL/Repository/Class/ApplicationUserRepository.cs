@@ -79,7 +79,7 @@ namespace LCMS.DAL.Repository.Class
             }
         }
 
-        public string Create(AddApplicationUserRequest applicationUserRequest)
+        public int Create(AddApplicationUserRequest applicationUserRequest)
         {
             try
             {
@@ -92,13 +92,13 @@ namespace LCMS.DAL.Repository.Class
                     obj.IsDeleted = false;
                     _dbContext.ApplicationUsers.Add(obj);
                     _dbContext.SaveChanges();
-                    return "Success";
+                    return obj.Id;
                 }
-                return "Fail";
+                return 0;
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return -1;
             }
         }
 
@@ -160,5 +160,6 @@ namespace LCMS.DAL.Repository.Class
         //        return ex.Message;
         //    }
         //}
+
     }
 }

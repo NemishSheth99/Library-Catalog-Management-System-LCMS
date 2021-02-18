@@ -18,6 +18,9 @@ namespace LCMS.BAL.Class
             _userRoleRepository = userRoleRepository;
         }
 
-        
+        public int GetRoleId(string role)
+        {
+            return _userRoleRepository.GetRoleId(role);
+        }
     }
 }

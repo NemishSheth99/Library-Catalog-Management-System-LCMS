@@ -23,10 +23,12 @@ namespace LCMS.BAL.Class
             return _applicationUserRoleRepository.GetApplicationUserRoleDetail(userId);
         }
 
-        //public string Create(ApplicationUserRole applicationUserRole)
-        //{
-        //    return _applicationUserRoleRepository.Create(applicationUserRole);
-        //}
+        public string Create(AddApplicationUserRoleRequest applicationUserRoleRequest)
+        {
+            return _applicationUserRoleRepository.Create(applicationUserRoleRequest);
+        }
+
+        
 
         //public string Update(ApplicationUserRole applicationUserRole)
         //{

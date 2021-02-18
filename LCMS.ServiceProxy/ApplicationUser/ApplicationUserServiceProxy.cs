@@ -35,9 +35,9 @@ namespace LCMS.ServiceProxy.ApplicationUser
             return GetRequest<ApplicationUserDetail>("GetUser", queryParam);
         }
 
-        public string Create(AddApplicationUserRequest applicationUserRequest)
+        public int Create(AddApplicationUserRequest applicationUserRequest)
         {
-            return MakeRequest<string, AddApplicationUserRequest>("AddUser", ServiceRequestType.Post, applicationUserRequest);
+            return MakeRequest<int, AddApplicationUserRequest>("AddUser", ServiceRequestType.Post, applicationUserRequest);
         }
 
         public string Update(AddApplicationUserRequest applicationUserRequest)

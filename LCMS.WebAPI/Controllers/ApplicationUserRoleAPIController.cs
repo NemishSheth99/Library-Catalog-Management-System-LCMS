@@ -33,5 +33,21 @@ namespace LCMS.WebAPI.Controllers
             }
 
         }
+
+        [Route("api/ApplicationUserRoleAPI/AddApplicationUserRole")]
+        [HttpPost]
+        public IHttpActionResult AddApplicationUserRole(AddApplicationUserRoleRequest applicationUserRoleRequest)
+        {
+            try
+            {
+                return Ok(_applicationUserRoleManager.Create(applicationUserRoleRequest));
+            }
+            catch (Exception ex)
+            {
+                //log.Error("Exception : " + ex);
+                return NotFound();
+            }
+
+        }
     }
 }

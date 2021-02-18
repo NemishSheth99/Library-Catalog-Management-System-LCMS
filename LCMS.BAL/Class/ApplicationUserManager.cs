@@ -33,7 +33,7 @@ namespace LCMS.BAL.Class
             return _applicationUserRepository.GetApplicationUserById(id);
         }
 
-        public string Create(AddApplicationUserRequest applicationUserRequest)
+        public int Create(AddApplicationUserRequest applicationUserRequest)
         {
             return _applicationUserRepository.Create(applicationUserRequest);
         }

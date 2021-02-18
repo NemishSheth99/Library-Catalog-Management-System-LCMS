@@ -18,31 +18,20 @@ namespace LCMS.WebAPI.Controllers
             _userRoleManager = userRoleManager;            
         }
 
-        // GET: api/UserRoleAPI
-        public IHttpActionResult Get()
+        [Route("api/UserRoleAPI/GetUserRole")]
+        [HttpGet]
+        public IHttpActionResult GetUserRole(string role)
         {
-            return Ok();
-        }
+            try
+            {
+                return Ok(_userRoleManager.GetRoleId(role));
+            }
+            catch (Exception ex)
+            {
+                //log.Error("Exception : " + ex);
+                return NotFound();
+            }
 
-        // GET: api/UserRoleAPI/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/UserRoleAPI
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/UserRoleAPI/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/UserRoleAPI/5
-        public void Delete(int id)
-        {
         }
     }
 }
