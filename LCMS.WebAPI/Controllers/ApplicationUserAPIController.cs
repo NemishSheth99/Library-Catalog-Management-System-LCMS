@@ -83,7 +83,7 @@ namespace LCMS.WebAPI.Controllers
         }
 
         [Route("api/ApplicationUserAPI/UpdateUser")]
-        [HttpPost]
+        [HttpPut]
         public IHttpActionResult UpdateUser(AddApplicationUserRequest applicationUserRequest)
         {
             try

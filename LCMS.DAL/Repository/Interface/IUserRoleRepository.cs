@@ -9,6 +9,6 @@ namespace LCMS.DAL.Repository.Interface
 {
     public interface IUserRoleRepository
     {
-        
+        int GetRoleId(string role);
     }
 }

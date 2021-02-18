@@ -18,6 +18,10 @@ namespace LCMS.DAL.Repository.Class
             _dbContext = new Database.LCMSDBEntities();
         }
 
-        
+        public int GetRoleId(string role)
+        {
+            int roleId = _dbContext.UserRoles.Where(x => x.Role == role).FirstOrDefault().Id;
+            return roleId;
+        }
     }
 }

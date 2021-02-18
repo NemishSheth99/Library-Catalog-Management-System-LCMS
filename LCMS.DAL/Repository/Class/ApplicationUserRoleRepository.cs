@@ -24,10 +24,10 @@ namespace LCMS.DAL.Repository.Class
             try
             {
                 ApplicationUserRoleDetail roleDetail = new ApplicationUserRoleDetail();
-                Database.ApplicationUserRole obj = _dbContext.ApplicationUserRoles.Where(x=>x.ApplicationUserId==userId).FirstOrDefault();
+                Database.ApplicationUserRole obj = _dbContext.ApplicationUserRoles.Where(x => x.ApplicationUserId == userId).FirstOrDefault();
                 if (obj != null)
                 {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<Database.ApplicationUserRole, ApplicationUserRoleDetail>().ForMember(x=>x.UserRole,y=>y.Ignore()));                    
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<Database.ApplicationUserRole, ApplicationUserRoleDetail>().ForMember(x => x.UserRole, y => y.Ignore()));
                     var mapper = new Mapper(config);
                     roleDetail = mapper.Map<ApplicationUserRoleDetail>(obj);
                     if (obj.UserRole != null)
@@ -35,7 +35,7 @@ namespace LCMS.DAL.Repository.Class
                         var c = new MapperConfiguration(cfg => cfg.CreateMap<Database.UserRole, UserRoleDetail>());
                         var m = new Mapper(c);
                         roleDetail.UserRole = m.Map<UserRoleDetail>(obj.UserRole);
-                    }                    
+                    }
                     return roleDetail;
                 }
                 return roleDetail;
@@ -46,16 +46,37 @@ namespace LCMS.DAL.Repository.Class
             }
         }
 
-        //public string Create(ApplicationUserRole applicationUserRole)
+        public string Create(AddApplicationUserRoleRequest applicationUserRoleRequest)
+        {
+            try
+            {
+                if (applicationUserRoleRequest != null)
+                {
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<AddApplicationUserRoleRequest, Database.ApplicationUserRole>());
+                    var mapper = new Mapper(config);
+                    Database.ApplicationUserRole obj = mapper.Map<Database.ApplicationUserRole>(applicationUserRoleRequest);
+                    _dbContext.ApplicationUserRoles.Add(obj);
+                    _dbContext.SaveChanges();
+                    return "Success";
+                }
+                return "Fail";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        //public string Update(ApplicationUserRole applicationUserRole)
         //{
         //    try
         //    {
-        //        if (applicationUserRole != null)
+        //        var role = _dbContext.ApplicationUserRoles.Find(applicationUserRole.Id);
+        //        if (role != null)
         //        {
         //            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserRole, Database.ApplicationUserRole>());
         //            var mapper = new Mapper(config);
-        //            Database.ApplicationUserRole obj = mapper.Map<Database.ApplicationUserRole>(applicationUserRole);
-        //            _dbContext.ApplicationUserRoles.Add(obj);
+        //            mapper.Map(applicationUserRole, role);
         //            _dbContext.SaveChanges();
         //            return "Success";
         //        }
@@ -67,45 +88,24 @@ namespace LCMS.DAL.Repository.Class
         //    }
         //}
 
-            //public string Update(ApplicationUserRole applicationUserRole)
-            //{
-            //    try
-            //    {
-            //        var role = _dbContext.ApplicationUserRoles.Find(applicationUserRole.Id);
-            //        if (role != null)
-            //        {
-            //            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserRole, Database.ApplicationUserRole>());
-            //            var mapper = new Mapper(config);
-            //            mapper.Map(applicationUserRole, role);
-            //            _dbContext.SaveChanges();
-            //            return "Success";
-            //        }
-            //        return "Fail";
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        return ex.Message;
-            //    }
-            //}
+        //public string Delete(int userId)
+        //{
+        //    try
+        //    {
+        //        var role = _dbContext.ApplicationUserRoles.Where(x=>x.ApplicationUserId==userId).FirstOrDefault();
+        //        if (role != null)
+        //        {
+        //            _dbContext.ApplicationUserRoles.Remove(role);
+        //            _dbContext.SaveChanges();
+        //            return "Success";
+        //        }
+        //        return "Fail";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return ex.Message;
+        //    }
+        //}
 
-            //public string Delete(int userId)
-            //{
-            //    try
-            //    {
-            //        var role = _dbContext.ApplicationUserRoles.Where(x=>x.ApplicationUserId==userId).FirstOrDefault();
-            //        if (role != null)
-            //        {
-            //            _dbContext.ApplicationUserRoles.Remove(role);
-            //            _dbContext.SaveChanges();
-            //            return "Success";
-            //        }
-            //        return "Fail";
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        return ex.Message;
-            //    }
-            //}
-
-        }
+    }
 }

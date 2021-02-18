@@ -12,7 +12,7 @@ namespace LCMS.BAL.Interface
         ApplicationUserDetail Login(ApplicationUserLogin applicationUserLogin);
         List<ApplicationUserDetail> GetApplicationUsers();
         ApplicationUserDetail GetApplicationUserById(int id);
-        string Create(AddApplicationUserRequest applicationUserRequest);
+        int Create(AddApplicationUserRequest applicationUserRequest);
         string Update(AddApplicationUserRequest applicationUserRequest);
         //string UpdateActiveStatus(int id, string status);
         //string Delete(int id);

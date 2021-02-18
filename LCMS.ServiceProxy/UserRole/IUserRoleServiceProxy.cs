@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LCMS.Models.UserRole;
 
-namespace LCMS.BAL.Interface
+namespace LCMS.ServiceProxy.UserRole
 {
-    public interface IUserRoleManager
+    public interface IUserRoleServiceProxy
     {
         int GetRoleId(string role);
     }

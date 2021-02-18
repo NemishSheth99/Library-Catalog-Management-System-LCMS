@@ -5,22 +5,45 @@ using System.Web;
 using System.Web.Mvc;
 using LCMS.ServiceProxy.ApplicationUser;
 using LCMS.ServiceProxy.ApplicationUserRole;
+using LCMS.ServiceProxy.UserRole;
 using LCMS.Models.ApplicationUser;
 using LCMS.Models.ApplicationUserRole;
+using LCMS.Models.UserRole;
 using LCMS.Web.Models;
 using AutoMapper;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace LCMS.Web.Controllers
 {
     public class ApplicationUserController : Controller
     {
         private readonly IApplicationUserServiceProxy _applicationUserServiceProxy;
+        private readonly IUserRoleServiceProxy _userRoleServiceProxy;
         private readonly IApplicationUserRoleServiceProxy _applicationUserRoleServiceProxy;
 
-        public ApplicationUserController(IApplicationUserServiceProxy applicationUserServiceProxy,IApplicationUserRoleServiceProxy applicationUserRoleServiceProxy)
+        public ApplicationUserController(IApplicationUserServiceProxy applicationUserServiceProxy,
+            IUserRoleServiceProxy userRoleServiceProxy,
+            IApplicationUserRoleServiceProxy applicationUserRoleServiceProxy)
         {
             _applicationUserServiceProxy = applicationUserServiceProxy;
+            _userRoleServiceProxy = userRoleServiceProxy;
             _applicationUserRoleServiceProxy = applicationUserRoleServiceProxy;
+        }
+
+        public static string GetMD5(string str)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] fromData = Encoding.UTF8.GetBytes(str);
+            byte[] targetData = md5.ComputeHash(fromData);
+            string byte2String = null;
+
+            for (int i = 0; i < targetData.Length; i++)
+            {
+                byte2String += targetData[i].ToString("x2");
+
+            }
+            return byte2String;
         }
 
         public ActionResult Login()
@@ -35,6 +58,7 @@ namespace LCMS.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    loginVM.Password = GetMD5(loginVM.Password);
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<LoginVM, ApplicationUserLogin>());
                     var mapper = new Mapper(config);
                     ApplicationUserLogin user = mapper.Map<ApplicationUserLogin>(loginVM);
@@ -94,17 +118,36 @@ namespace LCMS.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    applicationUserVM.Password = GetMD5(applicationUserVM.Password);
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserVM, AddApplicationUserRequest>());
                     var mapper = new Mapper(config);
                     AddApplicationUserRequest user = mapper.Map<AddApplicationUserRequest>(applicationUserVM);
                     string result;
+                    int userId,roleId;
                     if (applicationUserVM.Id == 0)
-                        result = _applicationUserServiceProxy.Create(user);
-                    else
-                        result = _applicationUserServiceProxy.Update(user);
-                    if (result!=null && result=="Success")
                     {
-                        return RedirectToAction("UserIndex");
+                        userId = _applicationUserServiceProxy.Create(user);
+                        if (userId > 0)
+                        {
+                            roleId = _userRoleServiceProxy.GetRoleId("Lawyer");
+                            AddApplicationUserRoleRequest addApplicationUserRoleRequest = new AddApplicationUserRoleRequest();
+                            addApplicationUserRoleRequest.RoleId = roleId;
+                            addApplicationUserRoleRequest.ApplicationUserId = userId;
+                            result = _applicationUserRoleServiceProxy.Create(addApplicationUserRoleRequest);
+                            if (result != null && result == "Success")
+                            {
+                                return RedirectToAction("UserIndex");
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        result = _applicationUserServiceProxy.Update(user);
+                        if (result != null && result == "Success")
+                        {
+                            return RedirectToAction("UserIndex");
+                        }
                     }
                 }
                 return View("Login");
