@@ -18,24 +18,24 @@ namespace LCMS.BAL.Class
             _transactionHistoryRepository = transactionHistoryRepository;
         }
 
-        public List<TransactionHistory> GetTransactionHistoriesByUserId(int userId)
-        {
-            return _transactionHistoryRepository.GetTransactionHistoriesByUserId(userId);
-        }
+        //public List<TransactionHistory> GetTransactionHistoriesByUserId(int userId)
+        //{
+        //    return _transactionHistoryRepository.GetTransactionHistoriesByUserId(userId);
+        //}
 
-        public List<TransactionHistory> GetTransactionHistoriesByDate(DateTime dt)
-        {
-            return _transactionHistoryRepository.GetTransactionHistoriesByDate(dt);
-        }
+        //public List<TransactionHistory> GetTransactionHistoriesByDate(DateTime dt)
+        //{
+        //    return _transactionHistoryRepository.GetTransactionHistoriesByDate(dt);
+        //}
 
-        public List<TransactionHistory> GetTransactionHistoriesByBook(int bookPlaceId)
-        {
-            return _transactionHistoryRepository.GetTransactionHistoriesByBook(bookPlaceId);
-        }
+        //public List<TransactionHistory> GetTransactionHistoriesByBook(int bookPlaceId)
+        //{
+        //    return _transactionHistoryRepository.GetTransactionHistoriesByBook(bookPlaceId);
+        //}
 
-        public string Create(TransactionHistory transactionHistory)
-        {
-            return _transactionHistoryRepository.Create(transactionHistory);
-        }        
+        //public string Create(TransactionHistory transactionHistory)
+        //{
+        //    return _transactionHistoryRepository.Create(transactionHistory);
+        //}        
     }
 }

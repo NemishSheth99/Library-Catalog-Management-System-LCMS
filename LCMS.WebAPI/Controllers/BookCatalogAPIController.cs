@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using LCMS.BAL.Interface;
-using LCMS.Models;
 
 namespace LCMS.WebAPI.Controllers
 {
@@ -31,10 +30,10 @@ namespace LCMS.WebAPI.Controllers
         }
 
         // POST: api/BookCatalogAPI
-        public IHttpActionResult Post(BookCatalog bookCatalog)
-        {
-            return Ok();
-        }
+        //public IHttpActionResult Post(BookCatalog bookCatalog)
+        //{
+        //    return Ok();
+        //}
 
         // PUT: api/BookCatalogAPI/5
         public void Put(int id, [FromBody]string value)

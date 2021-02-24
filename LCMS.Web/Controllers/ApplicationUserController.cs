@@ -11,8 +11,6 @@ using LCMS.Models.ApplicationUserRole;
 using LCMS.Models.UserRole;
 using LCMS.Web.Models;
 using AutoMapper;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace LCMS.Web.Controllers
 {
@@ -30,21 +28,7 @@ namespace LCMS.Web.Controllers
             _userRoleServiceProxy = userRoleServiceProxy;
             _applicationUserRoleServiceProxy = applicationUserRoleServiceProxy;
         }
-
-        public static string GetMD5(string str)
-        {
-            MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] fromData = Encoding.UTF8.GetBytes(str);
-            byte[] targetData = md5.ComputeHash(fromData);
-            string byte2String = null;
-
-            for (int i = 0; i < targetData.Length; i++)
-            {
-                byte2String += targetData[i].ToString("x2");
-
-            }
-            return byte2String;
-        }
+        
 
         public ActionResult Login()
         {
@@ -57,14 +41,17 @@ namespace LCMS.Web.Controllers
             try
             {
                 if (ModelState.IsValid)
-                {
-                    loginVM.Password = GetMD5(loginVM.Password);
+                {                    
+                    //// TO DO : mapping login vie model to application user login
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<LoginVM, ApplicationUserLogin>());
                     var mapper = new Mapper(config);
                     ApplicationUserLogin user = mapper.Map<ApplicationUserLogin>(loginVM);
+
+                    //// TO DO : call api for login
                     ApplicationUserDetail applicationUserDetail = _applicationUserServiceProxy.Login(user);
                     if(applicationUserDetail!=null)
                     {
+                        //// TO DO : Get User Role
                         ApplicationUserRoleDetail applicationUserRoleDetail = _applicationUserRoleServiceProxy.GetRoleDetail(applicationUserDetail.Id);
                         if(applicationUserRoleDetail!=null)
                         {
@@ -99,27 +86,30 @@ namespace LCMS.Web.Controllers
 
         public ActionResult Create()
         {
-            return View(new ApplicationUserVM());
+            var roleList = new SelectList(_userRoleServiceProxy.GetUserRoleDetails(), "Id", "Role");
+            ViewData["roleList"] = roleList;
+            return View(new ApplicationUserCreateVM());
         }
 
-        public ActionResult Edit(int id)
-        {
-            ApplicationUserVM applicationUserVM = new ApplicationUserVM();
-            ApplicationUserDetail applicationUserDetail = _applicationUserServiceProxy.GetApplicationUserById(id);
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserDetail, ApplicationUserVM>());
-            var mapper = new Mapper(config);
-            applicationUserVM = mapper.Map<ApplicationUserVM>(applicationUserDetail);
-            return View("Create",applicationUserVM);
-        }
+        //public ActionResult Edit(int id)
+        //{
+        //    var roleList = new SelectList(_userRoleServiceProxy.GetUserRoleDetails(), "Id", "Role");
+        //    ViewData["roleList"] = roleList;
+        //    ApplicationUserCreateVM applicationUserVM = new ApplicationUserCreateVM();
+        //    ApplicationUserDetail applicationUserDetail = _applicationUserServiceProxy.GetApplicationUserById(id);
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserDetail, ApplicationUserCreateVM>());
+        //    var mapper = new Mapper(config);
+        //    applicationUserVM = mapper.Map<ApplicationUserCreateVM>(applicationUserDetail);
+        //    return View("Create",applicationUserVM);
+        //}
 
-        public ActionResult CreateOrEdit(ApplicationUserVM applicationUserVM)
+        public ActionResult CreateUser(ApplicationUserCreateVM applicationUserVM)
         {
             try
             {
                 if (ModelState.IsValid)
-                {
-                    applicationUserVM.Password = GetMD5(applicationUserVM.Password);
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserVM, AddApplicationUserRequest>());
+                {                    
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserCreateVM, AddApplicationUserRequest>());
                     var mapper = new Mapper(config);
                     AddApplicationUserRequest user = mapper.Map<AddApplicationUserRequest>(applicationUserVM);
                     string result;
@@ -129,7 +119,7 @@ namespace LCMS.Web.Controllers
                         userId = _applicationUserServiceProxy.Create(user);
                         if (userId > 0)
                         {
-                            roleId = _userRoleServiceProxy.GetRoleId("Lawyer");
+                            roleId = applicationUserVM.RoleId;
                             AddApplicationUserRoleRequest addApplicationUserRoleRequest = new AddApplicationUserRoleRequest();
                             addApplicationUserRoleRequest.RoleId = roleId;
                             addApplicationUserRoleRequest.ApplicationUserId = userId;
@@ -141,14 +131,14 @@ namespace LCMS.Web.Controllers
                         }
 
                     }
-                    else
-                    {
-                        result = _applicationUserServiceProxy.Update(user);
-                        if (result != null && result == "Success")
-                        {
-                            return RedirectToAction("UserIndex");
-                        }
-                    }
+                    //else
+                    //{
+                    //    result = _applicationUserServiceProxy.Update(user);
+                    //    if (result != null && result == "Success")
+                    //    {
+                    //        return RedirectToAction("UserIndex");
+                    //    }
+                    //}
                 }
                 return View("Login");
             }

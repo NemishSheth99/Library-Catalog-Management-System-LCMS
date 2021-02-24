@@ -53,15 +53,18 @@
     <Compile Include="ApplicationUser\AddApplicationUserRequest.cs" />
     <Compile Include="ApplicationUser\ApplicationUserDetail.cs" />
     <Compile Include="ApplicationUser\ApplicationUserLogin.cs" />
-    <Compile Include="Author.cs" />
-    <Compile Include="BookCatalog.cs" />
-    <Compile Include="BookPlace.cs" />
+    <Compile Include="ApplicationUser\UpdateApplicationUserRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TransactionHistory.cs" />
     <Compile Include="UserRole\UserRoleDetail.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Author\" />
+    <Folder Include="BookCatalog\" />
+    <Folder Include="BookPlace\" />
+    <Folder Include="TransactionHistory\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -11,27 +11,25 @@ namespace LCMS.WebAPI.Controllers
 {
     public class UserRoleAPIController : ApiController
     {
-        private readonly IUserRoleManager _userRoleManager;        
+        private readonly IUserRoleManager _userRoleManager;
 
         public UserRoleAPIController(IUserRoleManager userRoleManager)
         {
-            _userRoleManager = userRoleManager;            
+            _userRoleManager = userRoleManager;
+        }
+
+        [Route("api/UserRoleAPI/GetUserRoles")]
+        [HttpGet]
+        public IHttpActionResult GetUserRoles()
+        {
+            return Ok(_userRoleManager.GetUserRoleDetails());
         }
 
         [Route("api/UserRoleAPI/GetUserRole")]
         [HttpGet]
         public IHttpActionResult GetUserRole(string role)
         {
-            try
-            {
-                return Ok(_userRoleManager.GetRoleId(role));
-            }
-            catch (Exception ex)
-            {
-                //log.Error("Exception : " + ex);
-                return NotFound();
-            }
-
+            return Ok(_userRoleManager.GetRoleId(role));
         }
     }
 }

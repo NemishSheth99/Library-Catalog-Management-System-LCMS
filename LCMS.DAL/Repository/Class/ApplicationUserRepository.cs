@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LCMS.DAL.Repository.Interface;
-using LCMS.Models.ApplicationUser;
-using AutoMapper;
+using LCMS.DAL.Database;
 
 namespace LCMS.DAL.Repository.Class
 {
@@ -18,148 +17,105 @@ namespace LCMS.DAL.Repository.Class
             _dbContext = new Database.LCMSDBEntities();
         }
 
-        public ApplicationUserDetail Login(ApplicationUserLogin applicationUserLogin)
+        public ApplicationUser Login(ApplicationUser applicationUser)
         {
-            try
+            var user = _dbContext.ApplicationUsers.Where(x => x.EmailAddress == applicationUser.EmailAddress && x.Password == applicationUser.Password && x.Status == "A" && x.IsDeleted == false).FirstOrDefault();            
+            if (user != null)
             {
-                ApplicationUserDetail user = new ApplicationUserDetail();
-                var obj = _dbContext.ApplicationUsers.Where(x => x.EmailAddress == applicationUserLogin.EmailAddress && x.Password == applicationUserLogin.Password && x.Status == "A" && x.IsDeleted == false).FirstOrDefault();
-                if (obj != null)
-                {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<Database.ApplicationUser, ApplicationUserDetail>());
-                    var mapper = new Mapper(config);
-                    user = mapper.Map<ApplicationUserDetail>(obj);
-                    return user;
-                }
                 return user;
             }
-            catch (Exception ex)
-            {
-                return null;
-            }
+            return user;
+
         }
 
-        public List<ApplicationUserDetail> GetApplicationUsers()
+        public List<ApplicationUser> GetApplicationUsers()
         {
-            var list = _dbContext.ApplicationUserRoles.Where(x => x.UserRole.Role != "Librarian").Select(x=>x.ApplicationUser).ToList();
-            //var list = _dbContext.ApplicationUsers.Where(x => x.IsDeleted == false).ToList();
-            List<ApplicationUserDetail> lst = new List<ApplicationUserDetail>();
-
-            if (list != null)
-            {
-                foreach (var items in list)
-                {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<Database.ApplicationUser, ApplicationUserDetail>());
-                    var mapper = new Mapper(config);
-                    ApplicationUserDetail obj = mapper.Map<ApplicationUserDetail>(items);
-                    lst.Add(obj);
-                }
-            }
-            return lst;
+            var list = _dbContext.ApplicationUsers.Where(x => x.IsDeleted == false).ToList();
+            return list;
         }
 
-        public ApplicationUserDetail GetApplicationUserById(int id)
+        public ApplicationUser GetApplicationUserById(int id)
         {
-            try
+            ApplicationUser applicationUser = _dbContext.ApplicationUsers.Find(id);
+            if (applicationUser != null)
             {
-                ApplicationUserDetail user = new ApplicationUserDetail();
-                var obj = _dbContext.ApplicationUsers.Find(id);
-                if (obj != null)
-                {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<Database.ApplicationUser, ApplicationUserDetail>());
-                    var mapper = new Mapper(config);
-                    user = mapper.Map<ApplicationUserDetail>(obj);
-                    return user;
-                }
-                return user;
+                return applicationUser;
             }
-            catch (Exception ex)
-            {
-                return null;
-            }
+            return applicationUser;
         }
 
-        public int Create(AddApplicationUserRequest applicationUserRequest)
+        public ApplicationUser GetApplicationUserByEmail(string emailAddress)
         {
-            try
+            ApplicationUser applicationUser = _dbContext.ApplicationUsers.Where(x=>x.EmailAddress==emailAddress).FirstOrDefault();
+            if (applicationUser != null)
             {
-                if (applicationUserRequest != null)
-                {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<AddApplicationUserRequest, Database.ApplicationUser>());
-                    var mapper = new Mapper(config);
-                    Database.ApplicationUser obj = mapper.Map<Database.ApplicationUser>(applicationUserRequest);
-                    obj.Status = "A";
-                    obj.IsDeleted = false;
-                    _dbContext.ApplicationUsers.Add(obj);
-                    _dbContext.SaveChanges();
-                    return obj.Id;
-                }
-                return 0;
+                return applicationUser;
             }
-            catch (Exception ex)
-            {
-                return -1;
-            }
+            return applicationUser;
         }
 
-        public string Update(AddApplicationUserRequest applicationUserRequest)
+        public int Create(ApplicationUser applicationUser)
         {
-            try
+            if (applicationUser != null)
             {
-                var obj = _dbContext.ApplicationUsers.Find(applicationUserRequest.Id);
-                if (obj != null)
-                {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<AddApplicationUserRequest, Database.ApplicationUser>());
-                    var mapper = new Mapper(config);
-                    mapper.Map(applicationUserRequest, obj);
-                    _dbContext.SaveChanges();
-                    return "Success";
-                }
-                return "Fail";
+                applicationUser.Status = "A";
+                applicationUser.IsDeleted = false;
+                _dbContext.ApplicationUsers.Add(applicationUser);
+                _dbContext.SaveChanges();
+                return applicationUser.Id;
             }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
+            return 0;
         }
 
-        //public string UpdateActiveStatus(int id, string status)
-        //{
-        //    try
-        //    {
-        //        var obj = _dbContext.ApplicationUsers.Find(id);
-        //        if (obj != null)
-        //        {
-        //            obj.Status = status;
-        //            _dbContext.SaveChanges();
-        //            return "Success";
-        //        }
-        //        return "Fail";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //    }
-        //}
+        public string Update(ApplicationUser applicationUser)
+        {
+            ApplicationUser user = _dbContext.ApplicationUsers.Find(applicationUser.Id);
+            if (user != null)
+            {
+                user.Name = applicationUser.Name;
+                user.EmailAddress = applicationUser.EmailAddress;
+                user.PhoneNumber = applicationUser.PhoneNumber;
+                _dbContext.SaveChanges();
+                return "Success";
+            }
+            return "Fail";
+        }
 
-        //public string Delete(int id)
-        //{
-        //    try
-        //    {
-        //        var obj = _dbContext.ApplicationUsers.Find(id);
-        //        if (obj != null)
-        //        {
-        //            obj.IsDeleted = true;
-        //            _dbContext.SaveChanges();
-        //            return "Success";
-        //        }
-        //        return "Fail";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //    }
-        //}
+        public string UpdateActiveStatus(int id, string status)
+        {
+            ApplicationUser applicationUser = _dbContext.ApplicationUsers.Find(id);
+            if (applicationUser != null)
+            {
+                applicationUser.Status = status;
+                _dbContext.SaveChanges();
+                return "Success";
+            }
+            return "Fail";
+        }
+
+        public string Delete(int id)
+        {
+            ApplicationUser applicationUser = _dbContext.ApplicationUsers.Find(id);
+            if (applicationUser != null)
+            {
+                applicationUser.IsDeleted = true;
+                _dbContext.SaveChanges();
+                return "Success";
+            }
+            return "Fail";
+        }
+
+        public string ChangePassword(int id,string passwprd)
+        {
+            ApplicationUser applicationUser = _dbContext.ApplicationUsers.Find(id);
+            if (applicationUser != null)
+            {
+                applicationUser.Password = passwprd;
+                _dbContext.SaveChanges();
+                return "Success";
+            }
+            return "Fail";
+        }
 
     }
 }
