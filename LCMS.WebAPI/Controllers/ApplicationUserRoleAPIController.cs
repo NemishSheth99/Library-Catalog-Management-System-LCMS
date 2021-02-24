@@ -22,32 +22,14 @@ namespace LCMS.WebAPI.Controllers
         [HttpGet]
         public IHttpActionResult GetUserRole(int userId)
         {
-            try
-            {
-                return Ok(_applicationUserRoleManager.GetApplicationUserRoleDetail(userId));
-            }
-            catch (Exception ex)
-            {
-                //log.Error("Exception : " + ex);
-                return NotFound();
-            }
-
+            return Ok(_applicationUserRoleManager.GetApplicationUserRoleDetail(userId));
         }
 
         [Route("api/ApplicationUserRoleAPI/AddApplicationUserRole")]
         [HttpPost]
         public IHttpActionResult AddApplicationUserRole(AddApplicationUserRoleRequest applicationUserRoleRequest)
         {
-            try
-            {
-                return Ok(_applicationUserRoleManager.Create(applicationUserRoleRequest));
-            }
-            catch (Exception ex)
-            {
-                //log.Error("Exception : " + ex);
-                return NotFound();
-            }
-
+            return Ok(_applicationUserRoleManager.Create(applicationUserRoleRequest));
         }
     }
 }

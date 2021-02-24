@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using LCMS.BAL.Interface;
-using LCMS.Models;
 
 namespace LCMS.WebAPI.Controllers
 {
@@ -33,16 +32,16 @@ namespace LCMS.WebAPI.Controllers
         }
 
         // POST: api/BookPlaceAPI
-        public IHttpActionResult Post(BookPlace bookPlace)
-        {
-            int bookId = _bookPlaceManager.Create(bookPlace);
-            TransactionHistory obj = new TransactionHistory();
-            obj.BookId = bookId;
-            obj.TransactionType = "ADD";
-            obj.ApplicationUserId = 1;
-            obj.TrasactionDate = DateTime.Now;
-            return Ok(_transactionHistoryManager.Create(obj));
-        }
+        //public IHttpActionResult Post(BookPlace bookPlace)
+        //{
+        //    int bookId = _bookPlaceManager.Create(bookPlace);
+        //    TransactionHistory obj = new TransactionHistory();
+        //    obj.BookId = bookId;
+        //    obj.TransactionType = "ADD";
+        //    obj.ApplicationUserId = 1;
+        //    obj.TrasactionDate = DateTime.Now;
+        //    return Ok(_transactionHistoryManager.Create(obj));
+        //}
 
         // PUT: api/BookPlaceAPI/5
         public void Put(int id, [FromBody]string value)

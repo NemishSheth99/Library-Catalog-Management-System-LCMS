@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LCMS.Models.ApplicationUser;
+using LCMS.DAL.Database;
 
 namespace LCMS.DAL.Repository.Interface
 {
     public interface IApplicationUserRepository
     {
-        ApplicationUserDetail Login(ApplicationUserLogin applicationUserLogin);
-        List<ApplicationUserDetail> GetApplicationUsers();
-        ApplicationUserDetail GetApplicationUserById(int id);
-        int Create(AddApplicationUserRequest applicationUserRequest);
-        string Update(AddApplicationUserRequest applicationUserRequest);
-        //string UpdateActiveStatus(int id, string status);
-        //string Delete(int id);
+        ApplicationUser Login(ApplicationUser applicationUser);
+        List<ApplicationUser> GetApplicationUsers();
+        ApplicationUser GetApplicationUserById(int id);
+        ApplicationUser GetApplicationUserByEmail(string emailAddress);
+        int Create(ApplicationUser applicationUser);
+        string Update(ApplicationUser applicationUser);
+        string UpdateActiveStatus(int id, string status);
+        string Delete(int id);
+        string ChangePassword(int id, string passwprd);
     }
 }

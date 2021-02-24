@@ -18,19 +18,19 @@ namespace LCMS.BAL.Class
             _authorRepository = authorRepository;
         }
 
-        public string Create(Author author)
-        {
-            return _authorRepository.Create(author);
-        }
+        //public string Create(Author author)
+        //{
+        //    return _authorRepository.Create(author);
+        //}
 
-        public string Update(Author author)
-        {
-            return _authorRepository.Update(author);
-        }
+        //public string Update(Author author)
+        //{
+        //    return _authorRepository.Update(author);
+        //}
 
-        public string Delete(int bookCatalogId)
-        {
-            return _authorRepository.Delete(bookCatalogId);
-        }
+        //public string Delete(int bookCatalogId)
+        //{
+        //    return _authorRepository.Delete(bookCatalogId);
+        //}
     }
 }

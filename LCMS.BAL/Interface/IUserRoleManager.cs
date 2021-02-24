@@ -9,6 +9,7 @@ namespace LCMS.BAL.Interface
 {
     public interface IUserRoleManager
     {
+        List<UserRoleDetail> GetUserRoleDetails();
         int GetRoleId(string role);
     }
 }

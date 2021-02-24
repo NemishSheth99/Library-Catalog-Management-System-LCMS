@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LCMS.Models
+namespace LCMS.Models.ApplicationUser
 {
-    public class Author
+    public class UpdateApplicationUserRequest
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int? BookCatalogId { get; set; }
+        public string EmailAddress { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

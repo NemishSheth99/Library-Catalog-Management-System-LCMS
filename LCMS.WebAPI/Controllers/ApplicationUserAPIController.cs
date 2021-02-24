@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 using LCMS.BAL.Interface;
 using LCMS.Models.ApplicationUser;
@@ -22,80 +23,51 @@ namespace LCMS.WebAPI.Controllers
         [HttpPost]
         public IHttpActionResult LoginUser(ApplicationUserLogin applicationUserLogin)
         {
-            try
-            {
-                return Ok(_applicationUserManager.Login(applicationUserLogin));
+            ApplicationUserDetail applicationUserDetail = _applicationUserManager.Login(applicationUserLogin);
+            if (applicationUserDetail.EmailAddress != null)
+            {               
+                return Ok(applicationUserDetail);
             }
-            catch (Exception ex)
-            {
-                //log.Error("Exception : " + ex);
-                return NotFound();
+            else
+            {                
+                return Ok("No User Found!!!");
             }
-
         }
 
         [Route("api/ApplicationUserAPI/GetApplicationUsers")]
         [HttpGet]
         public IHttpActionResult GetApplicationUsers()
         {
-            try
-            {
-                return Ok(_applicationUserManager.GetApplicationUsers());
-            }
-            catch (Exception ex)
-            {
-                //log.Error("Exception : " + ex);
-                return NotFound();
-            }
-
+            return Ok(_applicationUserManager.GetApplicationUsers());
         }
 
         [Route("api/ApplicationUserAPI/GetUser")]
         [HttpGet]
         public IHttpActionResult GetUser(int id)
         {
-            try
-            {
-                return Ok(_applicationUserManager.GetApplicationUserById(id));
-            }
-            catch (Exception ex)
-            {
-                //log.Error("Exception : " + ex);
-                return NotFound();
-            }
-
+            return Ok(_applicationUserManager.GetApplicationUserById(id));
         }
 
         [Route("api/ApplicationUserAPI/AddUser")]
         [HttpPost]
         public IHttpActionResult AddUser(AddApplicationUserRequest applicationUserRequest)
         {
-            try
+            ApplicationUserDetail applicationUserDetail = _applicationUserManager.GetApplicationUserByEmailAddress(applicationUserRequest.EmailAddress);
+            int result;
+            if (applicationUserDetail.EmailAddress == null)
             {
-                return Ok(_applicationUserManager.Create(applicationUserRequest));
+                result = _applicationUserManager.Create(applicationUserRequest);
+                return Ok(result);
             }
-            catch (Exception ex)
-            {
-                //log.Error("Exception : " + ex);
-                return NotFound();
-            }
-
+            else
+                return Ok("Email Address Already Exist!!!");
         }
 
         [Route("api/ApplicationUserAPI/UpdateUser")]
         [HttpPut]
-        public IHttpActionResult UpdateUser(AddApplicationUserRequest applicationUserRequest)
+        public IHttpActionResult UpdateUser(UpdateApplicationUserRequest applicationUserRequest)
         {
-            try
-            {
-                return Ok(_applicationUserManager.Update(applicationUserRequest));
-            }
-            catch (Exception ex)
-            {
-                //log.Error("Exception : " + ex);
-                return NotFound();
-            }
-
+            return Ok(_applicationUserManager.Update(applicationUserRequest));
         }
     }
 }

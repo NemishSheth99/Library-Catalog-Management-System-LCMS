@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LCMS.DAL.Repository.Interface;
-using AutoMapper;
-using LCMS.Models.ApplicationUserRole;
-using LCMS.Models.UserRole;
+using LCMS.DAL.Database;
 
 namespace LCMS.DAL.Repository.Class
 {
@@ -19,93 +17,51 @@ namespace LCMS.DAL.Repository.Class
             _dbContext = new Database.LCMSDBEntities();
         }
 
-        public ApplicationUserRoleDetail GetApplicationUserRoleDetail(int userId)
+        public ApplicationUserRole GetApplicationUserRole(int userId)
         {
-            try
+            ApplicationUserRole role = new ApplicationUserRole();
+            role = _dbContext.ApplicationUserRoles.Where(x => x.ApplicationUserId == userId).FirstOrDefault();
+            if (role != null)
             {
-                ApplicationUserRoleDetail roleDetail = new ApplicationUserRoleDetail();
-                Database.ApplicationUserRole obj = _dbContext.ApplicationUserRoles.Where(x => x.ApplicationUserId == userId).FirstOrDefault();
-                if (obj != null)
-                {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<Database.ApplicationUserRole, ApplicationUserRoleDetail>().ForMember(x => x.UserRole, y => y.Ignore()));
-                    var mapper = new Mapper(config);
-                    roleDetail = mapper.Map<ApplicationUserRoleDetail>(obj);
-                    if (obj.UserRole != null)
-                    {
-                        var c = new MapperConfiguration(cfg => cfg.CreateMap<Database.UserRole, UserRoleDetail>());
-                        var m = new Mapper(c);
-                        roleDetail.UserRole = m.Map<UserRoleDetail>(obj.UserRole);
-                    }
-                    return roleDetail;
-                }
-                return roleDetail;
+                return role;
             }
-            catch (Exception ex)
-            {
-                return null;
-            }
+            return role;
         }
 
-        public string Create(AddApplicationUserRoleRequest applicationUserRoleRequest)
+        public string Create(ApplicationUserRole applicationUserRole)
         {
-            try
-            {
-                if (applicationUserRoleRequest != null)
-                {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<AddApplicationUserRoleRequest, Database.ApplicationUserRole>());
-                    var mapper = new Mapper(config);
-                    Database.ApplicationUserRole obj = mapper.Map<Database.ApplicationUserRole>(applicationUserRoleRequest);
-                    _dbContext.ApplicationUserRoles.Add(obj);
-                    _dbContext.SaveChanges();
-                    return "Success";
-                }
-                return "Fail";
+            if (applicationUserRole != null)
+            {                
+                _dbContext.ApplicationUserRoles.Add(applicationUserRole);
+                _dbContext.SaveChanges();
+                return "Success";
             }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
+            return "Fail";
         }
 
-        //public string Update(ApplicationUserRole applicationUserRole)
-        //{
-        //    try
-        //    {
-        //        var role = _dbContext.ApplicationUserRoles.Find(applicationUserRole.Id);
-        //        if (role != null)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserRole, Database.ApplicationUserRole>());
-        //            var mapper = new Mapper(config);
-        //            mapper.Map(applicationUserRole, role);
-        //            _dbContext.SaveChanges();
-        //            return "Success";
-        //        }
-        //        return "Fail";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //    }
-        //}
+        public string Update(ApplicationUserRole applicationUserRole)
+        {
+            var role = _dbContext.ApplicationUserRoles.Find(applicationUserRole.Id);
+            if (role != null)
+            {
+                role.RoleId = applicationUserRole.RoleId;
+                _dbContext.SaveChanges();
+                return "Success";
+            }
+            return "Fail";
+        }
 
-        //public string Delete(int userId)
-        //{
-        //    try
-        //    {
-        //        var role = _dbContext.ApplicationUserRoles.Where(x=>x.ApplicationUserId==userId).FirstOrDefault();
-        //        if (role != null)
-        //        {
-        //            _dbContext.ApplicationUserRoles.Remove(role);
-        //            _dbContext.SaveChanges();
-        //            return "Success";
-        //        }
-        //        return "Fail";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //    }
-        //}
+        public string Delete(int userId)
+        {
+            var role = _dbContext.ApplicationUserRoles.Where(x => x.ApplicationUserId == userId).FirstOrDefault();
+            if (role != null)
+            {
+                _dbContext.ApplicationUserRoles.Remove(role);
+                _dbContext.SaveChanges();
+                return "Success";
+            }
+            return "Fail";
+        }
 
     }
 }

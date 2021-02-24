@@ -11,7 +11,7 @@ namespace LCMS.BAL.Interface
     {
         ApplicationUserRoleDetail GetApplicationUserRoleDetail(int userId);
         string Create(AddApplicationUserRoleRequest applicationUserRoleRequest);
-        //string Update(ApplicationUserRole applicationUserRole);
-        //string Delete(int userId);
+        string Update(AddApplicationUserRoleRequest applicationUserRoleRequest);
+        string Delete(int userId);
     }
 }

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LCMS.Web.Models
 {
-    public class ApplicationUserVM
+    public class ApplicationUserCreateVM
     {
         public int Id { get; set; }
 
@@ -31,5 +31,9 @@ namespace LCMS.Web.Models
         [MinLength(8, ErrorMessage = "Password must contain atleast 8 characters"), MaxLength(32, ErrorMessage = "Password can not contain more than 32 characters")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character")]
         public string Password { get; set; }
+
+        [Display(Name = "Role")]
+        [Required(ErrorMessage = "Please Select Role")]
+        public int RoleId { get; set; }
     }
 }
