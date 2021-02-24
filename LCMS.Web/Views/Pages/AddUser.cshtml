@@ -1,13 +1,12 @@
-﻿@model LCMS.Web.Models.ApplicationUserVM
-
+﻿
 @{
-    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
+
 <div class="">
     <div class="page-title">
         <div class="title_left">
-            <h3>Admin</h3>
+            <h3>Add User</h3>
         </div>
 
     </div>
@@ -15,42 +14,38 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 ">
             <div class="x_panel">
-                
+
 
                 <div class="x_content">
                     <br />
-                    @using (Html.BeginForm("CreateOrEdit", "ApplicationUser", FormMethod.Post, new { id = "form", @class = "form-horizontal form-label-left" }))
+                    @using (Html.BeginForm())
                     {
                         @Html.AntiForgeryToken()
 
                         <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="name">
                                 Name <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                <input type="text" id="name" required="required" class="form-control ">
                             </div>
                         </div>
 
                         <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="email-address">
-                                Email Address <span class="required">*</span>
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="email">
+                                Email<span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                                @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+                                <input type="text" id="email" required="required" class="form-control ">
                             </div>
                         </div>
-
 
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="phone-number">
-                                Phone Number <span class="required">*</span>
+                                Phone Number<span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                                @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                                <input type="text" id="phone-number" required="required" class="form-control ">
                             </div>
                         </div>
 
@@ -59,17 +54,17 @@
                                 Password <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                                @Html.TextBoxFor(model => model.Password, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                <input type="text" id="password" required="required" class="form-control ">
                             </div>
                         </div>
 
+                        //dropdown
 
                         <div class="form-group row">
                             <div class="col-md-9 col-sm-9  offset-md-3">
-                                <button type="button" class="btn btn-success">Save</button>
+                                <button type="button" class="btn btn-success">Add</button>
                                 <button class="btn btn-danger" type="reset">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Reset</button>
+                                <button class="btn btn-primary" type="reset">Reset</button>
                             </div>
                         </div>
 
@@ -79,8 +74,8 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
