@@ -1,13 +1,14 @@
-﻿@model LCMS.Web.Models.ApplicationUserCreateVM
+﻿@model LCMS.Web.Models.ApplicationUserEditVM
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
+
 <div class="">
     <div class="page-title">
         <div class="title_left">
-            
+
         </div>
 
     </div>
@@ -19,9 +20,10 @@
 
                 <div class="x_content">
                     <br />
-                    @using (Html.BeginForm("CreateUser", "ApplicationUser", FormMethod.Post, new { id = "form", @class = "form-horizontal form-label-left" }))
+                    @using (Html.BeginForm("EditUser", "ApplicationUser", FormMethod.Post, new { id = "form", @class = "form-horizontal form-label-left" }))
                     {
                         @Html.AntiForgeryToken()
+
                         @Html.HiddenFor(model => model.Id)
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="Name">
@@ -56,28 +58,6 @@
                         </div>
 
                         <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Password">
-                                Password
-                                <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6">
-                                @Html.TextBoxFor(model => model.Password, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Password">
-                                Role
-                                <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6">
-                                @Html.DropDownList("RoleId", (IEnumerable<SelectListItem>)ViewData["roleList"], new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="item form-group">
                             <div class="col-md-6 col-sm-6 offset-md-3">
                                 <input type="submit" value="Save" class="btn btn-success" />
                                 <button class="btn btn-danger" type="button">Cancel</button>
@@ -85,10 +65,7 @@
 
                             </div>
                         </div>
-
-
                     }
-
                 </div>
             </div>
         </div>

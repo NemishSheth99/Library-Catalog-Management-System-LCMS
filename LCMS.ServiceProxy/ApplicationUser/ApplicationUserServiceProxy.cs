@@ -40,9 +40,19 @@ namespace LCMS.ServiceProxy.ApplicationUser
             return MakeRequest<int, AddApplicationUserRequest>("AddUser", ServiceRequestType.Post, applicationUserRequest);
         }
 
-        public string Update(AddApplicationUserRequest applicationUserRequest)
+        public string Update(UpdateApplicationUserRequest applicationUserRequest)
         {
-            return MakeRequest<string, AddApplicationUserRequest>("UpdateUser", ServiceRequestType.Put, applicationUserRequest);
+            return MakeRequest<string, UpdateApplicationUserRequest>("UpdateUser", ServiceRequestType.Put, applicationUserRequest);
+        }
+
+        public string Delete(int id)
+        {
+            //var queryParam = new Dictionary<string, string>
+            //{
+            //    {"id", id.ToString(CultureInfo.InvariantCulture)}
+            //};
+            //return GetRequest<string>("DeleteUser",  queryParam);
+            return MakeRequest<string, int>("DeleteUser", ServiceRequestType.Delete, id);
         }
     }
 }

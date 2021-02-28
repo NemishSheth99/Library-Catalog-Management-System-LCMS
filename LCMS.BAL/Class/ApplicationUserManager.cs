@@ -12,7 +12,7 @@ using AutoMapper;
 
 namespace LCMS.BAL.Class
 {
-    public class ApplicationUserManager :IApplicationUserManager
+    public class ApplicationUserManager : IApplicationUserManager
     {
         private readonly IApplicationUserRepository _applicationUserRepository;
 
@@ -29,8 +29,8 @@ namespace LCMS.BAL.Class
             var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserLogin, ApplicationUser>());
             var mapper = new Mapper(config);
             applicationUser = mapper.Map<ApplicationUser>(applicationUserLogin);
-            var appUser= _applicationUserRepository.Login(applicationUser);
-            if(appUser!=null)
+            var appUser = _applicationUserRepository.Login(applicationUser);
+            if (appUser != null)
             {
                 var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, ApplicationUserDetail>());
                 var mp = new Mapper(cnfg);
@@ -113,7 +113,7 @@ namespace LCMS.BAL.Class
         public string Delete(int id)
         {
             return _applicationUserRepository.Delete(id);
-        }        
+        }
 
         public string ChangePassword(int id, string password)
         {

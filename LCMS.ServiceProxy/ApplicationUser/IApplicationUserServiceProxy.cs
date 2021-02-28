@@ -13,6 +13,7 @@ namespace LCMS.ServiceProxy.ApplicationUser
         List<ApplicationUserDetail> GetApplicationUsers();
         ApplicationUserDetail GetApplicationUserById(int id);
         int Create(AddApplicationUserRequest applicationUserRequest);
-        string Update(AddApplicationUserRequest applicationUserRequest);
+        string Update(UpdateApplicationUserRequest applicationUserRequest);
+        string Delete(int id);
     }
 }

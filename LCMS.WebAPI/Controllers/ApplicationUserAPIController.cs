@@ -60,7 +60,7 @@ namespace LCMS.WebAPI.Controllers
                 return Ok(result);
             }
             else
-                return Ok("Email Address Already Exist!!!");
+                return BadRequest("Email Address Already Exist!!!");
         }
 
         [Route("api/ApplicationUserAPI/UpdateUser")]
@@ -68,6 +68,13 @@ namespace LCMS.WebAPI.Controllers
         public IHttpActionResult UpdateUser(UpdateApplicationUserRequest applicationUserRequest)
         {
             return Ok(_applicationUserManager.Update(applicationUserRequest));
+        }
+
+        [Route("api/ApplicationUserAPI/DeleteUser/{id}")]
+        [HttpDelete]
+        public IHttpActionResult DeleteUser(int id)
+        {
+            return Ok(_applicationUserManager.Delete(id));
         }
     }
 }
