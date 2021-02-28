@@ -137,6 +137,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ApplicationUserCreateVM.cs" />
+    <Compile Include="Models\ApplicationUserEditVM.cs" />
     <Compile Include="Models\LoginVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -3827,6 +3828,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Image\Login\banner-with-overlay.jpg" />
+    <Content Include="Image\user.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\FontAwesome.otf" />
@@ -4914,6 +4916,8 @@
     <Content Include="Views\Pages\BookCatalogAdd.cshtml" />
     <Content Include="Views\Pages\TractionHistory.cshtml" />
     <Content Include="Views\Pages\UpdateUser.cshtml" />
+    <Content Include="Views\ApplicationUser\LibrarianDashboard.cshtml" />
+    <Content Include="Views\ApplicationUser\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

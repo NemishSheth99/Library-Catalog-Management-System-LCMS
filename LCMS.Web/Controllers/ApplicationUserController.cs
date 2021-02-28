@@ -28,7 +28,7 @@ namespace LCMS.Web.Controllers
             _userRoleServiceProxy = userRoleServiceProxy;
             _applicationUserRoleServiceProxy = applicationUserRoleServiceProxy;
         }
-        
+
 
         public ActionResult Login()
         {
@@ -41,7 +41,7 @@ namespace LCMS.Web.Controllers
             try
             {
                 if (ModelState.IsValid)
-                {                    
+                {
                     //// TO DO : mapping login vie model to application user login
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<LoginVM, ApplicationUserLogin>());
                     var mapper = new Mapper(config);
@@ -49,15 +49,15 @@ namespace LCMS.Web.Controllers
 
                     //// TO DO : call api for login
                     ApplicationUserDetail applicationUserDetail = _applicationUserServiceProxy.Login(user);
-                    if(applicationUserDetail!=null)
+                    if (applicationUserDetail != null)
                     {
                         //// TO DO : Get User Role
                         ApplicationUserRoleDetail applicationUserRoleDetail = _applicationUserRoleServiceProxy.GetRoleDetail(applicationUserDetail.Id);
-                        if(applicationUserRoleDetail!=null)
+                        if (applicationUserRoleDetail != null)
                         {
                             Session["auid"] = applicationUserDetail.Id;
                             Session["auname"] = applicationUserDetail.Name;
-                            string role= applicationUserRoleDetail.UserRole.Role;
+                            string role = applicationUserRoleDetail.UserRole.Role;
                             if (role != null)
                             {
                                 Session["aurole"] = role;
@@ -78,6 +78,11 @@ namespace LCMS.Web.Controllers
             }
         }
 
+        public ActionResult LibrarianDashboard()
+        {
+            return View();
+        }
+
         public ActionResult UserIndex()
         {
             List<ApplicationUserDetail> userList = _applicationUserServiceProxy.GetApplicationUsers();
@@ -91,29 +96,17 @@ namespace LCMS.Web.Controllers
             return View(new ApplicationUserCreateVM());
         }
 
-        //public ActionResult Edit(int id)
-        //{
-        //    var roleList = new SelectList(_userRoleServiceProxy.GetUserRoleDetails(), "Id", "Role");
-        //    ViewData["roleList"] = roleList;
-        //    ApplicationUserCreateVM applicationUserVM = new ApplicationUserCreateVM();
-        //    ApplicationUserDetail applicationUserDetail = _applicationUserServiceProxy.GetApplicationUserById(id);
-        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserDetail, ApplicationUserCreateVM>());
-        //    var mapper = new Mapper(config);
-        //    applicationUserVM = mapper.Map<ApplicationUserCreateVM>(applicationUserDetail);
-        //    return View("Create",applicationUserVM);
-        //}
-
         public ActionResult CreateUser(ApplicationUserCreateVM applicationUserVM)
         {
             try
             {
                 if (ModelState.IsValid)
-                {                    
+                {
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserCreateVM, AddApplicationUserRequest>());
                     var mapper = new Mapper(config);
                     AddApplicationUserRequest user = mapper.Map<AddApplicationUserRequest>(applicationUserVM);
                     string result;
-                    int userId,roleId;
+                    int userId, roleId;
                     if (applicationUserVM.Id == 0)
                     {
                         userId = _applicationUserServiceProxy.Create(user);
@@ -129,16 +122,7 @@ namespace LCMS.Web.Controllers
                                 return RedirectToAction("UserIndex");
                             }
                         }
-
                     }
-                    //else
-                    //{
-                    //    result = _applicationUserServiceProxy.Update(user);
-                    //    if (result != null && result == "Success")
-                    //    {
-                    //        return RedirectToAction("UserIndex");
-                    //    }
-                    //}
                 }
                 return View("Login");
             }
@@ -147,6 +131,54 @@ namespace LCMS.Web.Controllers
                 //log.Error("Exception : " + ex);
                 return View("Login");
             }
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var roleList = new SelectList(_userRoleServiceProxy.GetUserRoleDetails(), "Id", "Role");
+            ViewData["roleList"] = roleList;
+            ApplicationUserEditVM applicationUserVM = new ApplicationUserEditVM();
+            ApplicationUserDetail applicationUserDetail = _applicationUserServiceProxy.GetApplicationUserById(id);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserDetail, ApplicationUserEditVM>());
+            var mapper = new Mapper(config);
+            applicationUserVM = mapper.Map<ApplicationUserEditVM>(applicationUserDetail);
+            return View("Edit", applicationUserVM);
+        }
+
+        public ActionResult EditUser(ApplicationUserEditVM applicationUserVM)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserEditVM, UpdateApplicationUserRequest>());
+                    var mapper = new Mapper(config);
+                    UpdateApplicationUserRequest user = mapper.Map<UpdateApplicationUserRequest>(applicationUserVM);
+                    string result;
+                    if (applicationUserVM.Id != 0)
+                    {
+                        result = _applicationUserServiceProxy.Update(user);
+                        if (result != null && result == "Success")
+                        {
+                            return RedirectToAction("UserIndex");
+                        }
+                    }
+                }
+                return View("Login");
+            }
+            catch (Exception ex)
+            {
+                //log.Error("Exception : " + ex);
+                return View("Login");
+            }
+        }
+
+        public ActionResult Delete(int id)
+        {
+            string result;
+            result = _applicationUserServiceProxy.Delete(id);
+            //if (result == "Success")
+            return RedirectToAction("UserIndex");
         }
 
     }
