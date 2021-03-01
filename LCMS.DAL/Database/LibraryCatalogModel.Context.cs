@@ -22,7 +22,7 @@ namespace LCMS.DAL.Database
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+            throw new UnintentionalCodeFirstException();
         }
     
         public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }

@@ -16,7 +16,7 @@ namespace LCMS.BAL.Interface
         ApplicationUserDetail GetApplicationUserByEmailAddress(string emailAddress);
         int Create(AddApplicationUserRequest applicationUserRequest);
         string Update(UpdateApplicationUserRequest applicationUserRequest);
-        string UpdateActiveStatus(int id, string status);
+        string UpdateActiveStatus(int id);
         string Delete(int id);
         string ChangePassword(int id, string password);
     }

@@ -78,8 +78,8 @@
       <DependentUpon>LibraryCatalogModel.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\LibraryCatalogModel.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>LibraryCatalogModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\LibraryCatalogModel.Designer.cs">
@@ -123,7 +123,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Database\LibraryCatalogModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

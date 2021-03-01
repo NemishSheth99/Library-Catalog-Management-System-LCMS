@@ -133,6 +133,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\ApplicationUserController.cs" />
+    <Compile Include="Controllers\TransactionHistoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -4918,9 +4919,13 @@
     <Content Include="Views\Pages\UpdateUser.cshtml" />
     <Content Include="Views\ApplicationUser\LibrarianDashboard.cshtml" />
     <Content Include="Views\ApplicationUser\Edit.cshtml" />
+    <Content Include="Views\ApplicationUser\UserDashboard.cshtml" />
+    <Content Include="Views\TransactionHistory\TransactionHistoryIndex.cshtml" />
+    <Content Include="Views\TransactionHistory\UserTransactionHistoryIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ApplicationUserRole\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -4936,6 +4941,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LCMS.Core\LCMS.Core.csproj">
+      <Project>{1ef102c9-6a21-43b3-a219-4c23bd00be5d}</Project>
+      <Name>LCMS.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LCMS.Models\LCMS.Models.csproj">
       <Project>{05c4e885-9eb9-4520-bc4a-73b51c3670b8}</Project>
       <Name>LCMS.Models</Name>

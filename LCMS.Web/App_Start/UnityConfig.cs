@@ -3,6 +3,7 @@ using Unity;
 using Unity.Mvc5;
 using LCMS.ServiceProxy.ApplicationUser;
 using LCMS.ServiceProxy.ApplicationUserRole;
+using LCMS.ServiceProxy.TransactionHistory;
 using LCMS.ServiceProxy.UserRole;
 
 namespace LCMS.Web
@@ -19,6 +20,7 @@ namespace LCMS.Web
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterType<IApplicationUserServiceProxy,ApplicationUserServiceProxy>();
             container.RegisterType<IApplicationUserRoleServiceProxy, ApplicationUserRoleServiceProxy>();
+            container.RegisterType<ITransactionHistoryServiceProxy, TransactionHistoryServiceProxy>();
             container.RegisterType<IUserRoleServiceProxy, UserRoleServiceProxy>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

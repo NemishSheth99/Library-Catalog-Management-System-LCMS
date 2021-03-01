@@ -11,5 +11,7 @@ namespace LCMS.ServiceProxy.ApplicationUserRole
     {
         ApplicationUserRoleDetail GetRoleDetail(int id);
         string Create(AddApplicationUserRoleRequest applicationUserRoleRequest);
+
+        string Update(AddApplicationUserRoleRequest applicationUserRoleRequest);
     }
 }

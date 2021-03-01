@@ -81,12 +81,12 @@ namespace LCMS.DAL.Repository.Class
             return "Fail";
         }
 
-        public string UpdateActiveStatus(int id, string status)
+        public string UpdateActiveStatus(int id)
         {
             ApplicationUser applicationUser = _dbContext.ApplicationUsers.Find(id);
             if (applicationUser != null)
             {
-                applicationUser.Status = status;
+                applicationUser.Status = applicationUser.Status=="A"?"B":"A";
                 _dbContext.SaveChanges();
                 return "Success";
             }
@@ -105,12 +105,12 @@ namespace LCMS.DAL.Repository.Class
             return "Fail";
         }
 
-        public string ChangePassword(int id,string passwprd)
+        public string ChangePassword(int id,string password)
         {
             ApplicationUser applicationUser = _dbContext.ApplicationUsers.Find(id);
             if (applicationUser != null)
             {
-                applicationUser.Password = passwprd;
+                applicationUser.Password = password;
                 _dbContext.SaveChanges();
                 return "Success";
             }

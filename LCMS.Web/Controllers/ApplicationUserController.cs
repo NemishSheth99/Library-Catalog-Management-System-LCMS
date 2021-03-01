@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using LCMS.Core;
 using LCMS.ServiceProxy.ApplicationUser;
 using LCMS.ServiceProxy.ApplicationUserRole;
 using LCMS.ServiceProxy.UserRole;
@@ -28,8 +29,7 @@ namespace LCMS.Web.Controllers
             _userRoleServiceProxy = userRoleServiceProxy;
             _applicationUserRoleServiceProxy = applicationUserRoleServiceProxy;
         }
-
-
+        
         public ActionResult Login()
         {
             return View();
@@ -109,22 +109,30 @@ namespace LCMS.Web.Controllers
                     int userId, roleId;
                     if (applicationUserVM.Id == 0)
                     {
-                        userId = _applicationUserServiceProxy.Create(user);
-                        if (userId > 0)
+                        Result rs = _applicationUserServiceProxy.Create(user);
+                        if (rs.Status == "Success")
                         {
-                            roleId = applicationUserVM.RoleId;
-                            AddApplicationUserRoleRequest addApplicationUserRoleRequest = new AddApplicationUserRoleRequest();
-                            addApplicationUserRoleRequest.RoleId = roleId;
-                            addApplicationUserRoleRequest.ApplicationUserId = userId;
-                            result = _applicationUserRoleServiceProxy.Create(addApplicationUserRoleRequest);
-                            if (result != null && result == "Success")
+                            userId = Convert.ToInt32(rs.Data);
+                            if (userId > 0)
                             {
-                                return RedirectToAction("UserIndex");
+                                roleId = applicationUserVM.RoleId;
+                                AddApplicationUserRoleRequest addApplicationUserRoleRequest = new AddApplicationUserRoleRequest();
+                                addApplicationUserRoleRequest.RoleId = roleId;
+                                addApplicationUserRoleRequest.ApplicationUserId = userId;
+                                result = _applicationUserRoleServiceProxy.Create(addApplicationUserRoleRequest);
+                                if (result != null && result == "Success")
+                                {
+                                    return RedirectToAction("UserIndex");
+                                }
                             }
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = rs.Message;
                         }
                     }
                 }
-                return View("Login");
+                return RedirectToAction("Create");
             }
             catch (Exception ex)
             {
@@ -134,7 +142,7 @@ namespace LCMS.Web.Controllers
         }
 
         public ActionResult Edit(int id)
-        {
+        {            
             var roleList = new SelectList(_userRoleServiceProxy.GetUserRoleDetails(), "Id", "Role");
             ViewData["roleList"] = roleList;
             ApplicationUserEditVM applicationUserVM = new ApplicationUserEditVM();
@@ -160,7 +168,12 @@ namespace LCMS.Web.Controllers
                         result = _applicationUserServiceProxy.Update(user);
                         if (result != null && result == "Success")
                         {
-                            return RedirectToAction("UserIndex");
+                            string url = Request.UrlReferrer.ToString();
+                            if (Session["aurole"].ToString() == "Librarian")
+                                return RedirectToAction("UserIndex");
+                            else
+                                return RedirectToAction("UserDashboard");
+
                         }
                     }
                 }
@@ -179,6 +192,36 @@ namespace LCMS.Web.Controllers
             result = _applicationUserServiceProxy.Delete(id);
             //if (result == "Success")
             return RedirectToAction("UserIndex");
+        }
+
+        public ActionResult ChangeActivity(int id)
+        {
+            string result = _applicationUserServiceProxy.UpdateActiveStatus(id);
+            return RedirectToAction("UserIndex");
+        }
+
+        //public ActionResult UpdateRole(int id)
+        //{
+        //    var roleList = new SelectList(_userRoleServiceProxy.GetUserRoleDetails(), "Id", "Role");
+        //    ViewData["roleList"] = roleList;
+        //    ApplicationUserRoleVM applicationUserRoleVM = new ApplicationUserRoleVM();
+        //    ApplicationUserDetail applicationUserDetail = _applicationUserServiceProxy.GetApplicationUserById(id);
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserDetail, ApplicationUserRoleVM>());
+        //    var mapper = new Mapper(config);
+        //    applicationUserVM = mapper.Map<ApplicationUserEditVM>(applicationUserDetail);
+        //    return View("Edit", applicationUserVM);
+        //}
+
+        public ActionResult UserDashboard()
+        {
+            return View();
+        }
+
+        public ActionResult LogOut()
+        {
+            Session.Abandon();
+            Session.RemoveAll();
+            return RedirectToAction("Login");
         }
 
     }

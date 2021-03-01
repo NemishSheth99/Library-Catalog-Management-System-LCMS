@@ -105,9 +105,9 @@ namespace LCMS.BAL.Class
             return _applicationUserRepository.Update(applicationUser);
         }
 
-        public string UpdateActiveStatus(int id, string status)
+        public string UpdateActiveStatus(int id)
         {
-            return _applicationUserRepository.UpdateActiveStatus(id, status);
+            return _applicationUserRepository.UpdateActiveStatus(id);
         }
 
         public string Delete(int id)

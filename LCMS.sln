@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28307.1340
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCMS.WebAPI", "LCMS.WebAPI\LCMS.WebAPI.csproj", "{B1AF58C0-256C-4E50-AED3-81B0E8F75C65}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCMS.ServiceProxy", "LCMS.ServiceProxy\LCMS.ServiceProxy.csproj", "{239DE8AF-4552-44BB-8916-6818EDA481DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCMS.Web", "LCMS.Web\LCMS.Web.csproj", "{E9428C3F-2DFC-4BBA-B57F-7179D92B1CAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCMS.Core", "LCMS.Core\LCMS.Core.csproj", "{1EF102C9-6A21-43B3-A219-4C23BD00BE5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{E9428C3F-2DFC-4BBA-B57F-7179D92B1CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9428C3F-2DFC-4BBA-B57F-7179D92B1CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9428C3F-2DFC-4BBA-B57F-7179D92B1CAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EF102C9-6A21-43B3-A219-4C23BD00BE5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EF102C9-6A21-43B3-A219-4C23BD00BE5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EF102C9-6A21-43B3-A219-4C23BD00BE5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EF102C9-6A21-43B3-A219-4C23BD00BE5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

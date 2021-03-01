@@ -23,7 +23,7 @@
                     @using (Html.BeginForm("EditUser", "ApplicationUser", FormMethod.Post, new { id = "form", @class = "form-horizontal form-label-left" }))
                     {
                         @Html.AntiForgeryToken()
-
+                        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
                         @Html.HiddenFor(model => model.Id)
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="Name">

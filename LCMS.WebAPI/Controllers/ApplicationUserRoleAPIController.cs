@@ -31,5 +31,12 @@ namespace LCMS.WebAPI.Controllers
         {
             return Ok(_applicationUserRoleManager.Create(applicationUserRoleRequest));
         }
+
+        [Route("api/ApplicationUserRoleAPI/UpdateApplicationUserRole")]
+        [HttpPut]
+        public IHttpActionResult UpdateApplicationUserRole(AddApplicationUserRoleRequest applicationUserRoleRequest)
+        {
+            return Ok(_applicationUserRoleManager.Update(applicationUserRoleRequest));
+        }
     }
 }

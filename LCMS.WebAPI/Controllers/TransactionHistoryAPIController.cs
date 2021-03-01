@@ -4,36 +4,34 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using LCMS.BAL.Interface;
+using LCMS.Models.TransactionHistory;
 
 namespace LCMS.WebAPI.Controllers
 {
     public class TransactionHistoryAPIController : ApiController
     {
+        private readonly ITransactionHistoryManager _transactionHistoryManager;
+
+        public TransactionHistoryAPIController(ITransactionHistoryManager transactionHistoryManager)
+        {
+            _transactionHistoryManager = transactionHistoryManager;
+        }
+
         // GET: api/TransactionHistoryAPI
-        public IEnumerable<string> Get()
+        [Route("api/TransactionHistoryAPI/GetTransactionHistories")]
+        [HttpGet]
+        public IHttpActionResult GetTransactionHistories()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_transactionHistoryManager.GetTransactionHistories());
         }
 
-        // GET: api/TransactionHistoryAPI/5
-        public string Get(int id)
+        // GET: api/TransactionHistoryAPI
+        [Route("api/TransactionHistoryAPI/GetUserTransactionHistories")]
+        [HttpGet]
+        public IHttpActionResult GetUserTransactionHistories(int id)
         {
-            return "value";
-        }
-
-        // POST: api/TransactionHistoryAPI
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/TransactionHistoryAPI/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/TransactionHistoryAPI/5
-        public void Delete(int id)
-        {
+            return Ok(_transactionHistoryManager.GetTransactionHistoriesByUserId(id));
         }
     }
 }
