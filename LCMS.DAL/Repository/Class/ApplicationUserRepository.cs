@@ -72,8 +72,23 @@ namespace LCMS.DAL.Repository.Class
             ApplicationUser user = _dbContext.ApplicationUsers.Find(applicationUser.Id);
             if (user != null)
             {
+                _dbContext.Entry(user).CurrentValues.SetValues(applicationUser);
+                if (applicationUser.Status == null)
+                    user.Status = user.Status;
+                if (applicationUser.IsDeleted == null)
+                    user.IsDeleted = user.IsDeleted;
+                _dbContext.SaveChanges();
+                return "Success";
+            }
+            return "Fail";
+        }
+
+        public string EditProfile(ApplicationUser applicationUser)
+        {
+            ApplicationUser user = _dbContext.ApplicationUsers.Find(applicationUser.Id);
+            if (user != null)
+            {
                 user.Name = applicationUser.Name;
-                user.EmailAddress = applicationUser.EmailAddress;
                 user.PhoneNumber = applicationUser.PhoneNumber;
                 _dbContext.SaveChanges();
                 return "Success";
@@ -99,8 +114,10 @@ namespace LCMS.DAL.Repository.Class
             if (applicationUser != null)
             {
                 applicationUser.IsDeleted = true;
-                _dbContext.SaveChanges();
-                return "Success";
+                if (_dbContext.SaveChanges() > 0)
+                    return "Success";
+                else
+                    return "Fail";
             }
             return "Fail";
         }
@@ -117,5 +134,6 @@ namespace LCMS.DAL.Repository.Class
             return "Fail";
         }
 
+        
     }
 }

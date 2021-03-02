@@ -133,11 +133,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\ApplicationUserController.cs" />
+    <Compile Include="Controllers\BookCatalogController.cs" />
+    <Compile Include="Controllers\BookPlaceController.cs" />
     <Compile Include="Controllers\TransactionHistoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ApplicationUserCreateVM.cs" />
+    <Compile Include="Models\ApplicationUserEditProfileVM.cs" />
     <Compile Include="Models\ApplicationUserEditVM.cs" />
     <Compile Include="Models\LoginVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -4922,6 +4925,9 @@
     <Content Include="Views\ApplicationUser\UserDashboard.cshtml" />
     <Content Include="Views\TransactionHistory\TransactionHistoryIndex.cshtml" />
     <Content Include="Views\TransactionHistory\UserTransactionHistoryIndex.cshtml" />
+    <Content Include="Views\BookCatalog\BookCatalogIndex.cshtml" />
+    <Content Include="Views\BookPlace\BookPlaceIndex.cshtml" />
+    <Content Include="Views\ApplicationUser\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

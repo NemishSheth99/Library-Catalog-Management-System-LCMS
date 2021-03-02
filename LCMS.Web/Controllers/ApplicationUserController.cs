@@ -29,7 +29,7 @@ namespace LCMS.Web.Controllers
             _userRoleServiceProxy = userRoleServiceProxy;
             _applicationUserRoleServiceProxy = applicationUserRoleServiceProxy;
         }
-        
+
         public ActionResult Login()
         {
             return View();
@@ -131,6 +131,7 @@ namespace LCMS.Web.Controllers
                             TempData["ErrorMessage"] = rs.Message;
                         }
                     }
+
                 }
                 return RedirectToAction("Create");
             }
@@ -142,38 +143,98 @@ namespace LCMS.Web.Controllers
         }
 
         public ActionResult Edit(int id)
-        {            
-            var roleList = new SelectList(_userRoleServiceProxy.GetUserRoleDetails(), "Id", "Role");
-            ViewData["roleList"] = roleList;
+        {
             ApplicationUserEditVM applicationUserVM = new ApplicationUserEditVM();
             ApplicationUserDetail applicationUserDetail = _applicationUserServiceProxy.GetApplicationUserById(id);
             var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserDetail, ApplicationUserEditVM>());
             var mapper = new Mapper(config);
             applicationUserVM = mapper.Map<ApplicationUserEditVM>(applicationUserDetail);
+
+            ApplicationUserRoleDetail roleDetail = _applicationUserRoleServiceProxy.GetRoleDetail(id);
+            var roleList = new SelectList(_userRoleServiceProxy.GetUserRoleDetails(), "Id", "Role", roleDetail.UserRole.Id);
+            ViewData["roleList"] = roleList;
             return View("Edit", applicationUserVM);
         }
 
-        public ActionResult EditUser(ApplicationUserEditVM applicationUserVM)
+        //public ActionResult EditUser(ApplicationUserEditVM applicationUserVM)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserEditVM, UpdateApplicationUserRequest>());
+        //            var mapper = new Mapper(config);
+        //            UpdateApplicationUserRequest user = mapper.Map<UpdateApplicationUserRequest>(applicationUserVM);
+        //            string result;
+        //            if (applicationUserVM.Id != 0)
+        //            {
+
+        //                Result rs = _applicationUserServiceProxy.Update(user);
+        //                if (rs.Status == "Success")
+        //                {
+        //                    userId = applicationUserVM.Id;
+        //                    if (userId > 0)
+        //                    {
+        //                        roleId = applicationUserVM.RoleId;
+        //                        AddApplicationUserRoleRequest addApplicationUserRoleRequest = new AddApplicationUserRoleRequest();
+        //                        addApplicationUserRoleRequest.RoleId = roleId;
+        //                        addApplicationUserRoleRequest.ApplicationUserId = userId;
+        //                        return RedirectToAction("UserIndex");
+        //                        //result = _applicationUserRoleServiceProxy.Create(addApplicationUserRoleRequest);
+        //                        //if (result != null && result == "Success")
+        //                        //{
+        //                        //    return RedirectToAction("UserIndex");
+        //                        //}
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    TempData["ErrorMessage"] = rs.Message;
+        //                }
+        //            }
+        //        }
+        //        return View("Login");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //log.Error("Exception : " + ex);
+        //        return View("Login");
+        //    }
+        //}
+
+        public ActionResult EditProfile(int id)
+        {
+            ApplicationUserEditProfileVM userVM = new ApplicationUserEditProfileVM();
+            ApplicationUserDetail applicationUserDetail = _applicationUserServiceProxy.GetApplicationUserById(id);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserDetail, ApplicationUserEditProfileVM>());
+            var mapper = new Mapper(config);
+            userVM = mapper.Map<ApplicationUserEditProfileVM>(applicationUserDetail);
+            return View("EditProfile",userVM);
+        }
+
+        public ActionResult EditUserProfile(ApplicationUserEditProfileVM applicationUserVM)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserEditVM, UpdateApplicationUserRequest>());
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserEditProfileVM, EditProfileApplicationUser>());
                     var mapper = new Mapper(config);
-                    UpdateApplicationUserRequest user = mapper.Map<UpdateApplicationUserRequest>(applicationUserVM);
+                    EditProfileApplicationUser user = mapper.Map<EditProfileApplicationUser>(applicationUserVM);
                     string result;
                     if (applicationUserVM.Id != 0)
                     {
-                        result = _applicationUserServiceProxy.Update(user);
-                        if (result != null && result == "Success")
+                        result= _applicationUserServiceProxy.EditProfile(user);
+                        if (result == "Success")
                         {
-                            string url = Request.UrlReferrer.ToString();
                             if (Session["aurole"].ToString() == "Librarian")
-                                return RedirectToAction("UserIndex");
+                                return RedirectToAction("LibrarianDashboard");
                             else
                                 return RedirectToAction("UserDashboard");
-
+                        }
+                        else
+                        {
+                            return RedirectToAction("ErrorPage");
                         }
                     }
                 }
@@ -199,18 +260,6 @@ namespace LCMS.Web.Controllers
             string result = _applicationUserServiceProxy.UpdateActiveStatus(id);
             return RedirectToAction("UserIndex");
         }
-
-        //public ActionResult UpdateRole(int id)
-        //{
-        //    var roleList = new SelectList(_userRoleServiceProxy.GetUserRoleDetails(), "Id", "Role");
-        //    ViewData["roleList"] = roleList;
-        //    ApplicationUserRoleVM applicationUserRoleVM = new ApplicationUserRoleVM();
-        //    ApplicationUserDetail applicationUserDetail = _applicationUserServiceProxy.GetApplicationUserById(id);
-        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserDetail, ApplicationUserRoleVM>());
-        //    var mapper = new Mapper(config);
-        //    applicationUserVM = mapper.Map<ApplicationUserEditVM>(applicationUserDetail);
-        //    return View("Edit", applicationUserVM);
-        //}
 
         public ActionResult UserDashboard()
         {

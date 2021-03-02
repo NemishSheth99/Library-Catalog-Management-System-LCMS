@@ -15,6 +15,7 @@ namespace LCMS.DAL.Repository.Interface
         ApplicationUser GetApplicationUserByEmail(string emailAddress);
         int Create(ApplicationUser applicationUser);
         string Update(ApplicationUser applicationUser);
+        string EditProfile(ApplicationUser applicationUser);
         string UpdateActiveStatus(int id);
         string Delete(int id);
         string ChangePassword(int id, string password);

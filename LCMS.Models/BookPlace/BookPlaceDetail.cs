@@ -19,6 +19,6 @@ namespace LCMS.Models.BookPlace
         public DateTime UpdatedDate { get; set; }
         public bool IsDeleted { get; set; }
 
-        public virtual BookCatalogDetail BookCatalog { get; set; }
+        public BookCatalogDetail BookCatalog { get; set; }
     }
 }

@@ -72,9 +72,28 @@ namespace LCMS.WebAPI.Controllers
 
         [Route("api/ApplicationUserAPI/UpdateUser")]
         [HttpPut]
-        public IHttpActionResult UpdateUser(UpdateApplicationUserRequest applicationUserRequest)
+        public IHttpActionResult UpdateUser(AddApplicationUserRequest applicationUserRequest)
         {
-            return Ok(_applicationUserManager.Update(applicationUserRequest));
+            ApplicationUserDetail applicationUserDetail = _applicationUserManager.GetApplicationUserByEmailAddress(applicationUserRequest.EmailAddress);
+            Result rs = new Result();
+            if (applicationUserDetail.EmailAddress == null)
+            {                
+                rs.Status = "Success";
+                rs.Message = "User successfully Updated";
+            }
+            else
+            {
+                rs.Status = "Fail";
+                rs.Message = "Email Address Already Exist!!!";
+            }
+            return Ok(rs);
+        }
+
+        [Route("api/ApplicationUserAPI/EditProfile")]
+        [HttpPut]
+        public IHttpActionResult EditProfile(EditProfileApplicationUser editProfileApplicationUser)
+        {
+            return Ok(_applicationUserManager.EditProfile(editProfileApplicationUser));
         }
 
         [Route("api/ApplicationUserAPI/DeleteUser/{id}")]

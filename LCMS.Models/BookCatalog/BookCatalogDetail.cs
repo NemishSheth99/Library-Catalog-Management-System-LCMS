@@ -25,5 +25,7 @@ namespace LCMS.Models.BookCatalog
         public string ImageContentType { get; set; }
 
         public bool? IsDeleted { get; set; }
+
+        public string Authors { get; set;}
     }
 }

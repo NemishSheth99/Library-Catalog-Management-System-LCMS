@@ -25,7 +25,12 @@
     <link href="~/Assets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
     <!-- bootstrap-daterangepicker -->
     <link href="~/Assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-
+    <!-- Datatables -->
+    <link href="~/Assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="~/Assets/build/css/custom.min.css" rel="stylesheet">
 </head>
@@ -64,7 +69,7 @@
                                             <a><i class="fa fa-book"></i> Book Catalog <span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
                                                 <li><a href="/Bookcatalog/Create">Add Book Catalog</a></li>
-                                                <li><a href="/Bookcatalog/CatalogIndex">Manage Book Catalog</a></li>
+                                                <li><a href="/Bookcatalog/BookCatalogIndex">Manage Book Catalog</a></li>
                                             </ul>
                                         </li>
                                         <li>
@@ -112,7 +117,7 @@
                                         @Session["auname"].ToString()
                                     </a>
                                     <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/ApplicationUser/Edit/@Session["auid"]"><i class="fa fa-pencil-square-o pull-left"></i> Edit Profile</a>
+                                        <a class="dropdown-item" href="/ApplicationUser/EditProfile/@Session["auid"]"><i class="fa fa-pencil-square-o pull-left"></i> Edit Profile</a>
                                         <a class="dropdown-item" href=""><i class="fa fa-key pull-left"></i> Change Password</a>
                                         <a class="dropdown-item" href="/ApplicationUser/LogOut"><i class="fa fa-sign-out pull-left"></i> Log Out</a>
                                     </div>
@@ -176,6 +181,22 @@
     <!-- bootstrap-daterangepicker -->
     <script src="~/Assets/vendors/moment/min/moment.min.js"></script>
     <script src="~/Assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- Datatables -->
+    <script src="~/Assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/Assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="~/Assets/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/Assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/Assets/vendors/pdfmake/build/vfs_fonts.js"></script>
 
     <!-- Custom Theme Scripts -->
     <script src="~/Assets/build/js/custom.min.js"></script>

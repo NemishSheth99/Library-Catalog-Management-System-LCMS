@@ -97,12 +97,21 @@ namespace LCMS.BAL.Class
         }
 
         public string Update(UpdateApplicationUserRequest applicationUserRequest)
-        {
+        {            
             ApplicationUser applicationUser = new ApplicationUser();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UpdateApplicationUserRequest, ApplicationUser>());
             var mapper = new Mapper(config);
             applicationUser = mapper.Map<ApplicationUser>(applicationUserRequest);
             return _applicationUserRepository.Update(applicationUser);
+        }
+
+        public string EditProfile(EditProfileApplicationUser editProfileApplicationUser)
+        {
+            ApplicationUser applicationUser = new ApplicationUser();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<EditProfileApplicationUser, ApplicationUser>());
+            var mapper = new Mapper(config);
+            applicationUser = mapper.Map<ApplicationUser>(editProfileApplicationUser);
+            return _applicationUserRepository.EditProfile(applicationUser);
         }
 
         public string UpdateActiveStatus(int id)
@@ -120,5 +129,7 @@ namespace LCMS.BAL.Class
             password = PasswordMD5.GetMD5(password);
             return _applicationUserRepository.ChangePassword(id, password);
         }
+
+        
     }
 }

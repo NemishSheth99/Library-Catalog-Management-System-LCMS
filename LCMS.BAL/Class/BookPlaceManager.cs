@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LCMS.BAL.Interface;
+using LCMS.DAL.Database;
 using LCMS.DAL.Repository.Interface;
-using LCMS.Models;
+using LCMS.Models.BookPlace;
+using LCMS.Models.BookCatalog;
+using AutoMapper;
 
 namespace LCMS.BAL.Class
 {
@@ -18,10 +21,29 @@ namespace LCMS.BAL.Class
             _bookPlaceRepository = bookPlaceRepository;
         }
 
-        //public List<BookPlace> GetBookPlacesByCatalog(int catalogId)
-        //{
-        //    return _bookPlaceRepository.GetBookPlacesByCatalog(catalogId);
-        //}
+        public List<BookPlaceDetail> GetBookPlacesByCatalog(int catalogId)
+        {
+            List<BookPlace> bookPlaceList= _bookPlaceRepository.GetBookPlacesByCatalog(catalogId);
+            List<BookPlaceDetail> bookPlaceDetailList = new List<BookPlaceDetail>();
+            if(bookPlaceList != null)
+            {
+                foreach(var items in bookPlaceList)
+                {
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<BookPlace, BookPlaceDetail>().ForMember(x => x.BookCatalog, y => y.Ignore()));
+                    var mapper = new Mapper(config);
+                    BookPlaceDetail bookPlaceDetail = mapper.Map<BookPlaceDetail>(items);
+                    if(items.BookCatalog!=null)
+                    {
+                        var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
+                        var mp = new Mapper(cnfg);
+                        bookPlaceDetail.BookCatalog = mp.Map<BookCatalogDetail>(items.BookCatalog);
+                    }
+                    bookPlaceDetailList.Add(bookPlaceDetail);
+                }
+                return bookPlaceDetailList;
+            }
+            return bookPlaceDetailList;
+        }
 
         //public BookPlace GetBookPlaceById(int id)
         //{

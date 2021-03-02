@@ -14,7 +14,8 @@ namespace LCMS.ServiceProxy.ApplicationUser
         List<ApplicationUserDetail> GetApplicationUsers();
         ApplicationUserDetail GetApplicationUserById(int id);
         Result Create(AddApplicationUserRequest applicationUserRequest);
-        string Update(UpdateApplicationUserRequest applicationUserRequest);
+        Result Update(AddApplicationUserRequest applicationUserRequest);
+        string EditProfile(EditProfileApplicationUser editProfileApplicationUser);
         string Delete(int id);
         string UpdateActiveStatus(int id);
     }

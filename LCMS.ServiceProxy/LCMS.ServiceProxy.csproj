@@ -59,6 +59,10 @@
     <Compile Include="ApplicationUserRole\IApplicationUserRoleServiceProxy.cs" />
     <Compile Include="ApplicationUser\ApplicationUserServiceProxy.cs" />
     <Compile Include="ApplicationUser\IApplicationUserServiceProxy.cs" />
+    <Compile Include="BookCatalog\BookCatalogServiceProxy.cs" />
+    <Compile Include="BookCatalog\IBookCatalogServiceProxy.cs" />
+    <Compile Include="BookPlace\BookPlaceServiceProxy.cs" />
+    <Compile Include="BookPlace\IBookPlaceServiceProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceProxyBase.cs" />
     <Compile Include="ServiceProxySettings.cs" />

@@ -17,12 +17,12 @@ namespace LCMS.WebAPI.Controllers
             _bookCatalogManager = bookCatalogManager;
         }
 
-        //[Route("api/BookCatalogAPI/GetBookCatalogs")]
-        //[HttpGet]
-        //public IHttpActionResult GetBookCatalogs()
-        //{
-        //    return Ok(_bookCatalogManager.GetBookCatalogs());
-        //}
+        [Route("api/BookCatalogAPI/GetBookCatalogs")]
+        [HttpGet]
+        public IHttpActionResult GetBookCatalogs()
+        {
+            return Ok(_bookCatalogManager.GetBookCatalogs());
+        }
 
     }
 }

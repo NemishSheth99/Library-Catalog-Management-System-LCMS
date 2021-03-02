@@ -1,4 +1,4 @@
-﻿@model LCMS.Web.Models.ApplicationUserEditVM
+﻿@model LCMS.Web.Models.ApplicationUserEditProfileVM
 
 @{
     ViewBag.Title = "Edit";
@@ -20,7 +20,7 @@
 
                 <div class="x_content">
                     <br />
-                    @using (Html.BeginForm("EditUser", "ApplicationUser", FormMethod.Post, new { id = "form", @class = "form-horizontal form-label-left" }))
+                    @using (Html.BeginForm("EditUserProfile", "ApplicationUser", FormMethod.Post, new { id = "form", @class = "form-horizontal form-label-left" }))
                     {
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
@@ -34,17 +34,7 @@
                                 @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                             </div>
-                        </div>
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="EmailAddress">
-                                Email Address
-                                <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6">
-                                @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
+                        </div>                        
 
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="PhoneNumber">
@@ -55,18 +45,7 @@
                                 @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
                             </div>
-                        </div>
-
-                        <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Password">
-                                Role
-                                <span class="required">*</span>
-                            </label>
-                            <div class="col-md-6 col-sm-6">
-                                @Html.DropDownList("RoleId", (IEnumerable<SelectListItem>)ViewData["roleList"], new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
+                        </div>                       
 
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 offset-md-3">

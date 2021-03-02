@@ -19,16 +19,11 @@ namespace LCMS.WebAPI.Controllers
             _transactionHistoryManager = transactionHistoryManager;
         }
 
-        // GET: api/BookPlaceAPI
-        public IEnumerable<string> Get()
+        [Route("api/BookPlaceAPI/GetBooks")]
+        [HttpGet]
+        public IHttpActionResult GetBooks(int bookCatalogId)
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/BookPlaceAPI/5
-        public string Get(int id)
-        {
-            return "value";
+            return Ok(_bookPlaceManager.GetBookPlacesByCatalog(bookCatalogId));
         }
 
         // POST: api/BookPlaceAPI
@@ -43,14 +38,6 @@ namespace LCMS.WebAPI.Controllers
         //    return Ok(_transactionHistoryManager.Create(obj));
         //}
 
-        // PUT: api/BookPlaceAPI/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
 
-        // DELETE: api/BookPlaceAPI/5
-        public void Delete(int id)
-        {
-        }
     }
 }
