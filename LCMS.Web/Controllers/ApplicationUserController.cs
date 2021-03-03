@@ -30,6 +30,8 @@ namespace LCMS.Web.Controllers
             _applicationUserRoleServiceProxy = applicationUserRoleServiceProxy;
         }
 
+
+        #region Common
         public ActionResult Login()
         {
             return View();
@@ -77,6 +79,106 @@ namespace LCMS.Web.Controllers
                 return View("Login");
             }
         }
+
+        public ActionResult LogOut()
+        {
+            Session.Abandon();
+            Session.RemoveAll();
+            return RedirectToAction("Login");
+        }
+
+        public ActionResult Dashboard()
+        {
+            if (Session["aurole"].ToString() == "Librarian")
+                return RedirectToAction("LibrarianDashboard");
+            else
+                return RedirectToAction("UserDashboard");
+        }
+
+        public ActionResult EditProfile(int id)
+        {
+            ApplicationUserEditProfileVM userVM = new ApplicationUserEditProfileVM();
+            ApplicationUserDetail applicationUserDetail = _applicationUserServiceProxy.GetApplicationUserById(id);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserDetail, ApplicationUserEditProfileVM>());
+            var mapper = new Mapper(config);
+            userVM = mapper.Map<ApplicationUserEditProfileVM>(applicationUserDetail);
+            return View("EditProfile", userVM);
+        }
+
+        public ActionResult EditUserProfile(ApplicationUserEditProfileVM applicationUserVM)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserEditProfileVM, EditProfileApplicationUser>());
+                    var mapper = new Mapper(config);
+                    EditProfileApplicationUser user = mapper.Map<EditProfileApplicationUser>(applicationUserVM);
+                    string result;
+                    if (applicationUserVM.Id != 0)
+                    {
+                        result = _applicationUserServiceProxy.EditProfile(user);
+                        if (result == "Success")
+                        {
+                            return RedirectToAction("Dashboard");
+                        }
+                        else
+                        {
+                            return RedirectToAction("ErrorPage");
+                        }
+                    }
+                }
+                return View("Login");
+            }
+            catch (Exception ex)
+            {
+                //log.Error("Exception : " + ex);
+                return View("Login");
+            }
+        }
+
+        public ActionResult ChangePassword()
+        {
+            return View(new ApplicationUserChangePasswordVM());
+        }
+
+        public ActionResult ChangeUserPassword(ApplicationUserChangePasswordVM applicationUserVM)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    applicationUserVM.Id =Convert.ToInt32(Session["auid"]);
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserChangePasswordVM, ChangePasswordApplicationUser>());
+                    var mapper = new Mapper(config);
+                    ChangePasswordApplicationUser user = mapper.Map<ChangePasswordApplicationUser>(applicationUserVM);
+                    string result = _applicationUserServiceProxy.ChangePassword(user);
+                    if (result == "Success")
+                    {
+                        return RedirectToAction("Dashboard");
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = result;
+                        if (result == "Fail")
+                            return RedirectToAction("ErrorPage");
+                        else
+                            return View("ChangePassword");
+                    }
+
+                }
+                return View("Login");
+            }
+            catch (Exception ex)
+            {
+                //log.Error("Exception : " + ex);
+                return View("Login");
+            }
+        }
+
+        #endregion
+
+        #region Librarian
 
         public ActionResult LibrarianDashboard()
         {
@@ -156,85 +258,40 @@ namespace LCMS.Web.Controllers
             return View("Edit", applicationUserVM);
         }
 
-        //public ActionResult EditUser(ApplicationUserEditVM applicationUserVM)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserEditVM, UpdateApplicationUserRequest>());
-        //            var mapper = new Mapper(config);
-        //            UpdateApplicationUserRequest user = mapper.Map<UpdateApplicationUserRequest>(applicationUserVM);
-        //            string result;
-        //            if (applicationUserVM.Id != 0)
-        //            {
-
-        //                Result rs = _applicationUserServiceProxy.Update(user);
-        //                if (rs.Status == "Success")
-        //                {
-        //                    userId = applicationUserVM.Id;
-        //                    if (userId > 0)
-        //                    {
-        //                        roleId = applicationUserVM.RoleId;
-        //                        AddApplicationUserRoleRequest addApplicationUserRoleRequest = new AddApplicationUserRoleRequest();
-        //                        addApplicationUserRoleRequest.RoleId = roleId;
-        //                        addApplicationUserRoleRequest.ApplicationUserId = userId;
-        //                        return RedirectToAction("UserIndex");
-        //                        //result = _applicationUserRoleServiceProxy.Create(addApplicationUserRoleRequest);
-        //                        //if (result != null && result == "Success")
-        //                        //{
-        //                        //    return RedirectToAction("UserIndex");
-        //                        //}
-        //                    }
-        //                }
-        //                else
-        //                {
-        //                    TempData["ErrorMessage"] = rs.Message;
-        //                }
-        //            }
-        //        }
-        //        return View("Login");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //log.Error("Exception : " + ex);
-        //        return View("Login");
-        //    }
-        //}
-
-        public ActionResult EditProfile(int id)
-        {
-            ApplicationUserEditProfileVM userVM = new ApplicationUserEditProfileVM();
-            ApplicationUserDetail applicationUserDetail = _applicationUserServiceProxy.GetApplicationUserById(id);
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserDetail, ApplicationUserEditProfileVM>());
-            var mapper = new Mapper(config);
-            userVM = mapper.Map<ApplicationUserEditProfileVM>(applicationUserDetail);
-            return View("EditProfile",userVM);
-        }
-
-        public ActionResult EditUserProfile(ApplicationUserEditProfileVM applicationUserVM)
+        public ActionResult EditUser(ApplicationUserEditVM applicationUserVM)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserEditProfileVM, EditProfileApplicationUser>());
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUserEditVM, UpdateApplicationUserRequest>());
                     var mapper = new Mapper(config);
-                    EditProfileApplicationUser user = mapper.Map<EditProfileApplicationUser>(applicationUserVM);
+                    UpdateApplicationUserRequest applicationUserRequest = mapper.Map<UpdateApplicationUserRequest>(applicationUserVM);
                     string result;
                     if (applicationUserVM.Id != 0)
                     {
-                        result= _applicationUserServiceProxy.EditProfile(user);
-                        if (result == "Success")
+
+                        Result rs = _applicationUserServiceProxy.Update(applicationUserRequest);
+                        if (rs.Status == "Success")
                         {
-                            if (Session["aurole"].ToString() == "Librarian")
-                                return RedirectToAction("LibrarianDashboard");
-                            else
-                                return RedirectToAction("UserDashboard");
+                            int userId = applicationUserVM.Id;
+                            if (userId > 0)
+                            {
+                                int roleId = applicationUserVM.RoleId;
+                                AddApplicationUserRoleRequest addApplicationUserRoleRequest = new AddApplicationUserRoleRequest();
+                                addApplicationUserRoleRequest.RoleId = roleId;
+                                addApplicationUserRoleRequest.ApplicationUserId = userId;
+                                //return RedirectToAction("UserIndex");
+                                result = _applicationUserRoleServiceProxy.Update(addApplicationUserRoleRequest);
+                                if (result != null && result == "Success")
+                                {
+                                    return RedirectToAction("UserIndex");
+                                }
+                            }
                         }
                         else
                         {
-                            return RedirectToAction("ErrorPage");
+                            TempData["ErrorMessage"] = rs.Message;
                         }
                     }
                 }
@@ -261,17 +318,15 @@ namespace LCMS.Web.Controllers
             return RedirectToAction("UserIndex");
         }
 
+        #endregion
+
+        #region OtherUser
         public ActionResult UserDashboard()
         {
             return View();
         }
 
-        public ActionResult LogOut()
-        {
-            Session.Abandon();
-            Session.RemoveAll();
-            return RedirectToAction("Login");
-        }
+        #endregion
 
     }
 }

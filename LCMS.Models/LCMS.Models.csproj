@@ -53,6 +53,7 @@
     <Compile Include="ApplicationUser\AddApplicationUserRequest.cs" />
     <Compile Include="ApplicationUser\ApplicationUserDetail.cs" />
     <Compile Include="ApplicationUser\ApplicationUserLogin.cs" />
+    <Compile Include="ApplicationUser\ChangePasswordApplicationUser.cs" />
     <Compile Include="ApplicationUser\EditProfileApplicationUser.cs" />
     <Compile Include="ApplicationUser\UpdateApplicationUserRequest.cs" />
     <Compile Include="Author\AuthorDetail.cs" />

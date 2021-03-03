@@ -124,10 +124,11 @@ namespace LCMS.BAL.Class
             return _applicationUserRepository.Delete(id);
         }
 
-        public string ChangePassword(int id, string password)
+        public string ChangePassword(int id,string oldPassword, string newPassword)
         {
-            password = PasswordMD5.GetMD5(password);
-            return _applicationUserRepository.ChangePassword(id, password);
+            oldPassword = PasswordMD5.GetMD5(oldPassword);
+            newPassword = PasswordMD5.GetMD5(newPassword);
+            return _applicationUserRepository.ChangePassword(id, oldPassword,newPassword);
         }
 
         

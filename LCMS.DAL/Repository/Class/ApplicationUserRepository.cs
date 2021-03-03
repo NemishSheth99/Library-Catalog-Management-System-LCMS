@@ -69,14 +69,12 @@ namespace LCMS.DAL.Repository.Class
 
         public string Update(ApplicationUser applicationUser)
         {
-            ApplicationUser user = _dbContext.ApplicationUsers.Find(applicationUser.Id);
+            ApplicationUser user = _dbContext.ApplicationUsers.Where(x=>x.Id==applicationUser.Id).FirstOrDefault();
             if (user != null)
             {
-                _dbContext.Entry(user).CurrentValues.SetValues(applicationUser);
-                if (applicationUser.Status == null)
-                    user.Status = user.Status;
-                if (applicationUser.IsDeleted == null)
-                    user.IsDeleted = user.IsDeleted;
+                user.Name = applicationUser.Name;
+                user.EmailAddress = applicationUser.EmailAddress;
+                user.PhoneNumber = applicationUser.PhoneNumber;
                 _dbContext.SaveChanges();
                 return "Success";
             }
@@ -122,14 +120,19 @@ namespace LCMS.DAL.Repository.Class
             return "Fail";
         }
 
-        public string ChangePassword(int id,string password)
+        public string ChangePassword(int id, string oldPassword, string newPassword)
         {
             ApplicationUser applicationUser = _dbContext.ApplicationUsers.Find(id);
             if (applicationUser != null)
             {
-                applicationUser.Password = password;
-                _dbContext.SaveChanges();
-                return "Success";
+                if (applicationUser.Password == oldPassword)
+                {
+                    applicationUser.Password = newPassword;
+                    _dbContext.SaveChanges();
+                    return "Success";
+                }
+                else
+                    return "Old Password does not match!!!";
             }
             return "Fail";
         }

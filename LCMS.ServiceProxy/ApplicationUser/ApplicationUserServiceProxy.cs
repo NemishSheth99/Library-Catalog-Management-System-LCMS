@@ -41,9 +41,9 @@ namespace LCMS.ServiceProxy.ApplicationUser
             return MakeRequest<Result, AddApplicationUserRequest>("AddUser", ServiceRequestType.Post, applicationUserRequest);
         }
 
-        public Result Update(AddApplicationUserRequest applicationUserRequest)
+        public Result Update(UpdateApplicationUserRequest applicationUserRequest)
         {
-            return MakeRequest<Result, AddApplicationUserRequest>("UpdateUser", ServiceRequestType.Put, applicationUserRequest);
+            return MakeRequest<Result, UpdateApplicationUserRequest>("UpdateUser", ServiceRequestType.Put, applicationUserRequest);
         }
 
         public string EditProfile(EditProfileApplicationUser editProfileApplicationUser)
@@ -59,6 +59,11 @@ namespace LCMS.ServiceProxy.ApplicationUser
         public string UpdateActiveStatus(int id)
         {
             return MakeRequest<string, int>("ChangeUserActivity/"+id, ServiceRequestType.Put, id);
+        }
+
+        public string ChangePassword(ChangePasswordApplicationUser changePasswordApplicationUser)
+        {
+            return MakeRequest<string, ChangePasswordApplicationUser>("ChangePassword", ServiceRequestType.Put, changePasswordApplicationUser);
         }
     }
 }

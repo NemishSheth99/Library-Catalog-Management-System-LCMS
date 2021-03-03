@@ -41,7 +41,7 @@ namespace LCMS.DAL.Repository.Class
 
         public string Update(ApplicationUserRole applicationUserRole)
         {
-            var role = _dbContext.ApplicationUserRoles.Find(applicationUserRole.Id);
+            var role = _dbContext.ApplicationUserRoles.Where(x=>x.ApplicationUserId==applicationUserRole.ApplicationUserId).FirstOrDefault();
             if (role != null)
             {
                 role.RoleId = applicationUserRole.RoleId;

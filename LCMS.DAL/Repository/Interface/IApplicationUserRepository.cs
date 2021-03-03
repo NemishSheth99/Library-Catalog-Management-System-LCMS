@@ -18,6 +18,6 @@ namespace LCMS.DAL.Repository.Interface
         string EditProfile(ApplicationUser applicationUser);
         string UpdateActiveStatus(int id);
         string Delete(int id);
-        string ChangePassword(int id, string password);
+        string ChangePassword(int id, string oldPassword, string newPassword);
     }
 }

@@ -16,5 +16,6 @@ namespace LCMS.Models.ApplicationUser
         public string Password { get; set; }
         public string Status { get; set; }
         public bool? IsDeleted { get; set; }
+        //public string Role { get; set; }
     }
 }

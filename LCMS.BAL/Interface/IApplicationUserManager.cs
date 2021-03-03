@@ -19,6 +19,6 @@ namespace LCMS.BAL.Interface
         string EditProfile(EditProfileApplicationUser editProfileApplicationUser);
         string UpdateActiveStatus(int id);
         string Delete(int id);
-        string ChangePassword(int id, string password);
+        string ChangePassword(int id, string oldPassword, string newPassword);
     }
 }
