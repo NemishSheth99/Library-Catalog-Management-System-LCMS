@@ -69,7 +69,7 @@ namespace LCMS.DAL.Repository.Class
 
         public string Update(ApplicationUser applicationUser)
         {
-            ApplicationUser user = _dbContext.ApplicationUsers.Find(applicationUser.Id);
+            ApplicationUser user = _dbContext.ApplicationUsers.Where(x=>x.Id==applicationUser.Id).FirstOrDefault();
             if (user != null)
             {
                 user.Name = applicationUser.Name;
@@ -81,12 +81,25 @@ namespace LCMS.DAL.Repository.Class
             return "Fail";
         }
 
-        public string UpdateActiveStatus(int id, string status)
+        public string EditProfile(ApplicationUser applicationUser)
+        {
+            ApplicationUser user = _dbContext.ApplicationUsers.Find(applicationUser.Id);
+            if (user != null)
+            {
+                user.Name = applicationUser.Name;
+                user.PhoneNumber = applicationUser.PhoneNumber;
+                _dbContext.SaveChanges();
+                return "Success";
+            }
+            return "Fail";
+        }
+
+        public string UpdateActiveStatus(int id)
         {
             ApplicationUser applicationUser = _dbContext.ApplicationUsers.Find(id);
             if (applicationUser != null)
             {
-                applicationUser.Status = status;
+                applicationUser.Status = applicationUser.Status=="A"?"B":"A";
                 _dbContext.SaveChanges();
                 return "Success";
             }
@@ -99,23 +112,31 @@ namespace LCMS.DAL.Repository.Class
             if (applicationUser != null)
             {
                 applicationUser.IsDeleted = true;
-                _dbContext.SaveChanges();
-                return "Success";
+                if (_dbContext.SaveChanges() > 0)
+                    return "Success";
+                else
+                    return "Fail";
             }
             return "Fail";
         }
 
-        public string ChangePassword(int id,string passwprd)
+        public string ChangePassword(int id, string oldPassword, string newPassword)
         {
             ApplicationUser applicationUser = _dbContext.ApplicationUsers.Find(id);
             if (applicationUser != null)
             {
-                applicationUser.Password = passwprd;
-                _dbContext.SaveChanges();
-                return "Success";
+                if (applicationUser.Password == oldPassword)
+                {
+                    applicationUser.Password = newPassword;
+                    _dbContext.SaveChanges();
+                    return "Success";
+                }
+                else
+                    return "Old Password does not match!!!";
             }
             return "Fail";
         }
 
+        
     }
 }

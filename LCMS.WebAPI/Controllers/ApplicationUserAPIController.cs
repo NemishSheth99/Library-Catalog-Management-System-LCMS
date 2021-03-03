@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using LCMS.Core;
 using LCMS.BAL.Interface;
 using LCMS.Models.ApplicationUser;
 
@@ -53,21 +54,50 @@ namespace LCMS.WebAPI.Controllers
         public IHttpActionResult AddUser(AddApplicationUserRequest applicationUserRequest)
         {
             ApplicationUserDetail applicationUserDetail = _applicationUserManager.GetApplicationUserByEmailAddress(applicationUserRequest.EmailAddress);
-            int result;
+            Result rs = new Result();
             if (applicationUserDetail.EmailAddress == null)
-            {
-                result = _applicationUserManager.Create(applicationUserRequest);
-                return Ok(result);
+            {                
+                int x = _applicationUserManager.Create(applicationUserRequest);
+                rs.Status = "Success";
+                rs.Message = "User successfully Added";
+                rs.Data = x.ToString();
             }
             else
-                return BadRequest("Email Address Already Exist!!!");
+            {
+                rs.Status = "Fail";
+                rs.Message = "Email Address Already Exist!!!";
+            }
+            return Ok(rs);
         }
 
         [Route("api/ApplicationUserAPI/UpdateUser")]
         [HttpPut]
         public IHttpActionResult UpdateUser(UpdateApplicationUserRequest applicationUserRequest)
         {
-            return Ok(_applicationUserManager.Update(applicationUserRequest));
+            ApplicationUserDetail applicationUserDetail = _applicationUserManager.GetApplicationUserByEmailAddress(applicationUserRequest.EmailAddress);
+            Result rs = new Result();
+            if (applicationUserDetail.Id == applicationUserDetail.Id)
+            {                
+                if (applicationUserDetail.EmailAddress==applicationUserRequest.EmailAddress || applicationUserDetail.EmailAddress == null)
+                {
+                    string result = _applicationUserManager.Update(applicationUserRequest);
+                    rs.Status = "Success";
+                    rs.Message = "User successfully Updated";
+                }
+            }
+            else
+            {
+                rs.Status = "Fail";
+                rs.Message = "Email Address Already Exist!!!";
+            }
+            return Ok(rs);
+        }
+
+        [Route("api/ApplicationUserAPI/EditProfile")]
+        [HttpPut]
+        public IHttpActionResult EditProfile(EditProfileApplicationUser editProfileApplicationUser)
+        {
+            return Ok(_applicationUserManager.EditProfile(editProfileApplicationUser));
         }
 
         [Route("api/ApplicationUserAPI/DeleteUser/{id}")]
@@ -75,6 +105,20 @@ namespace LCMS.WebAPI.Controllers
         public IHttpActionResult DeleteUser(int id)
         {
             return Ok(_applicationUserManager.Delete(id));
+        }
+
+        [Route("api/ApplicationUserAPI/ChangeUserActivity/{id}")]
+        [HttpPut]
+        public IHttpActionResult ChangeUserActivity(int id)
+        {
+            return Ok(_applicationUserManager.UpdateActiveStatus(id));
+        }
+
+        [Route("api/ApplicationUserAPI/ChangePassword")]
+        [HttpPut]
+        public IHttpActionResult ChangePassword(ChangePasswordApplicationUser changePasswordApplicationUser)
+        {
+            return Ok(_applicationUserManager.ChangePassword(changePasswordApplicationUser.Id,changePasswordApplicationUser.OldPassword,changePasswordApplicationUser.NewPassword));
         }
     }
 }

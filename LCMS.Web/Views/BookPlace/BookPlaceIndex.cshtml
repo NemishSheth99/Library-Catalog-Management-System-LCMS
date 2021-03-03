@@ -1,0 +1,68 @@
+﻿@model IEnumerable<LCMS.Models.BookPlace.BookPlaceDetail>
+
+@{
+    ViewBag.Title = "BookPlaceIndex";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+<h2>BookPlaceIndex</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.PlaceCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaterialType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BorrowedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BorrowedOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdatedDate)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.PlaceCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaterialType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BorrowedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BorrowedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdatedDate)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

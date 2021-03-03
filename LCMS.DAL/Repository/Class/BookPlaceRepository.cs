@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LCMS.DAL.Repository.Interface;
-
+using LCMS.DAL.Database;
 
 namespace LCMS.DAL.Repository.Class
 {
@@ -17,23 +17,11 @@ namespace LCMS.DAL.Repository.Class
             _dbContext = new Database.LCMSDBEntities();
         }
 
-        //public List<BookPlace> GetBookPlacesByCatalog(int catalogId)
-        //{
-        //    var list = _dbContext.BookPlaces.Where(x =>x.BookCatalogId==catalogId && x.IsDeleted == false).ToList();
-        //    List<BookPlace> lst = new List<BookPlace>();
-
-        //    if (list != null)
-        //    {
-        //        foreach (var items in list)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<Database.BookPlace, BookPlace>());
-        //            var mapper = new Mapper(config);
-        //            BookPlace obj = mapper.Map<BookPlace>(items);
-        //            lst.Add(obj);
-        //        }
-        //    }
-        //    return lst;
-        //}
+        public List<BookPlace> GetBookPlacesByCatalog(int catalogId)
+        {
+            List<BookPlace> list = _dbContext.BookPlaces.Where(x => x.BookCatalogId == catalogId && x.IsDeleted == false).ToList();            
+            return list;
+        }
 
         //public BookPlace GetBookPlaceById(int id)
         //{

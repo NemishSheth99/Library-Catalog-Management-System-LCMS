@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using LCMS.Models;
+using LCMS.DAL.Database;
 
 namespace LCMS.DAL.Repository.Interface
 {
     public interface IBookCatalogRepository
     {
-        //List<BookCatalog> GetBookCatalogs();
+        List<BookCatalog> GetBookCatalogs();
         //BookCatalog GetBookCatalogById(int id);
         //int Create(BookCatalog bookCatalog);
         //int Update(BookCatalog bookCatalog);

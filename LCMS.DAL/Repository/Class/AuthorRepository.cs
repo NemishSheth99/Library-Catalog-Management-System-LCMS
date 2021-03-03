@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LCMS.DAL.Database;
 using LCMS.DAL.Repository.Interface;
 //using LCMS.Models;
 
@@ -16,6 +17,12 @@ namespace LCMS.DAL.Repository.Class
         public AuthorRepository()
         {
             _dbContext = new Database.LCMSDBEntities();
+        }
+
+        public List<Author> GetAuthorByBookcatalog(int bookCatalogId)
+        {
+            List<Author> authorList = _dbContext.Authors.Where(x => x.BookCatalogId == bookCatalogId).ToList();
+            return authorList;
         }
 
         //public string Create(Author author)

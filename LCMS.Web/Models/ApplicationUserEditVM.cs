@@ -24,6 +24,10 @@ namespace LCMS.Web.Models
         [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone Number")]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
         [Display(Name = "Phone Number")]
-        public string PhoneNumber { get; set; }        
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "Role")]
+        [Required(ErrorMessage = "Please Select Role")]
+        public int RoleId { get; set; }
     }
 }

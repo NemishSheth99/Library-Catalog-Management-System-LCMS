@@ -7,7 +7,7 @@
 <div class="">
     <div class="page-title">
         <div class="title_left">
-            
+
         </div>
 
     </div>
@@ -73,16 +73,15 @@
                             </label>
                             <div class="col-md-6 col-sm-6">
                                 @Html.DropDownList("RoleId", (IEnumerable<SelectListItem>)ViewData["roleList"], new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 offset-md-3">
                                 <input type="submit" value="Save" class="btn btn-success" />
-                                <button class="btn btn-danger" type="button">Cancel</button>
-                                <button class="btn btn-primary" type="reset">Reset</button>
-
+                                <button class="btn btn-primary" type="reset" onclick="clearData()">Clear</button>
+                                <a href="/ApplicationUser/UserIndex" class="btn btn-danger">Cancel</a>
                             </div>
                         </div>
 
@@ -97,4 +96,12 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function clearData() {
+            $("#Name").val("");
+            $("#EmailAddress").val("");
+            $("#PhoneNumber").val("");
+            $("#Password").val("");
+        }
+    </script>
 }

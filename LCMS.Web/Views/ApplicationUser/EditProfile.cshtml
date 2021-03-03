@@ -1,0 +1,67 @@
+﻿@model LCMS.Web.Models.ApplicationUserEditProfileVM
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="x_panel">
+
+
+                <div class="x_content">
+                    <br />
+                    @using (Html.BeginForm("EditUserProfile", "ApplicationUser", FormMethod.Post, new { id = "form", @class = "form-horizontal form-label-left" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+                        @Html.HiddenFor(model => model.Id)
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Name">
+                                Name
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>                        
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="PhoneNumber">
+                                Phone Number
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>                       
+
+                        <div class="item form-group">
+                            <div class="col-md-6 col-sm-6 offset-md-3">
+                                <input type="submit" value="Save" class="btn btn-success" />
+                                <button class="btn btn-danger" type="button">Cancel</button>
+                                <button class="btn btn-primary" type="reset">Reset</button>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

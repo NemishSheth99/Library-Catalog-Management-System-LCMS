@@ -28,5 +28,10 @@ namespace LCMS.ServiceProxy.ApplicationUserRole
         {
             return MakeRequest<string, AddApplicationUserRoleRequest>("AddApplicationUserRole", ServiceRequestType.Post, applicationUserRoleRequest);
         }
+
+        public string Update(AddApplicationUserRoleRequest applicationUserRoleRequest)
+        {
+            return MakeRequest<string, AddApplicationUserRoleRequest>("UpdateApplicationUserRole", ServiceRequestType.Put, applicationUserRoleRequest);
+        }
     }
 }

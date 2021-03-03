@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LCMS.Models;
+using LCMS.Models.BookCatalog;
 
 namespace LCMS.BAL.Interface
 {
     public interface IBookCatalogManager
     {
-        //List<BookCatalog> GetBookCatalogs();
+        List<BookCatalogDetail> GetBookCatalogs();
         //BookCatalog GetBookCatalogById(int id);
         //int Create(BookCatalog bookCatalog);
         //int Update(BookCatalog bookCatalog);

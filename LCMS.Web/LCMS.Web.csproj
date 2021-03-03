@@ -133,10 +133,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\ApplicationUserController.cs" />
+    <Compile Include="Controllers\BookCatalogController.cs" />
+    <Compile Include="Controllers\BookPlaceController.cs" />
+    <Compile Include="Controllers\TransactionHistoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ApplicationUserChangePasswordVM.cs" />
     <Compile Include="Models\ApplicationUserCreateVM.cs" />
+    <Compile Include="Models\ApplicationUserEditProfileVM.cs" />
     <Compile Include="Models\ApplicationUserEditVM.cs" />
     <Compile Include="Models\LoginVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -4911,16 +4916,19 @@
     <Content Include="Views\ApplicationUser\Create.cshtml" />
     <Content Include="Views\Shared\_PageLayout.cshtml" />
     <Content Include="Views\Shared\LoginLayout.cshtml" />
-    <Content Include="Views\Pages\ChangePassword.cshtml" />
-    <Content Include="Views\Pages\AddUser.cshtml" />
-    <Content Include="Views\Pages\BookCatalogAdd.cshtml" />
-    <Content Include="Views\Pages\TractionHistory.cshtml" />
-    <Content Include="Views\Pages\UpdateUser.cshtml" />
     <Content Include="Views\ApplicationUser\LibrarianDashboard.cshtml" />
     <Content Include="Views\ApplicationUser\Edit.cshtml" />
+    <Content Include="Views\ApplicationUser\UserDashboard.cshtml" />
+    <Content Include="Views\TransactionHistory\TransactionHistoryIndex.cshtml" />
+    <Content Include="Views\TransactionHistory\UserTransactionHistoryIndex.cshtml" />
+    <Content Include="Views\BookCatalog\BookCatalogIndex.cshtml" />
+    <Content Include="Views\BookPlace\BookPlaceIndex.cshtml" />
+    <Content Include="Views\ApplicationUser\EditProfile.cshtml" />
+    <Content Include="Views\ApplicationUser\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ApplicationUserRole\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -4936,6 +4944,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LCMS.Core\LCMS.Core.csproj">
+      <Project>{1ef102c9-6a21-43b3-a219-4c23bd00be5d}</Project>
+      <Name>LCMS.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LCMS.Models\LCMS.Models.csproj">
       <Project>{05c4e885-9eb9-4520-bc4a-73b51c3670b8}</Project>
       <Name>LCMS.Models</Name>

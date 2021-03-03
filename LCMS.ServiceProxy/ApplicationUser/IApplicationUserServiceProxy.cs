@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LCMS.Core;
 using LCMS.Models.ApplicationUser;
 
 namespace LCMS.ServiceProxy.ApplicationUser
@@ -12,8 +13,11 @@ namespace LCMS.ServiceProxy.ApplicationUser
         ApplicationUserDetail Login(ApplicationUserLogin applicationUserLogin);
         List<ApplicationUserDetail> GetApplicationUsers();
         ApplicationUserDetail GetApplicationUserById(int id);
-        int Create(AddApplicationUserRequest applicationUserRequest);
-        string Update(UpdateApplicationUserRequest applicationUserRequest);
+        Result Create(AddApplicationUserRequest applicationUserRequest);
+        Result Update(UpdateApplicationUserRequest applicationUserRequest);
+        string EditProfile(EditProfileApplicationUser editProfileApplicationUser);
         string Delete(int id);
+        string UpdateActiveStatus(int id);
+        string ChangePassword(ChangePasswordApplicationUser changePasswordApplicationUser);
     }
 }
