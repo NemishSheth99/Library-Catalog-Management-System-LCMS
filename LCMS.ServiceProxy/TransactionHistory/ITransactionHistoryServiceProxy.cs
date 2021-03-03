@@ -11,5 +11,6 @@ namespace LCMS.ServiceProxy.TransactionHistory
     {
         List<TransactionHistoryDetail> GetTransactionHistories();
         List<TransactionHistoryDetail> GetUserTransactionHistories(int id);
+        string Create(AddTransactionHistory addTransactionHistory);
     }
 }

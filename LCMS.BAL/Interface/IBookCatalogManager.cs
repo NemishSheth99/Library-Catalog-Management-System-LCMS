@@ -10,7 +10,7 @@ namespace LCMS.BAL.Interface
     public interface IBookCatalogManager
     {
         List<BookCatalogDetail> GetBookCatalogs();
-        //BookCatalog GetBookCatalogById(int id);
+        BookCatalogDetail GetBookCatalogById(int id);
         //int Create(BookCatalog bookCatalog);
         //int Update(BookCatalog bookCatalog);
         //string Delete(int id);

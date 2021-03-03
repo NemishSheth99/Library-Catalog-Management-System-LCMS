@@ -103,9 +103,13 @@ namespace LCMS.BAL.Class
         //    return _transactionHistoryRepository.GetTransactionHistoriesByBook(bookPlaceId);
         //}
 
-        //public string Create(TransactionHistory transactionHistory)
-        //{
-        //    return _transactionHistoryRepository.Create(transactionHistory);
-        //}        
+        public string Create(AddTransactionHistory addTransactionHistory)
+        {
+            TransactionHistory transactionHistory = new TransactionHistory();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<AddTransactionHistory, TransactionHistory>());
+            var mapper = new Mapper(config);
+            transactionHistory = mapper.Map<TransactionHistory>(addTransactionHistory);
+            return _transactionHistoryRepository.Create(transactionHistory);
+        }
     }
 }

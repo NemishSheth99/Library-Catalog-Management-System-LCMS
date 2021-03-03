@@ -45,15 +45,67 @@ namespace LCMS.BAL.Class
             return bookPlaceDetailList;
         }
 
+        public List<BookPlaceDetail> GetAvailableBooksByCatalog(int catalogId)
+        {
+            List<BookPlace> bookPlaceList = _bookPlaceRepository.GetAvailableBooksByCatalog(catalogId);
+            List<BookPlaceDetail> bookPlaceDetailList = new List<BookPlaceDetail>();
+            if (bookPlaceList != null)
+            {
+                foreach (var items in bookPlaceList)
+                {
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<BookPlace, BookPlaceDetail>().ForMember(x => x.BookCatalog, y => y.Ignore()));
+                    var mapper = new Mapper(config);
+                    BookPlaceDetail bookPlaceDetail = mapper.Map<BookPlaceDetail>(items);
+                    if (items.BookCatalog != null)
+                    {
+                        var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
+                        var mp = new Mapper(cnfg);
+                        bookPlaceDetail.BookCatalog = mp.Map<BookCatalogDetail>(items.BookCatalog);
+                    }
+                    bookPlaceDetailList.Add(bookPlaceDetail);
+                }
+                return bookPlaceDetailList;
+            }
+            return bookPlaceDetailList;
+        }
+
+        public List<BookPlaceDetail> GetUserCheckOutBooks(int userId)
+        {
+            List<BookPlace> bookPlaceList = _bookPlaceRepository.GetUserCheckOutBooks(userId);
+            List<BookPlaceDetail> bookPlaceDetailList = new List<BookPlaceDetail>();
+            if (bookPlaceList != null)
+            {
+                foreach (var items in bookPlaceList)
+                {
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<BookPlace, BookPlaceDetail>().ForMember(x => x.BookCatalog, y => y.Ignore()));
+                    var mapper = new Mapper(config);
+                    BookPlaceDetail bookPlaceDetail = mapper.Map<BookPlaceDetail>(items);
+                    if (items.BookCatalog != null)
+                    {
+                        var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
+                        var mp = new Mapper(cnfg);
+                        bookPlaceDetail.BookCatalog = mp.Map<BookCatalogDetail>(items.BookCatalog);
+                    }
+                    bookPlaceDetailList.Add(bookPlaceDetail);
+                }
+                return bookPlaceDetailList;
+            }
+            return bookPlaceDetailList;
+        }
+
         //public BookPlace GetBookPlaceById(int id)
         //{
         //    return _bookPlaceRepository.GetBookPlaceById(id);
         //}
 
-        //public int Create(BookPlace bookPlace)
-        //{
-        //    return _bookPlaceRepository.Create(bookPlace);
-        //}
+        public int Create(AddBookPlace addBookPlace)
+        {
+            BookPlace bookPlace = new BookPlace();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<AddBookPlace, BookPlace>());
+            var mapper = new Mapper(config);
+            bookPlace = mapper.Map<BookPlace>(addBookPlace);
+            return _bookPlaceRepository.Create(bookPlace);
+        }
 
         //public int Update(BookPlace bookPlace)
         //{
@@ -65,14 +117,16 @@ namespace LCMS.BAL.Class
         //    return _bookPlaceRepository.Delete(id);
         //}
 
-        //public string CheckInBook(int id, int userId)
-        //{
-        //    return _bookPlaceRepository.CheckInBook(id, userId);
-        //}
+        public string CheckInBook(int id)
+        {
+            return _bookPlaceRepository.CheckInBook(id);
+        }
 
-        //public string CheckOutBook(int id)
-        //{
-        //    return _bookPlaceRepository.CheckOutBook(id);
-        //}
+        public string CheckOutBook(int id, int userId)
+        {
+            return _bookPlaceRepository.CheckOutBook(id,userId);
+        }
+
+        
     }
 }

@@ -62,10 +62,19 @@ namespace LCMS.BAL.Class
             return bookCatalogDetailList;
         }
 
-        //public BookCatalog GetBookCatalogById(int id)
-        //{
-        //    return _bookCatalogRepository.GetBookCatalogById(id);
-        //}
+        public BookCatalogDetail GetBookCatalogById(int id)
+        {
+            BookCatalogDetail bookCatalogDetail = new BookCatalogDetail();
+            BookCatalog bookCatalog= _bookCatalogRepository.GetBookCatalogById(id);
+            if(bookCatalog!=null)
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
+                var mapper = new Mapper(config);
+                bookCatalogDetail = mapper.Map<BookCatalogDetail>(bookCatalog);
+                return bookCatalogDetail;
+            }
+            return bookCatalogDetail;
+        }
 
         //public int Create(BookCatalog bookCatalog)
         //{

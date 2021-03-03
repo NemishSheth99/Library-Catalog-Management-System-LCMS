@@ -143,6 +143,7 @@
     <Compile Include="Models\ApplicationUserCreateVM.cs" />
     <Compile Include="Models\ApplicationUserEditProfileVM.cs" />
     <Compile Include="Models\ApplicationUserEditVM.cs" />
+    <Compile Include="Models\BookPlaceCreateVM.cs" />
     <Compile Include="Models\LoginVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -4925,6 +4926,11 @@
     <Content Include="Views\BookPlace\BookPlaceIndex.cshtml" />
     <Content Include="Views\ApplicationUser\EditProfile.cshtml" />
     <Content Include="Views\ApplicationUser\ChangePassword.cshtml" />
+    <Content Include="Views\BookCatalog\ShowCatalog.cshtml" />
+    <Content Include="Views\BookCatalog\ShowCatalogDetail.cshtml" />
+    <Content Include="Views\BookPlace\ShowBookPlace.cshtml" />
+    <Content Include="Views\BookPlace\MyCheckOuts.cshtml" />
+    <Content Include="Views\BookPlace\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -19,30 +19,22 @@ namespace LCMS.DAL.Repository.Class
 
         public List<BookCatalog> GetBookCatalogs()
         {
-            var list = _dbContext.BookCatalogs.Where(x => x.IsDeleted == false).ToList();            
+            var list = _dbContext.BookCatalogs.Where(x => x.IsDeleted == false).ToList();
             return list;
         }
 
-        //public BookCatalog GetBookCatalogById(int id)
-        //{
-        //    try
-        //    {
-        //        BookCatalog bookCatalog = new BookCatalog();
-        //        var obj = _dbContext.BookCatalogs.Find(id);
-        //        if (obj != null)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<Database.BookCatalog, BookCatalog>());
-        //            var mapper = new Mapper(config);
-        //            bookCatalog = mapper.Map<BookCatalog>(obj);
-        //            return bookCatalog;
-        //        }
-        //        return bookCatalog;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return null;
-        //    }
-        //}
+        public BookCatalog GetBookCatalogById(int id)
+        {
+            BookCatalog bookCatalog = _dbContext.BookCatalogs.Where(x=>x.Id==id).FirstOrDefault();
+            if (bookCatalog != null)
+            {
+                //var config = new MapperConfiguration(cfg => cfg.CreateMap<Database.BookCatalog, BookCatalog>());
+                //var mapper = new Mapper(config);
+                //bookCatalog = mapper.Map<BookCatalog>(obj);
+                return bookCatalog;
+            }
+            return bookCatalog;
+        }
 
         //public int Create(BookCatalog bookCatalog)
         //{

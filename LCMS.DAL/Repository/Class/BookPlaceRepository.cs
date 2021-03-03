@@ -19,7 +19,19 @@ namespace LCMS.DAL.Repository.Class
 
         public List<BookPlace> GetBookPlacesByCatalog(int catalogId)
         {
-            List<BookPlace> list = _dbContext.BookPlaces.Where(x => x.BookCatalogId == catalogId && x.IsDeleted == false).ToList();            
+            List<BookPlace> list = _dbContext.BookPlaces.Where(x => x.BookCatalogId == catalogId && x.IsDeleted == false).ToList();
+            return list;
+        }
+
+        public List<BookPlace> GetAvailableBooksByCatalog(int catalogId)
+        {
+            List<BookPlace> list = _dbContext.BookPlaces.Where(x => x.BookCatalogId == catalogId && x.IsDeleted == false && x.BorrowedBy == null).ToList();
+            return list;
+        }
+
+        public List<BookPlace> GetUserCheckOutBooks(int userId)
+        {
+            List<BookPlace> list = _dbContext.BookPlaces.Where(x => x.BorrowedBy == userId && x.IsDeleted == false).ToList();
             return list;
         }
 
@@ -44,27 +56,17 @@ namespace LCMS.DAL.Repository.Class
         //    }
         //}
 
-        //public int Create(BookPlace bookPlace)
-        //{
-        //    try
-        //    {
-        //        if (bookPlace != null)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<BookPlace, Database.BookPlace>());
-        //            var mapper = new Mapper(config);
-        //            Database.BookPlace obj = mapper.Map<Database.BookPlace>(bookPlace);
-        //            _dbContext.BookPlaces.Add(obj);
-        //            _dbContext.SaveChanges();
-        //            int bookId = obj.Id;
-        //            return bookId;
-        //        }
-        //        return 0;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return 0;
-        //    }
-        //}
+        public int Create(BookPlace bookPlace)
+        {
+            if (bookPlace != null)
+            {                
+                _dbContext.BookPlaces.Add(bookPlace);
+                _dbContext.SaveChanges();
+                int bookId = bookPlace.Id;
+                return bookId;
+            }
+            return 0;
+        }
 
         //public int Update(BookPlace bookPlace)
         //{
@@ -107,44 +109,46 @@ namespace LCMS.DAL.Repository.Class
         //    }
         //}
 
-        //public string CheckInBook(int id, int userId)
-        //{
-        //    try
-        //    {
-        //        var obj = _dbContext.BookPlaces.Find(id);
-        //        if (obj != null)
-        //        {
-        //            obj.BorrowedBy = userId;
-        //            obj.BorrowedOn = DateTime.Now;
-        //            _dbContext.SaveChanges();
-        //            return "Success";
-        //        }
-        //        return "Fail";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //    }
-        //}        
+        public string CheckInBook(int id)
+        {
+            try
+            {
+                var obj = _dbContext.BookPlaces.Find(id);
+                if (obj != null)
+                {
+                    obj.BorrowedBy = null;
+                    obj.BorrowedOn = null;
+                    _dbContext.SaveChanges();
+                    return "Success";
+                }
+                return "Fail";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
 
-        //public string CheckOutBook(int id)
-        //{
-        //    try
-        //    {
-        //        var obj = _dbContext.BookPlaces.Find(id);
-        //        if (obj != null)
-        //        {
-        //            obj.BorrowedBy = null;
-        //            obj.BorrowedOn = null;
-        //            _dbContext.SaveChanges();
-        //            return "Success";
-        //        }
-        //        return "Fail";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //    }
-        //}
+        public string CheckOutBook(int id, int userId)
+        {
+            try
+            {
+                var obj = _dbContext.BookPlaces.Find(id);
+                if (obj != null)
+                {
+                    obj.BorrowedBy = userId;
+                    obj.BorrowedOn = DateTime.Now;
+                    _dbContext.SaveChanges();
+                    return "Success";
+                }
+                return "Fail";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+
     }
 }

@@ -16,12 +16,31 @@ namespace LCMS.Web.Controllers
         {
             _bookCatalogServiceProxy = bookCatalogServiceProxy;
         }
-            
+
+        #region Librarian
         // GET: BookCatalog
         public ActionResult BookCatalogIndex()
         {
             List<BookCatalogDetail> bookCatalogDetailList = _bookCatalogServiceProxy.GetBookCatalogs();
             return View(bookCatalogDetailList);
         }
+
+        #endregion
+
+        #region Other users
+
+        public ActionResult ShowCatalog()
+        {
+            List<BookCatalogDetail> bookCatalogDetailList = _bookCatalogServiceProxy.GetBookCatalogs();
+            return View(bookCatalogDetailList);
+        }
+
+        public ActionResult ShowCatalogDetail(int id)
+        {
+            BookCatalogDetail bookCatalogDetail = _bookCatalogServiceProxy.GetBookCatalog(id);
+            return View(bookCatalogDetail);
+        }
+
+        #endregion
     }
 }
