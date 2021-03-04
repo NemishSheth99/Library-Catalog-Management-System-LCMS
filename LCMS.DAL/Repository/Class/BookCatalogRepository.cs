@@ -25,38 +25,24 @@ namespace LCMS.DAL.Repository.Class
 
         public BookCatalog GetBookCatalogById(int id)
         {
-            BookCatalog bookCatalog = _dbContext.BookCatalogs.Where(x=>x.Id==id).FirstOrDefault();
+            BookCatalog bookCatalog = _dbContext.BookCatalogs.Where(x => x.Id == id).FirstOrDefault();
             if (bookCatalog != null)
             {
-                //var config = new MapperConfiguration(cfg => cfg.CreateMap<Database.BookCatalog, BookCatalog>());
-                //var mapper = new Mapper(config);
-                //bookCatalog = mapper.Map<BookCatalog>(obj);
                 return bookCatalog;
             }
             return bookCatalog;
         }
 
-        //public int Create(BookCatalog bookCatalog)
-        //{
-        //    try
-        //    {
-        //        if (bookCatalog != null)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, Database.BookCatalog>());
-        //            var mapper = new Mapper(config);
-        //            Database.BookCatalog obj = mapper.Map<Database.BookCatalog>(bookCatalog);
-        //            _dbContext.BookCatalogs.Add(obj);
-        //            _dbContext.SaveChanges();
-        //            int catalogId = obj.Id;
-        //            return catalogId;
-        //        }
-        //        return 0;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return 0;
-        //    }
-        //}
+        public int Create(BookCatalog bookCatalog)
+        {
+            if (bookCatalog != null)
+            {
+                _dbContext.BookCatalogs.Add(bookCatalog);
+                if (_dbContext.SaveChanges() > 0)
+                    return bookCatalog.Id;
+            }
+            return 0;
+        }
 
         //public int Update(BookCatalog bookCatalog)
         //{
@@ -80,23 +66,16 @@ namespace LCMS.DAL.Repository.Class
         //    }
         //}
 
-        //public string Delete(int id)
-        //{
-        //    try
-        //    {
-        //        var obj = _dbContext.BookCatalogs.Find(id);
-        //        if (obj != null)
-        //        {
-        //            obj.IsDeleted = true;
-        //            _dbContext.SaveChanges();
-        //            return "Success";
-        //        }
-        //        return "Fail";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //    }
-        //}
+        public string Delete(int id)
+        {
+            var obj = _dbContext.BookCatalogs.Find(id);
+            if (obj != null)
+            {
+                obj.IsDeleted = true;
+                _dbContext.SaveChanges();
+                return "Success";
+            }
+            return "Fail";
+        }
     }
 }

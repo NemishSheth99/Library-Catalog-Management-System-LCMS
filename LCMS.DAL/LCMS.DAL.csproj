@@ -78,8 +78,8 @@
       <DependentUpon>LibraryCatalogModel.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\LibraryCatalogModel.cs">
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>LibraryCatalogModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\LibraryCatalogModel.Designer.cs">

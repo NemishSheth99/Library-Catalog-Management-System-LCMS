@@ -45,6 +45,48 @@ namespace LCMS.BAL.Class
             return bookPlaceDetailList;
         }
 
+        public BookPlaceDetail GetBookPlaceById(int id)
+        {
+            BookPlace bookPlace= _bookPlaceRepository.GetBookPlaceById(id);
+            BookPlaceDetail bookPlaceDetail = new BookPlaceDetail();
+            if(bookPlace!=null)
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<BookPlace, BookPlaceDetail>().ForMember(x => x.BookCatalog, y => y.Ignore()));
+                var mapper = new Mapper(config);
+                bookPlaceDetail = mapper.Map<BookPlaceDetail>(bookPlace);
+                if (bookPlace.BookCatalog != null)
+                {
+                    var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
+                    var mp = new Mapper(cnfg);
+                    bookPlaceDetail.BookCatalog = mp.Map<BookCatalogDetail>(bookPlace.BookCatalog);
+                }
+            }
+            return bookPlaceDetail;
+        }
+
+        public int Create(AddBookPlace addBookPlace)
+        {
+            BookPlace bookPlace = new BookPlace();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<AddBookPlace, BookPlace>());
+            var mapper = new Mapper(config);
+            bookPlace = mapper.Map<BookPlace>(addBookPlace);
+            return _bookPlaceRepository.Create(bookPlace);
+        }
+
+        public int Update(AddBookPlace addBookPlace)
+        {
+            BookPlace bookPlace = new BookPlace();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<AddBookPlace, BookPlace>());
+            var mapper = new Mapper(config);
+            bookPlace = mapper.Map<BookPlace>(addBookPlace);
+            return _bookPlaceRepository.Update(bookPlace);
+        }
+
+        public string Delete(int id)
+        {
+            return _bookPlaceRepository.Delete(id);
+        }
+
         public List<BookPlaceDetail> GetAvailableBooksByCatalog(int catalogId)
         {
             List<BookPlace> bookPlaceList = _bookPlaceRepository.GetAvailableBooksByCatalog(catalogId);
@@ -91,31 +133,7 @@ namespace LCMS.BAL.Class
                 return bookPlaceDetailList;
             }
             return bookPlaceDetailList;
-        }
-
-        //public BookPlace GetBookPlaceById(int id)
-        //{
-        //    return _bookPlaceRepository.GetBookPlaceById(id);
-        //}
-
-        public int Create(AddBookPlace addBookPlace)
-        {
-            BookPlace bookPlace = new BookPlace();
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<AddBookPlace, BookPlace>());
-            var mapper = new Mapper(config);
-            bookPlace = mapper.Map<BookPlace>(addBookPlace);
-            return _bookPlaceRepository.Create(bookPlace);
-        }
-
-        //public int Update(BookPlace bookPlace)
-        //{
-        //    return _bookPlaceRepository.Update(bookPlace);
-        //}
-
-        //public string Delete(int id)
-        //{
-        //    return _bookPlaceRepository.Delete(id);
-        //}
+        }        
 
         public string CheckInBook(int id)
         {

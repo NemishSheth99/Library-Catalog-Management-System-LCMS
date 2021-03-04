@@ -25,26 +25,16 @@ namespace LCMS.DAL.Repository.Class
             return authorList;
         }
 
-        //public string Create(Author author)
-        //{
-        //    try
-        //    {
-        //        if (author != null)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<Author, Database.Author>());
-        //            var mapper = new Mapper(config);
-        //            Database.Author obj = mapper.Map<Database.Author>(author);
-        //            _dbContext.Authors.Add(obj);
-        //            _dbContext.SaveChanges();
-        //            return "Success";
-        //        }
-        //        return "Fail";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //    }
-        //}
+        public string Create(Author author)
+        {
+            if (author != null)
+            {
+                _dbContext.Authors.Add(author);
+                if (_dbContext.SaveChanges() > 0)
+                    return "Success";
+            }
+            return "Fail";
+        }
 
         //public string Update(Author author)
         //{
@@ -67,23 +57,19 @@ namespace LCMS.DAL.Repository.Class
         //    }
         //}
 
-        //public string Delete(int bookCatalogId)
-        //{
-        //    try
-        //    {
-        //        var obj = _dbContext.Authors.Where(x=>x.BookCatalogId==bookCatalogId).FirstOrDefault();
-        //        if (obj != null)
-        //        {
-        //            _dbContext.Authors.Remove(obj);
-        //            _dbContext.SaveChanges();
-        //            return "Success";
-        //        }
-        //        return "Fail";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //    }
-        //}        
+        public string Delete(int bookCatalogId)
+        {
+            List<Author> authorList = _dbContext.Authors.Where(x => x.BookCatalogId == bookCatalogId).ToList();
+            if (authorList != null)
+            {
+                foreach (var items in authorList)
+                {
+                    _dbContext.Authors.Remove(items);
+                    _dbContext.SaveChanges();
+                }
+                return "Success";
+            }
+            return "Fail";
+        }
     }
 }

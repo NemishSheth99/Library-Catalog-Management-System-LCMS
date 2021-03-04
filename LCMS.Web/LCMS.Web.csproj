@@ -143,6 +143,7 @@
     <Compile Include="Models\ApplicationUserCreateVM.cs" />
     <Compile Include="Models\ApplicationUserEditProfileVM.cs" />
     <Compile Include="Models\ApplicationUserEditVM.cs" />
+    <Compile Include="Models\BookCatalogCreateVM.cs" />
     <Compile Include="Models\BookPlaceCreateVM.cs" />
     <Compile Include="Models\LoginVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -4931,10 +4932,11 @@
     <Content Include="Views\BookPlace\ShowBookPlace.cshtml" />
     <Content Include="Views\BookPlace\MyCheckOuts.cshtml" />
     <Content Include="Views\BookPlace\Create.cshtml" />
+    <Content Include="Views\BookCatalog\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ApplicationUserRole\" />
+    <Folder Include="BookCoverImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

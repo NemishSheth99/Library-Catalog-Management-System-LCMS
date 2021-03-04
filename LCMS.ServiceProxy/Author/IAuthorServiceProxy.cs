@@ -5,12 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using LCMS.Models.Author;
 
-namespace LCMS.BAL.Interface
+namespace LCMS.ServiceProxy.Author
 {
-    public interface IAuthorManager
+    public interface IAuthorServiceProxy
     {
-        string Create(AuthorDetail author);
-        //string Update(Author author);
+        string Create(AuthorDetail authorDetail);
         string Delete(int bookCatalogId);
     }
 }

@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using LCMS.BAL.Interface;
 using LCMS.DAL.Repository.Interface;
-using LCMS.Models;
+using LCMS.DAL.Database;
+using LCMS.Models.Author;
+using AutoMapper;
 
 namespace LCMS.BAL.Class
 {
@@ -18,19 +20,23 @@ namespace LCMS.BAL.Class
             _authorRepository = authorRepository;
         }
 
-        //public string Create(Author author)
-        //{
-        //    return _authorRepository.Create(author);
-        //}
+        public string Create(AuthorDetail authorDetail)
+        {
+            Author author = new Author();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<AuthorDetail, Author>());
+            var mapper = new Mapper(config);
+            author = mapper.Map<Author>(authorDetail);
+            return _authorRepository.Create(author);
+        }
 
         //public string Update(Author author)
         //{
         //    return _authorRepository.Update(author);
         //}
 
-        //public string Delete(int bookCatalogId)
-        //{
-        //    return _authorRepository.Delete(bookCatalogId);
-        //}
+        public string Delete(int bookCatalogId)
+        {
+            return _authorRepository.Delete(bookCatalogId);
+        }
     }
 }

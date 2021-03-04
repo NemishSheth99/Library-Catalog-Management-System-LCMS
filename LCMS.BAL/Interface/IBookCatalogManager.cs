@@ -11,8 +11,8 @@ namespace LCMS.BAL.Interface
     {
         List<BookCatalogDetail> GetBookCatalogs();
         BookCatalogDetail GetBookCatalogById(int id);
-        //int Create(BookCatalog bookCatalog);
+        int Create(AddBookCatalog addBookCatalog);
         //int Update(BookCatalog bookCatalog);
-        //string Delete(int id);
+        string Delete(int id);
     }
 }

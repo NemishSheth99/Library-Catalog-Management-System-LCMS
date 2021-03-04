@@ -4,36 +4,32 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using LCMS.BAL.Interface;
+using LCMS.Models.Author;
 
 namespace LCMS.WebAPI.Controllers
 {
     public class AuthorAPIController : ApiController
     {
-        // GET: api/AuthorAPI
-        public IEnumerable<string> Get()
+        private readonly IAuthorManager _authorManager;
+
+        public AuthorAPIController(IAuthorManager authorManager)
         {
-            return new string[] { "value1", "value2" };
+            _authorManager = authorManager;
         }
 
-        // GET: api/AuthorAPI/5
-        public string Get(int id)
+        [Route("api/AuthorAPI/AddAuthor")]
+        [HttpPost]
+        public IHttpActionResult AddAuthor(AuthorDetail authorDetail)
         {
-            return "value";
+            return Ok( _authorManager.Create(authorDetail));
         }
 
-        // POST: api/AuthorAPI
-        public void Post([FromBody]string value)
+        [Route("api/AuthorAPI/DeleteAuthor/{id}")]
+        [HttpDelete]
+        public IHttpActionResult DeleteAuthor(int id)
         {
-        }
-
-        // PUT: api/AuthorAPI/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/AuthorAPI/5
-        public void Delete(int id)
-        {
+            return Ok(_authorManager.Delete(id));
         }
     }
 }

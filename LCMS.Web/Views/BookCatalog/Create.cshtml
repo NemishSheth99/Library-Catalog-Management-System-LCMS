@@ -1,0 +1,154 @@
+﻿@model LCMS.Web.Models.BookCatalogCreateVM
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="x_panel">
+
+
+                <div class="x_content">
+                    <br />
+
+                    @using (Html.BeginForm("CreateOrEditBookCatalog", "BookCatalog", FormMethod.Post, new { id = "form", enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Id)
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Name">
+                                Name
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Summary">
+                                Summary
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextAreaFor(model => model.Summary, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Summary, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="ISBN">
+                                ISBN
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.ISBN, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ISBN, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="PublicationYear">
+                                Publication Year
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.PublicationYear, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.PublicationYear, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Edition">
+                                Edition
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.Edition, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Edition, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Name">
+                                Author/Authors
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6">
+                                @Html.DropDownList("Author", new MultiSelectList(Enumerable.Empty<SelectListItem>()), new {@id="Author", @class = "form-control js-example-basic-multiple", multiple = "mutliple" })
+                                @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Name">
+                                Cover image
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.CoverImage, new { @type = "file" })
+                                @Html.ValidationMessageFor(model => model.CoverImage, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(model => model.coverImagePath, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <div class="col-md-6 col-sm-6 offset-md-3">
+                                <input type="submit" value="Save" class="btn btn-success" />
+                                <button class="btn btn-primary" type="reset" onclick="clearData()">Clear</button>
+                                <a href="/BookCatalo/BookCatalogIndex" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-multiple').select2({
+                multiple: true,
+                tags: true,
+                tokenSeparators: [',', ' ']
+            });
+        });
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+            var id = $("#Id").val();
+            if (id == 0)
+                $("#PublicationYear").val("");
+        });
+
+        function clearData() {
+            $("#Name").val('');
+            $("#Summary").val('');
+            $("#ISBN").val('');
+            $("#PublicationYear").val('');
+            $("#Edition").val('');
+            $("#Author").val('');
+        }
+    </script>
+}

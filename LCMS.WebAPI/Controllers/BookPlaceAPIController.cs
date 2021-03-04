@@ -27,11 +27,11 @@ namespace LCMS.WebAPI.Controllers
             return Ok(_bookPlaceManager.GetBookPlacesByCatalog(bookCatalogId));
         }
 
-        [Route("api/BookPlaceAPI/GetAvailableBooks")]
+        [Route("api/BookPlaceAPI/GetBookPlace")]
         [HttpGet]
-        public IHttpActionResult GetAvailableBooks(int bookCatalogId)
+        public IHttpActionResult GetBookPlace(int id)
         {
-            return Ok(_bookPlaceManager.GetAvailableBooksByCatalog(bookCatalogId));
+            return Ok(_bookPlaceManager.GetBookPlaceById(id));
         }
 
         [Route("api/BookPlaceAPI/AddBookPlace")]
@@ -40,6 +40,30 @@ namespace LCMS.WebAPI.Controllers
         {
             int x = _bookPlaceManager.Create(bookPlace);
             return Ok(x);
+        }
+
+        [Route("api/BookPlaceAPI/UpdateBookPlace")]
+        [HttpPut]
+        public IHttpActionResult UpdateBookPlace(AddBookPlace bookPlace)
+        {
+            int x = _bookPlaceManager.Update(bookPlace);
+            return Ok(x);
+        }
+
+        [Route("api/BookPlaceAPI/DeleteBookPlace/{id}")]
+        [HttpDelete]
+        public IHttpActionResult DeleteBookPlace(int id)
+        {
+            return Ok(_bookPlaceManager.Delete(id));
+        }
+
+        #region OtherUser
+
+        [Route("api/BookPlaceAPI/GetAvailableBooks")]
+        [HttpGet]
+        public IHttpActionResult GetAvailableBooks(int bookCatalogId)
+        {
+            return Ok(_bookPlaceManager.GetAvailableBooksByCatalog(bookCatalogId));
         }
 
         [Route("api/BookPlaceAPI/GetUserCheckoutBooks")]
@@ -63,18 +87,6 @@ namespace LCMS.WebAPI.Controllers
             return Ok(_bookPlaceManager.CheckInBook(id));
         }
 
-        // POST: api/BookPlaceAPI
-        //public IHttpActionResult Post(BookPlace bookPlace)
-        //{
-        //    int bookId = _bookPlaceManager.Create(bookPlace);
-        //    TransactionHistory obj = new TransactionHistory();
-        //    obj.BookId = bookId;
-        //    obj.TransactionType = "ADD";
-        //    obj.ApplicationUserId = 1;
-        //    obj.TrasactionDate = DateTime.Now;
-        //    return Ok(_transactionHistoryManager.Create(obj));
-        //}
-
-
+        #endregion
     }
 }

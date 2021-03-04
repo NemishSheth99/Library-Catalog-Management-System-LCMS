@@ -10,8 +10,8 @@ namespace LCMS.DAL.Repository.Interface
     public interface IAuthorRepository
     {
         List<Author> GetAuthorByBookcatalog(int bookCatalogId);
-        //string Create(Author author);
+        string Create(Author author);
         //string Update(Author author);
-        //string Delete(int bookCatalogId);
+        string Delete(int bookCatalogId);
     }
 }

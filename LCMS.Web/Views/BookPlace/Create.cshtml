@@ -20,13 +20,13 @@
 
                 <div class="x_content">
                     <br />
-                    @using (Html.BeginForm("CreateBookPlace", "BookPlace", FormMethod.Post, new { id = "form", @class = "form-horizontal form-label-left" }))
+                    @using (Html.BeginForm("CreateOrEditBookPlace", "BookPlace", FormMethod.Post, new { id = "form", @class = "form-horizontal form-label-left" }))
                     {
                         @Html.AntiForgeryToken()
 
                         @Html.HiddenFor(model => model.Id)
                         <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Name">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="PlaceCode">
                                 Place Code
                                 <span class="required">*</span>
                             </label>
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="item form-group">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="EmailAddress">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="MaterialType">
                                 Material Type
                                 <span class="required">*</span>
                             </label>
@@ -64,8 +64,8 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         function clearData() {
-            $("#PlaceCode").val("");
-            $("#MaterialType").val("");
+            $("#PlaceCode").val('');
+            $("#MaterialType").val('');
         }
     </script>
 }

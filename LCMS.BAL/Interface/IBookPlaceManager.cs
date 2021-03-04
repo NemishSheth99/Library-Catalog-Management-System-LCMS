@@ -10,12 +10,14 @@ namespace LCMS.BAL.Interface
     public interface IBookPlaceManager
     {
         List<BookPlaceDetail> GetBookPlacesByCatalog(int catalogId);
-        List<BookPlaceDetail> GetAvailableBooksByCatalog(int catalogId);
-        List<BookPlaceDetail> GetUserCheckOutBooks(int userId);
-        //BookPlace GetBookPlaceById(int id);
+        BookPlaceDetail GetBookPlaceById(int id);
         int Create(AddBookPlace bookPlace);
-        //int Update(BookPlace bookPlace);
-        //string Delete(int id);
+        int Update(AddBookPlace bookPlace);
+        string Delete(int id);
+
+
+        List<BookPlaceDetail> GetAvailableBooksByCatalog(int catalogId);
+        List<BookPlaceDetail> GetUserCheckOutBooks(int userId);       
         string CheckInBook(int id);
         string CheckOutBook(int id, int userId);
     }

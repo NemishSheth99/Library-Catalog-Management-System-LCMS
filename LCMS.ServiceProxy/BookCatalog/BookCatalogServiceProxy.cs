@@ -29,5 +29,15 @@ namespace LCMS.ServiceProxy.BookCatalog
             };
             return GetRequest<BookCatalogDetail>("GetBookCatalog", queryParam);
         }
+
+        public int Create(AddBookCatalog addBookCatalog)
+        {
+            return MakeRequest<int, AddBookCatalog>("AddBookCatalog", ServiceRequestType.Post, addBookCatalog);
+        }
+
+        public string Delete(int id)
+        {
+            return MakeRequest<string, int>("DeleteBookCatalog/" + id, ServiceRequestType.Delete, 0);
+        }
     }
 }
