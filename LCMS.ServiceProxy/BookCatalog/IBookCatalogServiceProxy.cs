@@ -10,5 +10,10 @@ namespace LCMS.ServiceProxy.BookCatalog
     public interface IBookCatalogServiceProxy
     {
         List<BookCatalogDetail> GetBookCatalogs();
+        BookCatalogDetail GetBookCatalog(int id);
+
+        int Create(AddBookCatalog addBookCatalog);
+        int Update(AddBookCatalog addBookCatalog);
+        string Delete(int id);
     }
 }

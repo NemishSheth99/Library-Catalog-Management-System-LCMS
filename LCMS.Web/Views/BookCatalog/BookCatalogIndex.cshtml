@@ -5,41 +5,26 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
-<h2>BookCatalogIndex</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table" id="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Summary)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ISBN)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PublicationYear)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Edition)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CoverImage)
-        </th>        
-        <th>
-            @Html.DisplayNameFor(model => model.Authors)
-        </th>
-        <th></th>
-        <th></th>
+        <th width="5%">Image</th>     
+        <th>Name</th>
+        <th>Summary</th>
+        <th>ISBN Number</th>
+        <th>Publication Year</th>
+        <th>Edition</th>           
+        <th>Authors</th>
+        <th width="10%">Show Books</th>
+        <th width="10%">Actions</th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                <img src="~/BookCoverImages/@Html.DisplayFor(modelItem => item.CoverImage)" height="80" width="80" alt="@Html.DisplayFor(modelItem => item.CoverImage)" />
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -56,18 +41,14 @@
                 @Html.DisplayFor(modelItem => item.Edition)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CoverImage)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Authors)
             </td>
             <td>
-                <a href="/BookPlace/BookPlaceIndex/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-primary">Show Books</a>
+                <a href="/BookPlace/BookPlaceIndex/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-info">Show Books</a>
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                <a href="/BookCatalog/Edit/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+                <a href="/BookCatalog/Delete/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-danger"><i class="fa fa-trash"></i> </a>
             </td>
         </tr>
     }

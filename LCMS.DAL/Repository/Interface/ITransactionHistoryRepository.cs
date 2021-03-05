@@ -13,6 +13,6 @@ namespace LCMS.DAL.Repository.Interface
         List<TransactionHistory> GetTransactionHistoriesByUserId(int userId);
         //List<TransactionHistory> GetTransactionHistoriesByDate(DateTime dt);
         //List<TransactionHistory> GetTransactionHistoriesByBook(int bookPlaceId);
-        //string Create(TransactionHistory transactionHistory);
+        string Create(TransactionHistory transactionHistory);
     }
 }

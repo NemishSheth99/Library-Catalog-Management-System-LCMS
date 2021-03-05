@@ -33,5 +33,12 @@ namespace LCMS.WebAPI.Controllers
         {
             return Ok(_transactionHistoryManager.GetTransactionHistoriesByUserId(id));
         }
+
+        [Route("api/TransactionHistoryAPI/AddTransactionhistory")]
+        [HttpPost]
+        public IHttpActionResult AddTransactionhistory(AddTransactionHistory addTransactionHistory)
+        {
+            return Ok(_transactionHistoryManager.Create(addTransactionHistory));
+        }
     }
 }

@@ -19,92 +19,63 @@ namespace LCMS.DAL.Repository.Class
 
         public List<BookCatalog> GetBookCatalogs()
         {
-            var list = _dbContext.BookCatalogs.Where(x => x.IsDeleted == false).ToList();            
+            var list = _dbContext.BookCatalogs.Where(x => x.IsDeleted == false).ToList();
             return list;
         }
 
-        //public BookCatalog GetBookCatalogById(int id)
-        //{
-        //    try
-        //    {
-        //        BookCatalog bookCatalog = new BookCatalog();
-        //        var obj = _dbContext.BookCatalogs.Find(id);
-        //        if (obj != null)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<Database.BookCatalog, BookCatalog>());
-        //            var mapper = new Mapper(config);
-        //            bookCatalog = mapper.Map<BookCatalog>(obj);
-        //            return bookCatalog;
-        //        }
-        //        return bookCatalog;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return null;
-        //    }
-        //}
+        public BookCatalog GetBookCatalogById(int id)
+        {
+            BookCatalog bookCatalog = _dbContext.BookCatalogs.Where(x => x.Id == id).FirstOrDefault();
+            if (bookCatalog != null)
+            {
+                return bookCatalog;
+            }
+            return bookCatalog;
+        }
 
-        //public int Create(BookCatalog bookCatalog)
-        //{
-        //    try
-        //    {
-        //        if (bookCatalog != null)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, Database.BookCatalog>());
-        //            var mapper = new Mapper(config);
-        //            Database.BookCatalog obj = mapper.Map<Database.BookCatalog>(bookCatalog);
-        //            _dbContext.BookCatalogs.Add(obj);
-        //            _dbContext.SaveChanges();
-        //            int catalogId = obj.Id;
-        //            return catalogId;
-        //        }
-        //        return 0;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return 0;
-        //    }
-        //}
+        public int Create(BookCatalog bookCatalog)
+        {
+            if (bookCatalog != null)
+            {
+                _dbContext.BookCatalogs.Add(bookCatalog);
+                if (_dbContext.SaveChanges() > 0)
+                    return bookCatalog.Id;
+            }
+            return 0;
+        }
 
-        //public int Update(BookCatalog bookCatalog)
-        //{
-        //    try
-        //    {
-        //        var obj = _dbContext.BookCatalogs.Find(bookCatalog.Id);
-        //        if (obj != null)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, Database.BookCatalog>());
-        //            var mapper = new Mapper(config);
-        //            mapper.Map(bookCatalog, obj);
-        //            _dbContext.SaveChanges();
-        //            int catalogId = obj.Id;
-        //            return catalogId;
-        //        }
-        //        return 0;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return 0;
-        //    }
-        //}
+        public int Update(BookCatalog bookCatalog)
+        {
+            BookCatalog catalog = _dbContext.BookCatalogs.Find(bookCatalog.Id);
+            if (catalog != null)
+            {
+                catalog.Name = bookCatalog.Name;
+                catalog.Summary = bookCatalog.Summary;
+                catalog.ISBN = bookCatalog.ISBN;
+                catalog.PublicationYear = bookCatalog.PublicationYear;
+                catalog.CoverImage = bookCatalog.CoverImage;
+                catalog.ImageContentType = bookCatalog.ImageContentType;                
+                catalog.Edition = bookCatalog.Edition;
+                catalog.UpdatedDate = bookCatalog.UpdatedDate;
+                if (_dbContext.SaveChanges() > 0)
+                {
+                    int catalogId = catalog.Id;
+                    return catalogId;
+                }
+            }
+            return 0;
+        }
 
-        //public string Delete(int id)
-        //{
-        //    try
-        //    {
-        //        var obj = _dbContext.BookCatalogs.Find(id);
-        //        if (obj != null)
-        //        {
-        //            obj.IsDeleted = true;
-        //            _dbContext.SaveChanges();
-        //            return "Success";
-        //        }
-        //        return "Fail";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //    }
-        //}
+        public string Delete(int id)
+        {
+            var obj = _dbContext.BookCatalogs.Find(id);
+            if (obj != null)
+            {
+                obj.IsDeleted = true;
+                _dbContext.SaveChanges();
+                return "Success";
+            }
+            return "Fail";
+        }
     }
 }

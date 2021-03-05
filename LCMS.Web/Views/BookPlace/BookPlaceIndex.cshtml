@@ -5,14 +5,11 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
-<h2>BookPlaceIndex</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<a href="/BookPlace/Create" class="btn-sm btn-primary"><i class="fa fa-plus"></i> Add</a>
+<hr />
 <table class="table">
     <tr>
-        
+
         <th>
             @Html.DisplayNameFor(model => model.PlaceCode)
         </th>
@@ -31,38 +28,49 @@
         <th>
             @Html.DisplayNameFor(model => model.UpdatedDate)
         </th>
-        
-        <th></th>
+        <th>Checkout</th>
+        <th width="10%">Actions</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.PlaceCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaterialType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BorrowedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BorrowedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdatedDate)
-        </td>
-        
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.PlaceCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaterialType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedDate)
+            </td>
+            @if (item.BorrowedBy.Equals(0))
+            {
+                <td style="pointer-events: none;cursor: default; " >
+                    <a href="" class="btn-sm btn-default">Check In</a>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <a href="/BookPlace/CheckInBook/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-info" dis>Check In</a>
+                </td>
+            }
+            <td>
+                <a href="/BookPlace/Edit/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+                <a href="/BookPlace/Delete/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-danger"><i class="fa fa-trash"></i> </a>
+            </td>
+        </tr>
+    }
 
 </table>

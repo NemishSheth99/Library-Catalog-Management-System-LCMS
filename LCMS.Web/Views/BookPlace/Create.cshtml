@@ -1,0 +1,74 @@
+﻿@model LCMS.Web.Models.BookPlaceCreateVM
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="x_panel">
+
+                <h2>Book Details</h2>
+                <div class="x_content">
+                    <br />
+                    @using (Html.BeginForm("CreateOrEditBookPlace", "BookPlace", FormMethod.Post, new { id = "form", @class = "form-horizontal form-label-left" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.HiddenFor(model => model.Id)
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="PlaceCode">
+                                Place Code
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.PlaceCode, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.PlaceCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="MaterialType">
+                                Material Type
+                                <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6">
+                                @Html.TextBoxFor(model => model.MaterialType, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.MaterialType, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <div class="col-md-6 col-sm-6 offset-md-3">
+                                <input type="submit" value="Save" class="btn btn-success" />
+                                @if (Model.Id == 0)
+                                {
+                                    <button class="btn btn-primary" type="reset" onclick="clearData()">Clear</button>
+                                }
+                                <a href="/BookPlace/BookPlaceIndex/@Session["bcid"]" class="btn btn-danger">Cancel</a>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function clearData() {
+            $("#PlaceCode").val('');
+            $("#MaterialType").val('');
+        }
+    </script>
+}

@@ -62,24 +62,43 @@ namespace LCMS.BAL.Class
             return bookCatalogDetailList;
         }
 
-        //public BookCatalog GetBookCatalogById(int id)
-        //{
-        //    return _bookCatalogRepository.GetBookCatalogById(id);
-        //}
+        public BookCatalogDetail GetBookCatalogById(int id)
+        {
+            BookCatalogDetail bookCatalogDetail = new BookCatalogDetail();
+            BookCatalog bookCatalog= _bookCatalogRepository.GetBookCatalogById(id);
+            if(bookCatalog!=null)
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
+                var mapper = new Mapper(config);
+                bookCatalogDetail = mapper.Map<BookCatalogDetail>(bookCatalog);
+                return bookCatalogDetail;
+            }
+            return bookCatalogDetail;
+        }
 
-        //public int Create(BookCatalog bookCatalog)
-        //{
-        //    return _bookCatalogRepository.Create(bookCatalog);
-        //}        
+        public int Create(AddBookCatalog addBookCatalog)
+        {
+            BookCatalog bookCatalog = new BookCatalog();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<AddBookCatalog, BookCatalog>().ForMember(x => x.ISBN, y => y.Ignore()));
+            var mapper = new Mapper(config);
+            bookCatalog = mapper.Map<BookCatalog>(addBookCatalog);
+            bookCatalog.ISBN = Convert.ToDecimal(addBookCatalog.ISBN);
+            return _bookCatalogRepository.Create(bookCatalog);
+        }
 
-        //public int Update(BookCatalog bookCatalog)
-        //{
-        //    return _bookCatalogRepository.Update(bookCatalog);
-        //}
+        public int Update(AddBookCatalog addBookCatalog)
+        {
+            BookCatalog bookCatalog = new BookCatalog();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<AddBookCatalog, BookCatalog>().ForMember(x => x.ISBN, y => y.Ignore()));
+            var mapper = new Mapper(config);
+            bookCatalog = mapper.Map<BookCatalog>(addBookCatalog);
+            bookCatalog.ISBN = Convert.ToDecimal(addBookCatalog.ISBN);
+            return _bookCatalogRepository.Update(bookCatalog);
+        }
 
-        //public string Delete(int id)
-        //{
-        //    return _bookCatalogRepository.Delete(id);
-        //}
+        public string Delete(int id)
+        {
+            return _bookCatalogRepository.Delete(id);
+        }
     }
 }

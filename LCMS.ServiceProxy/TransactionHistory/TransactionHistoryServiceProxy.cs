@@ -29,5 +29,10 @@ namespace LCMS.ServiceProxy.TransactionHistory
             };
             return GetRequest<List<TransactionHistoryDetail>>("GetUserTransactionHistories", queryParam);
         }
+
+        public string Create(AddTransactionHistory addTransactionHistory)
+        {
+            return MakeRequest<string, AddTransactionHistory>("AddTransactionhistory", ServiceRequestType.Post, addTransactionHistory);
+        }
     }
 }

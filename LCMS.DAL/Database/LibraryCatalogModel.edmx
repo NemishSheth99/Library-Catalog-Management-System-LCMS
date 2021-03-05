@@ -379,7 +379,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="LCMSDBEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="LCMSDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ApplicationUsers" EntityType="Self.ApplicationUser" />
           <EntitySet Name="ApplicationUserRoles" EntityType="Self.ApplicationUserRole" />
           <EntitySet Name="Authors" EntityType="Self.Author" />
@@ -421,7 +421,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="LCMSDBModelStoreContainer" CdmEntityContainer="LCMSDBEntities1">
+        <EntityContainerMapping StorageEntityContainer="LCMSDBModelStoreContainer" CdmEntityContainer="LCMSDBEntities">
           <EntitySetMapping Name="ApplicationUsers">
             <EntityTypeMapping TypeName="LCMSDBModel.ApplicationUser">
               <MappingFragment StoreEntitySet="ApplicationUser">

@@ -4,36 +4,46 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using LCMS.BAL.Interface;
+using LCMS.Models.Author;
 
 namespace LCMS.WebAPI.Controllers
 {
     public class AuthorAPIController : ApiController
     {
-        // GET: api/AuthorAPI
-        public IEnumerable<string> Get()
+        private readonly IAuthorManager _authorManager;
+
+        public AuthorAPIController(IAuthorManager authorManager)
         {
-            return new string[] { "value1", "value2" };
+            _authorManager = authorManager;
         }
 
-        // GET: api/AuthorAPI/5
-        public string Get(int id)
+        [Route("api/AuthorAPI/GetAuthorByBookCatalog")]
+        [HttpGet]
+        public IHttpActionResult GetAuthorByBookCatalog(int bookCatalogId)
         {
-            return "value";
+            return Ok(_authorManager.GetAuthorByBookcatalog(bookCatalogId));
         }
 
-        // POST: api/AuthorAPI
-        public void Post([FromBody]string value)
+        [Route("api/AuthorAPI/AddAuthor")]
+        [HttpPost]
+        public IHttpActionResult AddAuthor(AuthorDetail authorDetail)
         {
+            return Ok( _authorManager.Create(authorDetail));
         }
 
-        // PUT: api/AuthorAPI/5
-        public void Put(int id, [FromBody]string value)
+        [Route("api/AuthorAPI/DeleteAuthor")]
+        [HttpPost]
+        public IHttpActionResult DeleteAuthor(AuthorDetail authorDetail)
         {
+            return Ok(_authorManager.DeleteBookAuthors(authorDetail));
         }
 
-        // DELETE: api/AuthorAPI/5
-        public void Delete(int id)
+        [Route("api/AuthorAPI/DeleteBookAuthor/{id}")]
+        [HttpDelete]
+        public IHttpActionResult DeleteBookAuthor(int id)
         {
+            return Ok(_authorManager.Delete(id));
         }
     }
 }

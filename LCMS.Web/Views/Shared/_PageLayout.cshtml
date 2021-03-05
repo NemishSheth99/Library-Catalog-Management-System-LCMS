@@ -25,12 +25,14 @@
     <link href="~/Assets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
     <!-- bootstrap-daterangepicker -->
     <link href="~/Assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="~/Assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet" />
     <!-- Datatables -->
-    <link href="~/Assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    @*<link href="~/Assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="~/Assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
     <link href="~/Assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
     <link href="~/Assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-    <link href="~/Assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">*@
     <!-- Custom Theme Style -->
     <link href="~/Assets/build/css/custom.min.css" rel="stylesheet">
 </head>
@@ -82,7 +84,10 @@
                                             <a href="/ApplicationUser/UserDashboard"><i class="fa fa-dashboard"></i> Dashboard </a>
                                         </li>
                                         <li>
-                                            <a href="/BookCatalog/ShowCatalog"><i class="fa fa-dashboard"></i> Book Catalog </a>
+                                            <a href="/BookCatalog/ShowCatalog"><i class="fa fa-book"></i> Book Catalog </a>
+                                        </li>
+                                        <li>
+                                            <a href="/BookPlace/MyCheckOuts"><i class="fa fa-external-link-square"></i> My CheckOuts </a>
                                         </li>
                                         <li>
                                             <a href="/TransactionHistory/UserTransactionHistoryIndex"><i class="fa fa-history"></i> Transaction history </a>
@@ -181,8 +186,10 @@
     <!-- bootstrap-daterangepicker -->
     <script src="~/Assets/vendors/moment/min/moment.min.js"></script>
     <script src="~/Assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- Select2 -->
+    <script src="~/Assets/vendors/select2/dist/js/select2.min.js"></script>
     <!-- Datatables -->
-    <script src="~/Assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    @*<script src="~/Assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="~/Assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="~/Assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
     <script src="~/Assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
@@ -196,7 +203,7 @@
     <script src="~/Assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
     <script src="~/Assets/vendors/jszip/dist/jszip.min.js"></script>
     <script src="~/Assets/vendors/pdfmake/build/pdfmake.min.js"></script>
-    <script src="~/Assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="~/Assets/vendors/pdfmake/build/vfs_fonts.js"></script>*@
 
     <!-- Custom Theme Scripts -->
     <script src="~/Assets/build/js/custom.min.js"></script>

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<LCMS.Models.BookPlace.BookPlaceDetail>
+
+@{
+    ViewBag.Title = "ShowBookPlace";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+
+<table class="table">
+    <tr>        
+        <th>
+            @Html.DisplayNameFor(model => model.PlaceCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaterialType)
+        </th>        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>        
+        <td>
+            @Html.DisplayFor(modelItem => item.PlaceCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaterialType)
+        </td>
+        <td>
+            <a href="/BookPlace/CheckOutBook/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-primary">Chech Out</a>
+        </td>
+        
+    </tr>
+}
+
+</table>

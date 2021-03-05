@@ -20,24 +20,12 @@ namespace LCMS.DAL.Repository.Class
         public List<TransactionHistory> GetTransactionHistories()
         {
             List<TransactionHistory> transactionhistoryList = _dbContext.TransactionHistories.ToList();
-            //List<TransactionHistory> lst = new List<TransactionHistory>();
-
-            //if (list != null)
-            //{
-            //    foreach (var items in list)
-            //    {
-            //        var config = new MapperConfiguration(cfg => cfg.CreateMap<Database.TransactionHistory, TransactionHistory>());
-            //        var mapper = new Mapper(config);
-            //        TransactionHistory obj = mapper.Map<TransactionHistory>(items);
-            //        lst.Add(obj);
-            //    }
-            //}
             return transactionhistoryList;
         }
 
         public List<TransactionHistory> GetTransactionHistoriesByUserId(int userId)
         {
-            List<TransactionHistory> transactionhistoryList = _dbContext.TransactionHistories.Where(x => x.ApplicationUserId == userId).ToList();           
+            List<TransactionHistory> transactionhistoryList = _dbContext.TransactionHistories.Where(x => x.ApplicationUserId == userId).ToList();
             return transactionhistoryList;
         }
 
@@ -77,25 +65,15 @@ namespace LCMS.DAL.Repository.Class
         //    return lst;
         //}
 
-        //public string Create(TransactionHistory transactionHistory)
-        //{
-        //    try
-        //    {
-        //        if (transactionHistory != null)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<TransactionHistory, Database.TransactionHistory>());
-        //            var mapper = new Mapper(config);
-        //            Database.TransactionHistory obj = mapper.Map<Database.TransactionHistory>(transactionHistory);
-        //            _dbContext.TransactionHistories.Add(obj);
-        //            _dbContext.SaveChanges();
-        //            return "Success";
-        //        }
-        //        return "Fail";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //    }
-        //}
+        public string Create(TransactionHistory transactionHistory)
+        {
+            if (transactionHistory != null)
+            {                
+                _dbContext.TransactionHistories.Add(transactionHistory);
+                _dbContext.SaveChanges();
+                return "Success";
+            }
+            return "Fail";
+        }
     }
 }
