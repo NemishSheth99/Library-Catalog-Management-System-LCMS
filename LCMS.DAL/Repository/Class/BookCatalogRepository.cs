@@ -44,27 +44,27 @@ namespace LCMS.DAL.Repository.Class
             return 0;
         }
 
-        //public int Update(BookCatalog bookCatalog)
-        //{
-        //    try
-        //    {
-        //        var obj = _dbContext.BookCatalogs.Find(bookCatalog.Id);
-        //        if (obj != null)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, Database.BookCatalog>());
-        //            var mapper = new Mapper(config);
-        //            mapper.Map(bookCatalog, obj);
-        //            _dbContext.SaveChanges();
-        //            int catalogId = obj.Id;
-        //            return catalogId;
-        //        }
-        //        return 0;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return 0;
-        //    }
-        //}
+        public int Update(BookCatalog bookCatalog)
+        {
+            BookCatalog catalog = _dbContext.BookCatalogs.Find(bookCatalog.Id);
+            if (catalog != null)
+            {
+                catalog.Name = bookCatalog.Name;
+                catalog.Summary = bookCatalog.Summary;
+                catalog.ISBN = bookCatalog.ISBN;
+                catalog.PublicationYear = bookCatalog.PublicationYear;
+                catalog.CoverImage = bookCatalog.CoverImage;
+                catalog.ImageContentType = bookCatalog.ImageContentType;                
+                catalog.Edition = bookCatalog.Edition;
+                catalog.UpdatedDate = bookCatalog.UpdatedDate;
+                if (_dbContext.SaveChanges() > 0)
+                {
+                    int catalogId = catalog.Id;
+                    return catalogId;
+                }
+            }
+            return 0;
+        }
 
         public string Delete(int id)
         {

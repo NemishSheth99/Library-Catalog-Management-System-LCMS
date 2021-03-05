@@ -35,6 +35,11 @@ namespace LCMS.ServiceProxy.BookCatalog
             return MakeRequest<int, AddBookCatalog>("AddBookCatalog", ServiceRequestType.Post, addBookCatalog);
         }
 
+        public int Update(AddBookCatalog addBookCatalog)
+        {
+            return MakeRequest<int, AddBookCatalog>("UpdateBookCatalog", ServiceRequestType.Put, addBookCatalog);
+        }
+
         public string Delete(int id)
         {
             return MakeRequest<string, int>("DeleteBookCatalog/" + id, ServiceRequestType.Delete, 0);

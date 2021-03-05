@@ -17,7 +17,7 @@
         <div class="col-md-12 col-sm-12 ">
             <div class="x_panel">
 
-
+                <h2>Application User Detail</h2>
                 <div class="x_content">
                     <br />
                     @using (Html.BeginForm("EditUser", "ApplicationUser", FormMethod.Post, new { id = "form", @class = "form-horizontal form-label-left" }))
@@ -71,7 +71,6 @@
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 offset-md-3">
                                 <input type="submit" value="Save" class="btn btn-success" />
-                                <button class="btn btn-primary" type="reset" onclick="clearData()">Clear</button>
                                 <a href="/ApplicationUser/UserIndex" class="btn btn-danger">Cancel</a>
                             </div>
                         </div>
@@ -84,11 +83,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        function clearData() {
-            $("#Name").val("");
-            $("#EmailAddress").val("");
-            $("#PhoneNumber").val("");
-        }
-    </script>
+   
 }

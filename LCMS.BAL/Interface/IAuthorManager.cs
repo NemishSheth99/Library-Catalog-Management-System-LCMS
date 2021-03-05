@@ -9,8 +9,9 @@ namespace LCMS.BAL.Interface
 {
     public interface IAuthorManager
     {
+        List<AuthorDetail> GetAuthorByBookcatalog(int bookCatalogId);
         string Create(AuthorDetail author);
-        //string Update(Author author);
+        string DeleteBookAuthors(AuthorDetail author);
         string Delete(int bookCatalogId);
     }
 }

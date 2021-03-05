@@ -36,26 +36,20 @@ namespace LCMS.DAL.Repository.Class
             return "Fail";
         }
 
-        //public string Update(Author author)
-        //{
-        //    try
-        //    {
-        //        var aut = _dbContext.Authors.Where(x=>x.BookCatalogId==author.BookCatalogId);
-        //        if (aut != null)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<Author, Database.Author>());
-        //            var mapper = new Mapper(config);
-        //            mapper.Map(author, aut);
-        //            _dbContext.SaveChanges();
-        //            return "Success";
-        //        }
-        //        return "Fail";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return ex.Message;
-        //    }
-        //}
+        public string DeleteBookAuthors(Author author)
+        {
+            List<Author> authorList = _dbContext.Authors.Where(x => x.BookCatalogId == author.BookCatalogId && x.Name.Equals(author.Name)).ToList();
+            if (authorList != null)
+            {
+                foreach (var items in authorList)
+                {
+                    _dbContext.Authors.Remove(items);
+                    _dbContext.SaveChanges();
+                }
+                return "Success";
+            }
+            return "Fail";
+        }
 
         public string Delete(int bookCatalogId)
         {

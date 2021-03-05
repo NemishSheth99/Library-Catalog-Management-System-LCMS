@@ -12,7 +12,7 @@ namespace LCMS.DAL.Repository.Interface
         List<BookCatalog> GetBookCatalogs();
         BookCatalog GetBookCatalogById(int id);
         int Create(BookCatalog bookCatalog);
-        //int Update(BookCatalog bookCatalog);
+        int Update(BookCatalog bookCatalog);
         string Delete(int id);
     }
 }

@@ -40,6 +40,14 @@ namespace LCMS.WebAPI.Controllers
             return Ok(x);
         }
 
+        [Route("api/BookCatalogAPI/UpdateBookCatalog")]
+        [HttpPut]
+        public IHttpActionResult UpdateBookCatalog(AddBookCatalog addBookCatalog)
+        {
+            int x = _bookCatalogManager.Update(addBookCatalog);
+            return Ok(x);
+        }
+
         [Route("api/BookCatalogAPI/DeleteBookCatalog/{id}")]
         [HttpDelete]
         public IHttpActionResult DeleteBookCatalog(int id)

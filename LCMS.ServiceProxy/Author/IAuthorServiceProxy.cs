@@ -9,7 +9,9 @@ namespace LCMS.ServiceProxy.Author
 {
     public interface IAuthorServiceProxy
     {
+        List<AuthorDetail> GetAuthorsByCatalog(int catalogId);
         string Create(AuthorDetail authorDetail);
+        string DeleteAuthor(AuthorDetail authorDetail);
         string Delete(int bookCatalogId);
     }
 }

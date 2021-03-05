@@ -86,10 +86,15 @@ namespace LCMS.BAL.Class
             return _bookCatalogRepository.Create(bookCatalog);
         }
 
-        //public int Update(BookCatalog bookCatalog)
-        //{
-        //    return _bookCatalogRepository.Update(bookCatalog);
-        //}
+        public int Update(AddBookCatalog addBookCatalog)
+        {
+            BookCatalog bookCatalog = new BookCatalog();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<AddBookCatalog, BookCatalog>().ForMember(x => x.ISBN, y => y.Ignore()));
+            var mapper = new Mapper(config);
+            bookCatalog = mapper.Map<BookCatalog>(addBookCatalog);
+            bookCatalog.ISBN = Convert.ToDecimal(addBookCatalog.ISBN);
+            return _bookCatalogRepository.Update(bookCatalog);
+        }
 
         public string Delete(int id)
         {

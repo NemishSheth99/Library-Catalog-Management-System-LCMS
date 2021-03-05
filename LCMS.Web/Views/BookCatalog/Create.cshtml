@@ -17,7 +17,7 @@
         <div class="col-md-12 col-sm-12 ">
             <div class="x_panel">
 
-
+                <h2>Book Catalog Detail</h2>
                 <div class="x_content">
                     <br />
 
@@ -87,7 +87,7 @@
                                 <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6">
-                                @Html.DropDownList("Author", new MultiSelectList(Enumerable.Empty<SelectListItem>()), new {@id="Author", @class = "form-control js-example-basic-multiple", multiple = "mutliple" })
+                                @Html.DropDownList("Author", new MultiSelectList(ViewBag.List), new { @id = "Author", @class = "form-control js-example-basic-multiple", multiple = "mutliple" })
                                 @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -107,8 +107,11 @@
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 offset-md-3">
                                 <input type="submit" value="Save" class="btn btn-success" />
-                                <button class="btn btn-primary" type="reset" onclick="clearData()">Clear</button>
-                                <a href="/BookCatalo/BookCatalogIndex" class="btn btn-danger">Cancel</a>
+                                @if (Model.Id == 0)
+                                {
+                                    <button class="btn btn-primary" type="reset" onclick="clearData()">Clear</button>
+                                }
+                                <a href="/BookCatalog/BookCatalogIndex" class="btn btn-danger">Cancel</a>
                             </div>
                         </div>
                     }

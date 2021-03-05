@@ -34,7 +34,33 @@ namespace LCMS.Web.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.List = new List<string>();
             return View(new BookCatalogCreateVM());
+        }
+
+        public ActionResult Edit(int id)
+        {
+            BookCatalogCreateVM bookCatalogCreateVM = new BookCatalogCreateVM();
+            BookCatalogDetail bookCatalogDetail = _bookCatalogServiceProxy.GetBookCatalog(id);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalogDetail, BookCatalogCreateVM>().ForMember(x => x.CoverImage, y => y.Ignore()));
+            var mapper = new Mapper(config);
+            bookCatalogCreateVM = mapper.Map<BookCatalogCreateVM>(bookCatalogDetail);
+            if(bookCatalogCreateVM!=null)
+            {
+                TempData["CoverImage"] = bookCatalogDetail.CoverImage;
+                List<AuthorDetail> authorList = _authorServiceProxy.GetAuthorsByCatalog(id);
+                List<string> author = new List<string>();
+                foreach(var items in authorList)
+                {
+                    author.Add(items.Name);
+                }
+                if (author != null)
+                {
+                    bookCatalogCreateVM.Author = author;
+                    ViewBag.List = author;
+                }
+            }
+            return View("Create",bookCatalogCreateVM);
         }
 
         public ActionResult CreateOrEditBookCatalog(BookCatalogCreateVM bookcatalogVM)
@@ -54,10 +80,10 @@ namespace LCMS.Web.Controllers
                         bookCatalog.CoverImage = coverImage;
                         bookCatalog.ImageContentType = bookcatalogVM.CoverImage.ContentType;
                     }
-                    //else
-                    //{
-                    //    product.SmallImage = TempData["SmallImage"].ToString();
-                    //}
+                    else
+                    {
+                        bookCatalog.CoverImage = TempData["CoverImage"].ToString();
+                    }
 
                     int id = 0;
                     if (bookcatalogVM.Id == 0)
@@ -81,14 +107,65 @@ namespace LCMS.Web.Controllers
                                 return RedirectToAction("BookCatalogIndex");
                         }
                     }
-                    //else
-                    //{
-                    //    bookCatalog.CreatedDate = null;
-                    //    bookCatalog.UpdatedDate = DateTime.Now;
-                    //    id = _bookCatalogServiceProxy.Update(bookPlace);
-                    //    transactionStatus = "UPDATE";
-                    //}
-                    
+                    else
+                    {
+                        bookCatalog.CreatedDate = null;
+                        bookCatalog.UpdatedDate = DateTime.Now;
+                        id = _bookCatalogServiceProxy.Update(bookCatalog);
+                        if(id>0)
+                        {
+                            List<AuthorDetail> authorList = _authorServiceProxy.GetAuthorsByCatalog(id);
+                            List<string> oldAuthors = new List<string>();
+                            foreach (var items in authorList)
+                            {
+                                oldAuthors.Add(items.Name);
+                            }
+
+                            List<string> newAuthors = new List<string>();
+                            for(int i=0;i<bookcatalogVM.Author.Count;i++)
+                            {
+                                newAuthors.Add(bookcatalogVM.Author[i]);
+                            }
+
+                            IEnumerable<string> addAuthors = newAuthors.Except(oldAuthors);
+                            int cnt = 0,c= 0;
+                            foreach(var item in addAuthors)
+                            {
+                                c++;
+                                AuthorDetail authorDetail = new AuthorDetail();
+                                authorDetail.BookCatalogId = id;
+                                authorDetail.Name = item;
+                                string result = _authorServiceProxy.Create(authorDetail);
+                                if (result == "Success")
+                                    cnt++;
+                            }
+                            if (c == cnt)
+                            {
+                                IEnumerable<string> removeAuthors = oldAuthors.Except(newAuthors);
+                                int count = 0, ct = 0;
+                                foreach (var item in removeAuthors)
+                                {
+                                    ct++;
+                                    AuthorDetail authorDetail = new AuthorDetail();
+                                    authorDetail.BookCatalogId = id;
+                                    authorDetail.Name = item;
+                                    string result = _authorServiceProxy.DeleteAuthor(authorDetail);
+                                    if (result == "Success")
+                                        count++;
+                                }
+                                if(ct==count)
+                                {
+                                    return RedirectToAction("BookCatalogIndex");
+                                }
+                                else
+                                {
+                                    string r = _bookCatalogServiceProxy.Delete(id);
+                                    return RedirectToAction("ErrorPage");
+                                }
+                            }
+                        }
+                    }
+
                 }
                 return RedirectToAction("ErrorPage");
             }

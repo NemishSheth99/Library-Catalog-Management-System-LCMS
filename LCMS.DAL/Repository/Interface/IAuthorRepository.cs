@@ -11,7 +11,8 @@ namespace LCMS.DAL.Repository.Interface
     {
         List<Author> GetAuthorByBookcatalog(int bookCatalogId);
         string Create(Author author);
-        //string Update(Author author);
+        string DeleteBookAuthors(Author author);
+
         string Delete(int bookCatalogId);
     }
 }

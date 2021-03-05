@@ -5,31 +5,15 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
-<h2>TransactionHistoryIndex</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.BookPlace.BookCatalog.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookPlace.PlaceCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookPlace.MaterialType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TransactionType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TrasactionDate)
-        </th>
+        <th>Name</th>
+        <th>Place Code</th>
+        <th>Material Type</th>
+        <th>Transaction Type</th>
+        <th>Application User</th>
+        <th>Transaction Date</th>
     </tr>
 
 @foreach (var item in Model) {

@@ -18,6 +18,13 @@ namespace LCMS.WebAPI.Controllers
             _authorManager = authorManager;
         }
 
+        [Route("api/AuthorAPI/GetAuthorByBookCatalog")]
+        [HttpGet]
+        public IHttpActionResult GetAuthorByBookCatalog(int bookCatalogId)
+        {
+            return Ok(_authorManager.GetAuthorByBookcatalog(bookCatalogId));
+        }
+
         [Route("api/AuthorAPI/AddAuthor")]
         [HttpPost]
         public IHttpActionResult AddAuthor(AuthorDetail authorDetail)
@@ -25,9 +32,16 @@ namespace LCMS.WebAPI.Controllers
             return Ok( _authorManager.Create(authorDetail));
         }
 
-        [Route("api/AuthorAPI/DeleteAuthor/{id}")]
+        [Route("api/AuthorAPI/DeleteAuthor")]
+        [HttpPost]
+        public IHttpActionResult DeleteAuthor(AuthorDetail authorDetail)
+        {
+            return Ok(_authorManager.DeleteBookAuthors(authorDetail));
+        }
+
+        [Route("api/AuthorAPI/DeleteBookAuthor/{id}")]
         [HttpDelete]
-        public IHttpActionResult DeleteAuthor(int id)
+        public IHttpActionResult DeleteBookAuthor(int id)
         {
             return Ok(_authorManager.Delete(id));
         }
