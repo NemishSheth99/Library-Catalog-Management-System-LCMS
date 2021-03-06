@@ -3814,6 +3814,9 @@
     <Content Include="Assets\vendors\switchery\package.js" />
     <Content Include="Assets\vendors\switchery\switchery.css" />
     <Content Include="Assets\vendors\switchery\switchery.js" />
+    <Content Include="Assets\vendors\toastr\dist\css\toastr.css" />
+    <Content Include="Assets\vendors\toastr\dist\css\toastr.min.css" />
+    <Content Include="Assets\vendors\toastr\dist\js\toastr.min.js" />
     <Content Include="Assets\vendors\transitionize\dist\transitionize.js" />
     <Content Include="Assets\vendors\transitionize\dist\transitionize.min.js" />
     <Content Include="Assets\vendors\transitionize\examples\browserify.js" />

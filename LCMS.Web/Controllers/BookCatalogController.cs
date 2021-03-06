@@ -57,7 +57,7 @@ namespace LCMS.Web.Controllers
                 if (author != null)
                 {
                     bookCatalogCreateVM.Author = author;
-                    ViewBag.List = author;
+                    ViewBag.List = author;                    
                 }
             }
             return View("Create",bookCatalogCreateVM);

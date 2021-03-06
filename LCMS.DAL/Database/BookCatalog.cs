@@ -24,7 +24,7 @@ namespace LCMS.DAL.Database
         public int Id { get; set; }
         public string Name { get; set; }
         public string Summary { get; set; }
-        public Nullable<decimal> ISBN { get; set; }
+        public string ISBN { get; set; }
         public Nullable<int> PublicationYear { get; set; }
         public string Edition { get; set; }
         public string CoverImage { get; set; }

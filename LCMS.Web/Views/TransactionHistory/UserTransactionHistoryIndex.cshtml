@@ -8,17 +8,21 @@
 
 <table class="table">
     <tr>
-        <th>Name</th>
-        <th>Place Code</th>
-        <th>Material Type</th>
-        <th>Transaction Type</th>
-        <th>Transaction Date</th>
+        <th>Book name</th>
+        <th>ISBN number</th>
+        <th>Place code</th>
+        <th>Material type</th>
+        <th>Transaction type</th>
+        <th>Transaction date</th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.BookPlace.BookCatalog.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookPlace.BookCatalog.ISBN)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BookPlace.PlaceCode)

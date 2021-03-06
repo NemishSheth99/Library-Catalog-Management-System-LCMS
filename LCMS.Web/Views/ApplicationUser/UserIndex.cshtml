@@ -8,30 +8,32 @@
 <section id="progress notes">
     <div class="content-box-md">
         <div class="container">
-            @*<!-- header Row -->
-                <div class="row">
-
-                    <!-- Main heading -->
-                    <div class="col-md-12">
-
-                    </div>
-                </div>*@
+            <h2>Application Users <span>(@ViewBag.UserCount)</span></h2>
             <div class="table-box">
                 <div class=" table-responsive">
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th width="10%">Active/Block</th>
+                            <tr>                                
                                 <th>Name</th>
                                 <th>Email Address</th>
                                 <th>Phone Number</th>
+                                <th width="10%">Active/Block</th>
                                 <th width="10%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>                                    
+                                <tr>     
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EmailAddress)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                    </td>
                                     <td>
                                         @if (item.Status.Equals("A"))
                                         {
@@ -41,15 +43,6 @@
                                         {
                                             <a href="/ApplicationUser/ChangeActivity/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-success">Active</a>
                                         }
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EmailAddress)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.PhoneNumber)
                                     </td>
                                     <td>
                                         <a href="/ApplicationUser/Edit/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-primary"><i class="fa fa-pencil"></i></a>

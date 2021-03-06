@@ -187,8 +187,9 @@ namespace LCMS.Web.Controllers
 
         public ActionResult UserIndex()
         {
-            List<ApplicationUserDetail> userList = _applicationUserServiceProxy.GetApplicationUsers();
-            return View(userList);
+            ApplicationUserResponse response= _applicationUserServiceProxy.GetApplicationUsers();
+            ViewBag.UserCount = response.Count;
+            return View(response.ApplicationUserList);
         }
 
         public ActionResult Create()
@@ -253,8 +254,9 @@ namespace LCMS.Web.Controllers
             applicationUserVM = mapper.Map<ApplicationUserEditVM>(applicationUserDetail);
 
             ApplicationUserRoleDetail roleDetail = _applicationUserRoleServiceProxy.GetRoleDetail(id);
-            var roleList = new SelectList(_userRoleServiceProxy.GetUserRoleDetails(), "Id", "Role", roleDetail.UserRole.Id);
+            var roleList = new SelectList(_userRoleServiceProxy.GetUserRoleDetails(), "Id", "Role");
             ViewData["roleList"] = roleList;
+            ViewBag.RoleId = roleDetail.UserRole.Id;
             return View("Edit", applicationUserVM);
         }
 

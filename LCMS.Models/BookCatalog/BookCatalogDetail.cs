@@ -14,7 +14,7 @@ namespace LCMS.Models.BookCatalog
 
         public string Summary { get; set; }
 
-        public decimal? ISBN { get; set; }
+        public string ISBN { get; set; }
 
         public int? PublicationYear { get; set; }
 

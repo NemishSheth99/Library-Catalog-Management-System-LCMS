@@ -21,10 +21,10 @@ namespace LCMS.ServiceProxy.ApplicationUser
             return MakeRequest<ApplicationUserDetail,ApplicationUserLogin>("LoginUser", ServiceRequestType.Post, applicationUserLogin);
         }
 
-        public List<ApplicationUserDetail> GetApplicationUsers()
+        public ApplicationUserResponse GetApplicationUsers()
         {
             var queryParam = new Dictionary<string, string>();
-            return GetRequest<List<ApplicationUserDetail>>("GetApplicationUsers",queryParam);
+            return GetRequest<ApplicationUserResponse>("GetApplicationUsers",queryParam);
         }
 
         public ApplicationUserDetail GetApplicationUserById(int id)

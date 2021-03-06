@@ -11,7 +11,7 @@ namespace LCMS.ServiceProxy.ApplicationUser
     public interface IApplicationUserServiceProxy
     {
         ApplicationUserDetail Login(ApplicationUserLogin applicationUserLogin);
-        List<ApplicationUserDetail> GetApplicationUsers();
+        ApplicationUserResponse GetApplicationUsers();
         ApplicationUserDetail GetApplicationUserById(int id);
         Result Create(AddApplicationUserRequest applicationUserRequest);
         Result Update(UpdateApplicationUserRequest applicationUserRequest);
