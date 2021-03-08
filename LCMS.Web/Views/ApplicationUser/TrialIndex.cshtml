@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "TrialIndex";
+    Layout = "~/Views/Shared/_PageLayout.cshtml";
+}
+
+<body>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone number</th>
+                <th>Email address</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: users">
+            <tr>
+                <td><span data-bind="text: Name"></span></td>
+                <td><span data-bind="text: PhoneNumber"></span></td>
+                <td><span data-bind="text: EmailAddress"></span></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+@section Scripts {
+<script src="~/Assets/vendors/knockout/knockout-3.5.1.js"></script>
+<script>
+        var userListService = "";
+        window.userListService = "@Url.Action("GetUserList", "ApplicationUser")";
+
+        $(document).ready(function () {
+            ko.applyBindings(userListVM);
+            loadUsers();
+        });
+
+        var userListVM = {
+            users: ko.observableArray([]),
+            //totalCount: ko.observable(0),
+            //currentPageIndex: ko.observable(1),
+            getUsers: function () {
+                var vm = userListVM;
+
+                //var pageNo = vm.currentPageIndex();
+                //show loader;
+                $.ajax({
+                    method: "GET",
+                    url: userListService,
+                    //data: { PageNo: pageNo }
+                }).done(function (response) {
+                    if (response != null) {
+                        vm.users(response.ApplicationUserList);
+                        console.log(response);
+                        //vm.totalCount(data.TotalCount);
+                        //if (vm.currentPageIndex() === 1) {
+                        //    initPaging();
+                        //}
+                    }
+                })
+                    .fail(function () {
+                        alert("error");
+                    })
+                    .always(function () {
+                        //hide loader;
+                    });
+            }
+        };
+
+        function loadUsers() {
+            userListVM.getUsers();
+        }
+
+</script>
+}

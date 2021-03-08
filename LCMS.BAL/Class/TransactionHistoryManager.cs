@@ -23,9 +23,45 @@ namespace LCMS.BAL.Class
             _transactionHistoryRepository = transactionHistoryRepository;
         }
 
-        public List<TransactionHistoryDetail> GetTransactionHistories()
+        //public List<TransactionHistoryDetail> GetTransactionHistories()
+        //{
+        //    List<TransactionHistory> lst = _transactionHistoryRepository.GetTransactionHistories();
+        //    List<TransactionHistoryDetail> transactionHistoryDetailList = new List<TransactionHistoryDetail>();
+        //    if (lst != null)
+        //    {
+        //        foreach (var items in lst)
+        //        {
+        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<TransactionHistory, TransactionHistoryDetail>().ForMember(x => x.ApplicationUser, y => y.Ignore()).ForMember(x => x.BookPlace, y => y.Ignore()));
+        //            var mapper = new Mapper(config);
+        //            TransactionHistoryDetail obj = mapper.Map<TransactionHistoryDetail>(items);
+        //            if(items.ApplicationUser!=null)
+        //            {
+        //                var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, ApplicationUserDetail>());
+        //                var mp = new Mapper(cnfg);
+        //                obj.ApplicationUser = mp.Map<ApplicationUserDetail>(items.ApplicationUser);
+        //            }
+        //            if (items.BookPlace != null)
+        //            {
+        //                var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<BookPlace, BookPlaceDetail>().ForMember(x => x.BookCatalog, y => y.Ignore()));
+        //                var mp = new Mapper(cnfg);
+        //                obj.BookPlace = mp.Map<BookPlaceDetail>(items.BookPlace);
+        //                if(obj.BookPlace!=null)
+        //                {
+        //                    var c = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
+        //                    var m = new Mapper(c);
+        //                    obj.BookPlace.BookCatalog = m.Map<BookCatalogDetail>(items.BookPlace.BookCatalog);
+        //                }
+        //            }
+        //            transactionHistoryDetailList.Add(obj);
+        //        }
+        //    }
+        //    return transactionHistoryDetailList;
+        //}
+
+        public TransactionHistoryResponse GetTransactionHistories(int pageNo,string search)
         {
-            List<TransactionHistory> lst = _transactionHistoryRepository.GetTransactionHistories();
+            TransactionHistoryResponse thResponse = new TransactionHistoryResponse();
+            List<TransactionHistory> lst = _transactionHistoryRepository.GetTransactionHistories(pageNo,search);
             List<TransactionHistoryDetail> transactionHistoryDetailList = new List<TransactionHistoryDetail>();
             if (lst != null)
             {
@@ -34,7 +70,7 @@ namespace LCMS.BAL.Class
                     var config = new MapperConfiguration(cfg => cfg.CreateMap<TransactionHistory, TransactionHistoryDetail>().ForMember(x => x.ApplicationUser, y => y.Ignore()).ForMember(x => x.BookPlace, y => y.Ignore()));
                     var mapper = new Mapper(config);
                     TransactionHistoryDetail obj = mapper.Map<TransactionHistoryDetail>(items);
-                    if(items.ApplicationUser!=null)
+                    if (items.ApplicationUser != null)
                     {
                         var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, ApplicationUserDetail>());
                         var mp = new Mapper(cnfg);
@@ -45,7 +81,7 @@ namespace LCMS.BAL.Class
                         var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<BookPlace, BookPlaceDetail>().ForMember(x => x.BookCatalog, y => y.Ignore()));
                         var mp = new Mapper(cnfg);
                         obj.BookPlace = mp.Map<BookPlaceDetail>(items.BookPlace);
-                        if(obj.BookPlace!=null)
+                        if (obj.BookPlace != null)
                         {
                             var c = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
                             var m = new Mapper(c);
@@ -54,13 +90,15 @@ namespace LCMS.BAL.Class
                     }
                     transactionHistoryDetailList.Add(obj);
                 }
+                thResponse.TransactionHistoryList = transactionHistoryDetailList;
+                thResponse.Count = _transactionHistoryRepository.GetTotalCount();
             }
-            return transactionHistoryDetailList;
+            return thResponse;
         }
 
-        public List<TransactionHistoryDetail> GetTransactionHistoriesByUserId(int userId)
+        public List<TransactionHistoryDetail> GetTransactionHistoriesByUserId(int userId,int pageNo)
         {
-            List<TransactionHistory> lst = _transactionHistoryRepository.GetTransactionHistoriesByUserId(userId);
+            List<TransactionHistory> lst = _transactionHistoryRepository.GetTransactionHistoriesByUserId(userId,pageNo);
             List<TransactionHistoryDetail> transactionHistoryDetailList = new List<TransactionHistoryDetail>();
             if (lst != null)
             {

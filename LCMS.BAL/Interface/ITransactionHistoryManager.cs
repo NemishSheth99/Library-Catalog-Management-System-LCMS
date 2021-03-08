@@ -9,8 +9,9 @@ namespace LCMS.BAL.Interface
 {
     public interface ITransactionHistoryManager
     {
-        List<TransactionHistoryDetail> GetTransactionHistories();
-        List<TransactionHistoryDetail> GetTransactionHistoriesByUserId(int userId);
+        //List<TransactionHistoryDetail> GetTransactionHistories();
+        TransactionHistoryResponse GetTransactionHistories(int pageNo,string search);
+        List<TransactionHistoryDetail> GetTransactionHistoriesByUserId(int userId,int pageNo);
         //List<TransactionHistory> GetTransactionHistoriesByDate(DateTime dt);
         //List<TransactionHistory> GetTransactionHistoriesByBook(int bookPlaceId);
         string Create(AddTransactionHistory addTransactionHistory);

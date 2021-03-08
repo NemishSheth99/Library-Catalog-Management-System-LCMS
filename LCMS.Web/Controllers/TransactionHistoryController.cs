@@ -17,11 +17,23 @@ namespace LCMS.Web.Controllers
             _transactionHistoryServiceProxy = transactionHistoryServiceProxy;
         }
 
-        
+
+        //public ActionResult TransactionHistoryIndex()
+        //{
+        //    List<TransactionHistoryDetail> historyList = _transactionHistoryServiceProxy.GetTransactionHistories();
+        //    return View(historyList);
+        //}
+
         public ActionResult TransactionHistoryIndex()
         {
-            List<TransactionHistoryDetail> historyList = _transactionHistoryServiceProxy.GetTransactionHistories();
-            return View(historyList);
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult GetTransactionHistoryIndex(int pageNo,string searchISBN)
+        {
+            TransactionHistoryResponse historyResponse = _transactionHistoryServiceProxy.GetTransactionHistories(pageNo,searchISBN);
+            return Json(historyResponse, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult UserTransactionHistoryIndex()

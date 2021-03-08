@@ -330,5 +330,21 @@ namespace LCMS.Web.Controllers
 
         #endregion
 
+        #region TrialPagination
+
+        public ActionResult TrialIndex()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult GetUserList()
+        {
+            ApplicationUserResponse response = _applicationUserServiceProxy.GetApplicationUsers();
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
     }
 }

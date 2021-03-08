@@ -21,17 +21,17 @@ namespace LCMS.WebAPI.Controllers
         // GET: api/TransactionHistoryAPI
         [Route("api/TransactionHistoryAPI/GetTransactionHistories")]
         [HttpGet]
-        public IHttpActionResult GetTransactionHistories()
+        public IHttpActionResult GetTransactionHistories(int pageNo,string search)
         {
-            return Ok(_transactionHistoryManager.GetTransactionHistories());
+            return Ok(_transactionHistoryManager.GetTransactionHistories(pageNo,search));
         }
 
         // GET: api/TransactionHistoryAPI
         [Route("api/TransactionHistoryAPI/GetUserTransactionHistories")]
         [HttpGet]
-        public IHttpActionResult GetUserTransactionHistories(int id)
+        public IHttpActionResult GetUserTransactionHistories(int id,int pageNo)
         {
-            return Ok(_transactionHistoryManager.GetTransactionHistoriesByUserId(id));
+            return Ok(_transactionHistoryManager.GetTransactionHistoriesByUserId(id,pageNo));
         }
 
         [Route("api/TransactionHistoryAPI/AddTransactionhistory")]

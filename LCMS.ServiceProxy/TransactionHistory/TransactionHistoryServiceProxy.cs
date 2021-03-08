@@ -15,10 +15,20 @@ namespace LCMS.ServiceProxy.TransactionHistory
             ServiceUrlPrefix = "api/TransactionHistoryAPI";
         }
 
-        public List<TransactionHistoryDetail> GetTransactionHistories()
+        //public List<TransactionHistoryDetail> GetTransactionHistories()
+        //{
+        //    var queryParam = new Dictionary<string, string>();
+        //    return GetRequest<List<TransactionHistoryDetail>>("GetTransactionHistories", queryParam);
+        //}
+
+        public TransactionHistoryResponse GetTransactionHistories(int pageNo,string search)
         {
-            var queryParam = new Dictionary<string, string>();
-            return GetRequest<List<TransactionHistoryDetail>>("GetTransactionHistories", queryParam);
+            var queryParam = new Dictionary<string, string>
+            {
+                {"pageNo", pageNo.ToString(CultureInfo.InvariantCulture)},
+                {"search", search.ToString(CultureInfo.InvariantCulture)}
+            };
+            return GetRequest<TransactionHistoryResponse>("GetTransactionHistories", queryParam);
         }
 
         public List<TransactionHistoryDetail> GetUserTransactionHistories(int id)
