@@ -87,7 +87,7 @@
                                 <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6">
-                                @Html.DropDownList("Author", new MultiSelectList(ViewBag.List), new { @id = "Author", @class = "form-control js-example-basic-multiple", multiple = "mutliple" })
+                                @Html.DropDownListFor(model => model.Author, new MultiSelectList(ViewBag.List), new { @id = "Author", @class = "form-control js-example-basic-multiple", multiple = "mutliple" })
                                 @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -122,20 +122,7 @@
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        $(document).ready(function () {
-            $('.js-example-basic-single').select2();
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('.js-example-basic-multiple').select2({
-                multiple: true,
-                tags: true,
-                tokenSeparators: [',', ' ']
-            });
-        });
-    </script>
+
 
     <script>
 
@@ -143,6 +130,12 @@
             var id = $("#Id").val();
             if (id == 0)
                 $("#PublicationYear").val("");
+
+            $('.js-example-basic-multiple').select2({
+                multiple: true,
+                tags: true,
+                tokenSeparators: [',', ' ']
+            });
         });
 
         function clearData() {

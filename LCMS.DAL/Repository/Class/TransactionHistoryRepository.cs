@@ -16,54 +16,32 @@ namespace LCMS.DAL.Repository.Class
         {
             _dbContext = new Database.LCMSDBEntities();
         }
-
-        public List<TransactionHistory> GetTransactionHistories()
-        {
-            List<TransactionHistory> transactionhistoryList = _dbContext.TransactionHistories.ToList();
-            return transactionhistoryList;
-        }
-
-        public List<TransactionHistory> GetTransactionHistoriesByUserId(int userId)
-        {
-            List<TransactionHistory> transactionhistoryList = _dbContext.TransactionHistories.Where(x => x.ApplicationUserId == userId).ToList();
-            return transactionhistoryList;
-        }
-
-        //public List<TransactionHistory> GetTransactionHistoriesByDate(DateTime dt)
+        
+        //public List<TransactionHistory> GetTransactionHistories()
         //{
-        //    var list = _dbContext.TransactionHistories.Where(x => x.TrasactionDate == dt).ToList();
-        //    List<TransactionHistory> lst = new List<TransactionHistory>();
-
-        //    if (list != null)
-        //    {
-        //        foreach (var items in list)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<Database.TransactionHistory, TransactionHistory>());
-        //            var mapper = new Mapper(config);
-        //            TransactionHistory obj = mapper.Map<TransactionHistory>(items);
-        //            lst.Add(obj);
-        //        }
-        //    }
-        //    return lst;
+        //    List<TransactionHistory> transactionhistoryList = _dbContext.TransactionHistories.ToList();
+        //    return transactionhistoryList;
         //}
 
-        //public List<TransactionHistory> GetTransactionHistoriesByBook(int bookPlaceId)
-        //{
-        //    var list = _dbContext.TransactionHistories.Where(x => x.BookId == bookPlaceId).ToList();
-        //    List<TransactionHistory> lst = new List<TransactionHistory>();
+        public List<TransactionHistory> GetTransactionHistories(int pageNo,string search)
+        {
+            int NoOfRecordsPerPage = 15;
+            int NoOfRecordsToSkip = (pageNo - 1) * NoOfRecordsPerPage;
+            List<TransactionHistory> transactionhistoryList = new List<TransactionHistory>();
+            if (search!=null)
+                transactionhistoryList = _dbContext.TransactionHistories.Where(x=>x.BookPlace.BookCatalog.ISBN.Equals(search)).OrderByDescending(x=>x.TrasactionDate).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
+            else
+                transactionhistoryList= _dbContext.TransactionHistories.OrderByDescending(x => x.TrasactionDate).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
+            return transactionhistoryList;
+        }        
 
-        //    if (list != null)
-        //    {
-        //        foreach (var items in list)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<Database.TransactionHistory, TransactionHistory>());
-        //            var mapper = new Mapper(config);
-        //            TransactionHistory obj = mapper.Map<TransactionHistory>(items);
-        //            lst.Add(obj);
-        //        }
-        //    }
-        //    return lst;
-        //}
+        public List<TransactionHistory> GetTransactionHistoriesByUserId(int userId,int pageNo)
+        {
+            int NoOfRecordsPerPage = 15;
+            int NoOfRecordsToSkip = (pageNo - 1) * NoOfRecordsPerPage;
+            List<TransactionHistory> transactionhistoryList = _dbContext.TransactionHistories.Where(x => x.ApplicationUserId == userId).OrderByDescending(x => x.TrasactionDate).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
+            return transactionhistoryList;
+        }        
 
         public string Create(TransactionHistory transactionHistory)
         {
@@ -74,6 +52,11 @@ namespace LCMS.DAL.Repository.Class
                 return "Success";
             }
             return "Fail";
+        }
+
+        public int GetTotalCount()
+        {
+            return _dbContext.TransactionHistories.Count();
         }
     }
 }

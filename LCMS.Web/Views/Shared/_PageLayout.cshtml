@@ -27,12 +27,9 @@
     <link href="~/Assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- Select2 -->
     <link href="~/Assets/vendors/select2/dist/css/select2.min.css" rel="stylesheet" />
-    <!-- Datatables -->
-    @*<link href="~/Assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="~/Assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
-    <link href="~/Assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-    <link href="~/Assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-    <link href="~/Assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">*@
+    <!-- Toastr -->
+    <link href="~/Assets/vendors/toastr/dist/css/toastr.css" rel="stylesheet" />
+    <link href="~/Assets/vendors/toastr/dist/css/toastr.min.css" rel="stylesheet" />
     <!-- Custom Theme Style -->
     <link href="~/Assets/build/css/custom.min.css" rel="stylesheet">
 </head>
@@ -188,23 +185,8 @@
     <script src="~/Assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- Select2 -->
     <script src="~/Assets/vendors/select2/dist/js/select2.min.js"></script>
-    <!-- Datatables -->
-    @*<script src="~/Assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="~/Assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script src="~/Assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="~/Assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="~/Assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="~/Assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-    <script src="~/Assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="~/Assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="~/Assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-    <script src="~/Assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <script src="~/Assets/vendors/jszip/dist/jszip.min.js"></script>
-    <script src="~/Assets/vendors/pdfmake/build/pdfmake.min.js"></script>
-    <script src="~/Assets/vendors/pdfmake/build/vfs_fonts.js"></script>*@
-
+    <!-- Toastr -->
+    <script src="~/Assets/vendors/toastr/dist/js/toastr.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="~/Assets/build/js/custom.min.js"></script>
     @RenderSection("scripts", required: false)
@@ -220,7 +202,7 @@
             $("#mobile-nav-close-btn, #mobile-nav a").click(function () {
                 $("#mobile-nav").css("height", "0%");
             });
-
+        });
     </script>
 </body>
 </html>

@@ -39,7 +39,13 @@ namespace LCMS.WebAPI.Controllers
         [HttpGet]
         public IHttpActionResult GetApplicationUsers()
         {
-            return Ok(_applicationUserManager.GetApplicationUsers());
+            //return Ok(_applicationUserManager.GetApplicationUsers());
+            List<ApplicationUserDetail> userList = _applicationUserManager.GetApplicationUsers();
+            int count = userList.Count;
+            ApplicationUserResponse response = new ApplicationUserResponse();
+            response.ApplicationUserList = userList;
+            response.Count = count;
+            return Ok(response);
         }
 
         [Route("api/ApplicationUserAPI/GetUser")]

@@ -82,7 +82,7 @@ namespace LCMS.BAL.Class
             var config = new MapperConfiguration(cfg => cfg.CreateMap<AddBookCatalog, BookCatalog>().ForMember(x => x.ISBN, y => y.Ignore()));
             var mapper = new Mapper(config);
             bookCatalog = mapper.Map<BookCatalog>(addBookCatalog);
-            bookCatalog.ISBN = Convert.ToDecimal(addBookCatalog.ISBN);
+            bookCatalog.ISBN = addBookCatalog.ISBN;
             return _bookCatalogRepository.Create(bookCatalog);
         }
 
@@ -92,7 +92,7 @@ namespace LCMS.BAL.Class
             var config = new MapperConfiguration(cfg => cfg.CreateMap<AddBookCatalog, BookCatalog>().ForMember(x => x.ISBN, y => y.Ignore()));
             var mapper = new Mapper(config);
             bookCatalog = mapper.Map<BookCatalog>(addBookCatalog);
-            bookCatalog.ISBN = Convert.ToDecimal(addBookCatalog.ISBN);
+            bookCatalog.ISBN = addBookCatalog.ISBN;
             return _bookCatalogRepository.Update(bookCatalog);
         }
 

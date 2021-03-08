@@ -63,7 +63,7 @@
                                 <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6">
-                                @Html.DropDownList("RoleId", (IEnumerable<SelectListItem>)ViewData["roleList"], new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.RoleId, (IEnumerable<SelectListItem>)ViewData["roleList"], new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
                             </div>
                         </div>

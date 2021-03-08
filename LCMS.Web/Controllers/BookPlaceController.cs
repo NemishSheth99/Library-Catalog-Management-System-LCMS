@@ -144,7 +144,11 @@ namespace LCMS.Web.Controllers
                 transactionHistory.ApplicationUserId = Convert.ToInt32(Session["auid"]);
                 string r = _transactionHistoryServiceProxy.Create(transactionHistory);
                 if (r == "Success")
+                {
+                    TempData["toast"] = "Book checked-out successfully.";
+                    TempData["type"] = "success";
                     return RedirectToAction("MyCheckOuts");
+                }
                 else
                     return RedirectToAction("ErrorPage");
             }
@@ -172,10 +176,18 @@ namespace LCMS.Web.Controllers
                 string r = _transactionHistoryServiceProxy.Create(transactionHistory);
                 if (r == "Success")
                 {
-                    if(Session["aurole"].ToString()!="Librarian")
+                    if (Session["aurole"].ToString() != "Librarian")
+                    {
+                        TempData["toast"] = "Book checked-in successfully.";
+                        TempData["type"] = "success";
                         return RedirectToAction("ShowCatalog", "BookCatalog");
+                    }
                     else
+                    {
+                        TempData["toast"] = "Book checked-in successfully.";
+                        TempData["type"] = "success";
                         return RedirectToAction("BookCatalogIndex", "BookCatalog");
+                    }
                 }
                 else
                     return RedirectToAction("ErrorPage");

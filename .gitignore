@@ -16,7 +16,6 @@ LCMS.DAL/Database/LibraryCatalogModel.edmx.diagram
 LCMS.WebAPI/Web.config
 
 
-
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

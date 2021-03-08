@@ -5,38 +5,103 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
+<body>
+    <div class="col-4">
+        <input type="text" id="txtSearch" name="txtSearch" class="form-control" placeholder="Search by ISBN number" />
+        <button id="btnSearch" class="btn-sm btn-primary" onclick="searchHistory()"><i class="fa fa-search"></i> Serach</button>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Book name</th>
+                <th>ISBN number</th>
+                <th>Place code</th>
+                <th>Material type</th>
+                <th>Transaction type</th>
+                <th>User</th>
+                <th>Transaction date</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: list">
+            <tr>
+                <td><span data-bind="text: BookPlace.BookCatalog.Name"></span></td>
+                <td><span data-bind="text: BookPlace.BookCatalog.ISBN"></span></td>
+                <td><span data-bind="text: BookPlace.PlaceCode"></span></td>
+                <td><span data-bind="text: BookPlace.MaterialType"></span></td>
+                <td><span data-bind="text: TransactionType"></span></td>
+                <td><span data-bind="text: ApplicationUser.Name"></span></td>
+                <td><span data-bind="text: TrasactionDate"></span></td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="paging-area"></div>
+</body>
 
-<table class="table">
-    <tr>
-        <th>Name</th>
-        <th>Place Code</th>
-        <th>Material Type</th>
-        <th>Transaction Type</th>
-        <th>Application User</th>
-        <th>Transaction Date</th>
-    </tr>
+@section Scripts {
+    <script src="~/Assets/vendors/knockout/knockout-3.5.1.js"></script>
+    <script src="~/Assets/vendors/jquery.pagination/jquery.simplePagination.js"></script>
+    <link href="~/Assets/vendors/jquery.pagination/simplePagination.css" rel="stylesheet" />
+    <script>
+        var historyListService = "";
+        window.historyListService = "@Url.Action("GetTransactionHistoryIndex", "TransactionHistory")";
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookPlace.BookCatalog.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookPlace.PlaceCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookPlace.MaterialType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TransactionType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TrasactionDate)
-        </td>
-    </tr>
+        $(document).ready(function () {
+            ko.applyBindings(historyListVM);
+            loadHistory();
+        });
+
+        var historyListVM = {
+            list: ko.observableArray([]),
+            totalCount: ko.observable(0),
+            currentPageIndex: ko.observable(1),
+            getList: function (s) {
+                var vm = historyListVM;
+                var pNo = vm.currentPageIndex();                
+                var search = "";
+                if (s != undefined)
+                    search = s;
+                $.ajax({
+                    method: "GET",
+                    url: historyListService,
+                    data: { pageNo: pNo, searchISBN: search }
+                }).done(function (response) {
+                    if (response != null) {
+                        vm.list(response.TransactionHistoryList);
+                        vm.totalCount(response.Count);                        
+                        if (vm.currentPageIndex() === 1 && response.TransactionHistoryList.length>15) {
+                            initPaging();
+                            
+                        }
+                        
+                    }
+                }).fail(function () {
+                        alert("error");
+                    }).always(function () {
+                    });
+            }
+        };
+
+        function loadHistory() {
+            historyListVM.getList();
+        }
+
+        function searchHistory()
+        {
+            var search = $("#txtSearch").val();
+            historyListVM.getList(search);
+        }
+
+        function initPaging() {
+            $('#paging-area').pagination({
+                items: historyListVM.totalCount(),
+                itemsOnPage: 15,
+                cssStyle: 'light-theme',
+                onPageClick: function (pageNumber) {
+                    historyListVM.currentPageIndex(pageNumber);
+                    historyListVM.getList();
+                }
+            });
+        }
+
+    </script>
 }
-
-</table>

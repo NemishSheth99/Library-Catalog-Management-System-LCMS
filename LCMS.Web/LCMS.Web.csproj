@@ -2530,6 +2530,8 @@
     <Content Include="Assets\vendors\jquery.inputmask\extra\phone-codes\phone-nl.js" />
     <Content Include="Assets\vendors\jquery.inputmask\extra\phone-codes\phone-ru.js" />
     <Content Include="Assets\vendors\jquery.inputmask\extra\phone-codes\phone-uk.js" />
+    <Content Include="Assets\vendors\jquery.pagination\jquery.simplePagination.js" />
+    <Content Include="Assets\vendors\jquery.pagination\simplePagination.css" />
     <Content Include="Assets\vendors\jquery.tagsinput\dist\jquery.tagsinput.min.css" />
     <Content Include="Assets\vendors\jquery.tagsinput\grunt-tasks\assets_production.js" />
     <Content Include="Assets\vendors\jquery.tagsinput\grunt-tasks\options\cssmin.js" />
@@ -2802,6 +2804,7 @@
     <Content Include="Assets\vendors\jszip\lib\zipEntries.js" />
     <Content Include="Assets\vendors\jszip\lib\zipEntry.js" />
     <Content Include="Assets\vendors\jszip\vendor\FileSaver.js" />
+    <Content Include="Assets\vendors\knockout\knockout-3.5.1.js" />
     <Content Include="Assets\vendors\malihu-custom-scrollbar-plugin\jquery.mCustomScrollbar.concat.min.js" />
     <Content Include="Assets\vendors\malihu-custom-scrollbar-plugin\jquery.mCustomScrollbar.css" />
     <Content Include="Assets\vendors\malihu-custom-scrollbar-plugin\jquery.mCustomScrollbar.js" />
@@ -3814,6 +3817,9 @@
     <Content Include="Assets\vendors\switchery\package.js" />
     <Content Include="Assets\vendors\switchery\switchery.css" />
     <Content Include="Assets\vendors\switchery\switchery.js" />
+    <Content Include="Assets\vendors\toastr\dist\css\toastr.css" />
+    <Content Include="Assets\vendors\toastr\dist\css\toastr.min.css" />
+    <Content Include="Assets\vendors\toastr\dist\js\toastr.min.js" />
     <Content Include="Assets\vendors\transitionize\dist\transitionize.js" />
     <Content Include="Assets\vendors\transitionize\dist\transitionize.min.js" />
     <Content Include="Assets\vendors\transitionize\examples\browserify.js" />
@@ -4933,6 +4939,7 @@
     <Content Include="Views\BookPlace\MyCheckOuts.cshtml" />
     <Content Include="Views\BookPlace\Create.cshtml" />
     <Content Include="Views\BookCatalog\Create.cshtml" />
+    <Content Include="Views\ApplicationUser\TrialIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

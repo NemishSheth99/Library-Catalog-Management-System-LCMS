@@ -5,7 +5,8 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
-
+@if (Model != null && Model.Count() != 0)
+{
 <table class="table">
     <tr>        
         <th>
@@ -33,3 +34,29 @@
 }
 
 </table>
+}
+else
+{
+<h6>No Data Found!!!</h6>
+}
+
+@section Scripts {
+
+    <script>
+
+        $(document).ready(function () {
+            toastShow();
+        });
+
+        function toastShow() {
+                var msg = '@TempData["toast"]';
+                var type = '@TempData["type"]';
+                if (msg != '' && type != '') {
+                    if (type == 'success')
+                        toastr.success(msg);
+                    else
+                        toastr.error(msg);
+                }
+            }
+    </script>
+}
