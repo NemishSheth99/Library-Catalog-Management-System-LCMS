@@ -5,62 +5,139 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
-
-<table class="table" id="table">
-    <tr>
-        <th width="5%">Image</th>     
-        <th>Name</th>
-        <th>Summary</th>
-        <th>ISBN Number</th>
-        <th>Publication Year</th>
-        <th>Edition</th>           
-        <th>Authors</th>
-        <th width="10%">Show Books</th>
-        <th width="10%">Actions</th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                <img src="~/BookCoverImages/@Html.DisplayFor(modelItem => item.CoverImage)" height="80" width="80" alt="@Html.DisplayFor(modelItem => item.CoverImage)" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Summary)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ISBN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublicationYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Edition)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Authors)
-            </td>
-            <td>
-                <a href="/BookPlace/BookPlaceIndex/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-info">Show Books</a>
-            </td>
-            <td>
-                <a href="/BookCatalog/Edit/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
-                <a href="/BookCatalog/Delete/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-danger"><i class="fa fa-trash"></i> </a>
-            </td>
-        </tr>
-    }
-
-</table>
+<h2>Book Catalogs </h2>
+<div class="row">
+    <div class="col-md-6">
+        <input type="text" id="txtSearch" name="txtSearch" class="form-control" placeholder="Search" />
+    </div>
+    <button id="btnSearch" class="btn-sm btn-primary" onclick="searchUser(1)"><i class="fa fa-search"></i> Serach</button>
+    <button id="btnClear" class="btn-sm btn-danger" onclick="clearSearch()"><i class="fa fa-eraser"></i> Clear</button>
+</div>
+<hr />
+<div id="divMess">
+    <h6>No data found!!!</h6>
+</div>
+<div id="divData">
+    <table class="table" id="table">
+        <thead>
+            <tr>
+                <th width="5%">Image</th>
+                <th>Name</th>
+                <th>Summary</th>
+                <th>ISBN Number</th>
+                <th>Publication Year</th>
+                <th>Edition</th>
+                <th>Authors</th>
+                <th width="10%">Show Books</th>
+                <th width="10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: list">
+            <tr>
+                <td>
+                    <img data-bind="attr: { src:'../BookCoverImages/'+ $data.CoverImage }" height="80" width="80" />
+                </td>
+                <td><span data-bind="text: Name"></span></td>
+                <td><span data-bind="text: Summary"></span></td>
+                <td><span data-bind="text: ISBN"></span></td>
+                <td><span data-bind="text: PublicationYear"></span></td>
+                <td><span data-bind="text: Edition"></span></td>
+                <td><span data-bind="text: Authors"></span></td>
+                <td>
+                    <a data-bind="attr: { href: '/BookPlace/BookPlaceIndex/' + $data.Id }" class="btn-sm btn-info">Show Books</a>
+                </td>
+                <td>
+                    <a data-bind="attr: { href: '/BookCatalog/Edit/' + $data.Id }" class="btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+                    <a data-bind="attr: { href: '/BookCatalog/Delete/' + $data.Id }" class="btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="paging-area"></div>
+</div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    @*<script>
+    <script src="~/Assets/vendors/knockout/knockout-3.5.1.js"></script>
+    <script src="~/Assets/vendors/jquery.pagination/jquery.simplePagination.js"></script>
+    <link href="~/Assets/vendors/jquery.pagination/simplePagination.css" rel="stylesheet" />
+    <script>
+        var catalogListService = "";
+        window.catalogListService = "@Url.Action("GetBookCatalogIndex", "BookCatalog")";
+
         $(document).ready(function () {
-            $("#table").DataTable();
+            $("#divMess").hide();
+            ko.applyBindings(catalogListVM);
+            loadCatalog();
         });
 
-    </script>*@
+        var catalogListVM = {
+            list: ko.observableArray([]),
+            totalCount: ko.observable(0),
+            currentPageIndex: ko.observable(1),
+            getList: function (s) {
+                var vm = catalogListVM;
+                var pNo = vm.currentPageIndex();
+                var search = "";
+                if (s != undefined)
+                    search = s;
+                $.ajax({
+                    method: "GET",
+                    url: catalogListService,
+                    data: { pageNo: pNo, search: search }
+                }).done(function (response) {
+                    if (response != null) {
+                        if (response.BookCatalogList != null) {
+                            $("#divData").show();
+                            $("#divMess").hide();
+                            vm.list(response.BookCatalogList);
+                            vm.totalCount(response.Count);
+                            if (vm.currentPageIndex() === 1) {
+                                initPaging();
+                            }
+                        }
+                        else
+                        {
+                            $("#divData").hide();
+                            $("#divMess").show();
+                        }
+                    }
+                }).fail(function () {
+                        alert("error");
+                }).always(function () {
+                });
+            }
+        };
+
+        function loadCatalog() {
+            catalogListVM.getList();
+        }
+
+        function clearSearch()
+        {
+            $("#txtSearch").val('');
+            catalogListVM.currentPageIndex(1);
+            loadCatalog();
+        }
+
+        function searchUser(pageIndex)
+        {
+            var search = $("#txtSearch").val();
+            catalogListVM.currentPageIndex(pageIndex);
+            catalogListVM.getList(search);
+        }
+
+        function initPaging() {
+            $('#paging-area').pagination({
+                items: catalogListVM.totalCount(),
+                itemsOnPage: 15,
+                cssStyle: 'light-theme',
+                onPageClick: function (pageNumber) {
+                    catalogListVM.currentPageIndex(pageNumber);
+                    var search = $("#txtSearch").val();
+                    catalogListVM.getList(search);
+                }
+            });
+        }
+
+    </script>
 }

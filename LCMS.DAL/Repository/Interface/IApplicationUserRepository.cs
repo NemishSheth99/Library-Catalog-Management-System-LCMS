@@ -10,7 +10,9 @@ namespace LCMS.DAL.Repository.Interface
     public interface IApplicationUserRepository
     {
         ApplicationUser Login(ApplicationUser applicationUser);
-        List<ApplicationUser> GetApplicationUsers();
+        List<ApplicationUser> SearchApplicationUser(string search);
+        List<ApplicationUser> GetApplicationUsers(List<ApplicationUser> applicationUserList,int pageNo);
+        int GetCount(string search);
         ApplicationUser GetApplicationUserById(int id);
         ApplicationUser GetApplicationUserByEmail(string emailAddress);
         int Create(ApplicationUser applicationUser);

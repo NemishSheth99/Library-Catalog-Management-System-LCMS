@@ -6,35 +6,45 @@
 }
 
 <body>
-    <div class="col-4">
-        <input type="text" id="txtSearch" name="txtSearch" class="form-control" placeholder="Search by ISBN number" />
-        <button id="btnSearch" class="btn-sm btn-primary" onclick="searchHistory()"><i class="fa fa-search"></i> Serach</button>
+    <h2>Tranaction History</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <input type="text" id="txtSearch" name="txtSearch" class="form-control" placeholder="Search" />
+        </div>
+        <button id="btnSearch" class="btn-sm btn-primary" onclick="searchHistory(1)"><i class="fa fa-search"></i> Serach</button>
+        <button id="btnClear" class="btn-sm btn-danger" onclick="clearSearch()"><i class="fa fa-eraser"></i> Clear</button>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Book name</th>
-                <th>ISBN number</th>
-                <th>Place code</th>
-                <th>Material type</th>
-                <th>Transaction type</th>
-                <th>User</th>
-                <th>Transaction date</th>
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: list">
-            <tr>
-                <td><span data-bind="text: BookPlace.BookCatalog.Name"></span></td>
-                <td><span data-bind="text: BookPlace.BookCatalog.ISBN"></span></td>
-                <td><span data-bind="text: BookPlace.PlaceCode"></span></td>
-                <td><span data-bind="text: BookPlace.MaterialType"></span></td>
-                <td><span data-bind="text: TransactionType"></span></td>
-                <td><span data-bind="text: ApplicationUser.Name"></span></td>
-                <td><span data-bind="text: TrasactionDate"></span></td>
-            </tr>
-        </tbody>
-    </table>
-    <div id="paging-area"></div>
+    <hr/>
+    <div id="divMess">
+        <h6>No data found!!!</h6>
+    </div>
+    <div id="divData">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Book name</th>
+                    <th>ISBN number</th>
+                    <th>Place code</th>
+                    <th>Material type</th>
+                    <th>Transaction type</th>
+                    <th>User</th>
+                    <th>Transaction date</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: list">
+                <tr>
+                    <td><span data-bind="text: BookPlace.BookCatalog.Name"></span></td>
+                    <td><span data-bind="text: BookPlace.BookCatalog.ISBN"></span></td>
+                    <td><span data-bind="text: BookPlace.PlaceCode"></span></td>
+                    <td><span data-bind="text: BookPlace.MaterialType"></span></td>
+                    <td><span data-bind="text: TransactionType"></span></td>
+                    <td><span data-bind="text: ApplicationUser.Name"></span></td>
+                    <td><span data-bind="text: TrasactionDate"></span></td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="paging-area"></div>
+    </div>
 </body>
 
 @section Scripts {
@@ -46,6 +56,7 @@
         window.historyListService = "@Url.Action("GetTransactionHistoryIndex", "TransactionHistory")";
 
         $(document).ready(function () {
+            $("#divMess").hide();
             ko.applyBindings(historyListVM);
             loadHistory();
         });
@@ -56,28 +67,35 @@
             currentPageIndex: ko.observable(1),
             getList: function (s) {
                 var vm = historyListVM;
-                var pNo = vm.currentPageIndex();                
+                var pNo = vm.currentPageIndex();
                 var search = "";
                 if (s != undefined)
                     search = s;
                 $.ajax({
                     method: "GET",
                     url: historyListService,
-                    data: { pageNo: pNo, searchISBN: search }
+                    data: { pageNo: pNo, search: search }
                 }).done(function (response) {
                     if (response != null) {
-                        vm.list(response.TransactionHistoryList);
-                        vm.totalCount(response.Count);                        
-                        if (vm.currentPageIndex() === 1 && response.TransactionHistoryList.length>15) {
-                            initPaging();
-                            
+                        if (response.TransactionHistoryList != null) {
+                            $("#divData").show();
+                            $("#divMess").hide();
+                            vm.list(response.TransactionHistoryList);
+                            vm.totalCount(response.Count);
+                            if (vm.currentPageIndex() === 1) {
+                                initPaging();
+                            }
                         }
-                        
+                        else
+                        {
+                            $("#divData").hide();
+                            $("#divMess").show();
+                        }
                     }
                 }).fail(function () {
                         alert("error");
-                    }).always(function () {
-                    });
+                }).always(function () {
+                });
             }
         };
 
@@ -85,9 +103,17 @@
             historyListVM.getList();
         }
 
-        function searchHistory()
+        function clearSearch()
+        {
+            $("#txtSearch").val('');
+            historyListVM.currentPageIndex(1);
+            loadHistory();
+        }
+
+        function searchHistory(pageIndex)
         {
             var search = $("#txtSearch").val();
+            historyListVM.currentPageIndex(pageIndex);
             historyListVM.getList(search);
         }
 
@@ -98,7 +124,9 @@
                 cssStyle: 'light-theme',
                 onPageClick: function (pageNumber) {
                     historyListVM.currentPageIndex(pageNumber);
-                    historyListVM.getList();
+                    var search = $("#txtSearch").val();
+                    historyListVM.getList(search);
+                    //searchHistory(pageNumber);
                 }
             });
         }

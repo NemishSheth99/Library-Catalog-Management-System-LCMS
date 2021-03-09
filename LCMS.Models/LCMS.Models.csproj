@@ -60,6 +60,7 @@
     <Compile Include="Author\AuthorDetail.cs" />
     <Compile Include="BookCatalog\AddBookCatalog.cs" />
     <Compile Include="BookCatalog\BookCatalogDetail.cs" />
+    <Compile Include="BookCatalog\BookCatalogResponse.cs" />
     <Compile Include="BookPlace\AddBookPlace.cs" />
     <Compile Include="BookPlace\BookPlaceCheckOut.cs" />
     <Compile Include="BookPlace\BookPlaceDetail.cs" />

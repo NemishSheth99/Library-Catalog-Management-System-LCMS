@@ -11,7 +11,7 @@ namespace LCMS.BAL.Interface
     public interface IApplicationUserManager
     {
         ApplicationUserDetail Login(ApplicationUserLogin applicationUserLogin);
-        List<ApplicationUserDetail> GetApplicationUsers();
+        ApplicationUserResponse GetApplicationUsers(int pageNo, string search);
         ApplicationUserDetail GetApplicationUserById(int id);
         ApplicationUserDetail GetApplicationUserByEmailAddress(string emailAddress);
         int Create(AddApplicationUserRequest applicationUserRequest);

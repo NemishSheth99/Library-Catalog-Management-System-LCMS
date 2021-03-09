@@ -40,22 +40,32 @@ namespace LCMS.BAL.Class
             return applicationUserDetail;
         }
 
-        public List<ApplicationUserDetail> GetApplicationUsers()
+        public ApplicationUserResponse GetApplicationUsers(int pageNo, string search)
         {
-            List<ApplicationUser> applicationUserList = _applicationUserRepository.GetApplicationUsers();
-            List<ApplicationUserDetail> applicationUserDetailList = new List<ApplicationUserDetail>();
-            if (applicationUserList != null)
+            ApplicationUserResponse auResponse = new ApplicationUserResponse();
+            List<ApplicationUser> list = _applicationUserRepository.SearchApplicationUser(search);
+            if (search != null && list.Count == 0)
             {
-                foreach (var items in applicationUserList)
-                {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, ApplicationUserDetail>());
-                    var mapper = new Mapper(config);
-                    ApplicationUserDetail applicationUserDetail = mapper.Map<ApplicationUserDetail>(items);
-                    applicationUserDetailList.Add(applicationUserDetail);
-                }
-                return applicationUserDetailList;
+                return auResponse;
             }
-            return applicationUserDetailList;
+            else
+            {
+                List<ApplicationUser> applicationUserList = _applicationUserRepository.GetApplicationUsers(list,pageNo);
+                List<ApplicationUserDetail> applicationUserDetailList = new List<ApplicationUserDetail>();
+                if (applicationUserList != null)
+                {
+                    foreach (var items in applicationUserList)
+                    {
+                        var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, ApplicationUserDetail>());
+                        var mapper = new Mapper(config);
+                        ApplicationUserDetail applicationUserDetail = mapper.Map<ApplicationUserDetail>(items);
+                        applicationUserDetailList.Add(applicationUserDetail);
+                    }
+                    auResponse.ApplicationUserList = applicationUserDetailList;
+                    auResponse.Count = _applicationUserRepository.GetCount(search);
+                }
+            }
+            return auResponse;
         }
 
         public ApplicationUserDetail GetApplicationUserById(int id)

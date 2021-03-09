@@ -31,13 +31,15 @@ namespace LCMS.ServiceProxy.TransactionHistory
             return GetRequest<TransactionHistoryResponse>("GetTransactionHistories", queryParam);
         }
 
-        public List<TransactionHistoryDetail> GetUserTransactionHistories(int id)
+        public TransactionHistoryResponse GetUserTransactionHistories(int id,int pageNo,string search)
         {
             var queryParam = new Dictionary<string, string>
             {
-                {"id", id.ToString(CultureInfo.InvariantCulture)}
+                {"id", id.ToString(CultureInfo.InvariantCulture)},
+                {"pageNo", pageNo.ToString(CultureInfo.InvariantCulture)},
+                {"search", search.ToString(CultureInfo.InvariantCulture)}
             };
-            return GetRequest<List<TransactionHistoryDetail>>("GetUserTransactionHistories", queryParam);
+            return GetRequest<TransactionHistoryResponse> ("GetUserTransactionHistories", queryParam);
         }
 
         public string Create(AddTransactionHistory addTransactionHistory)
