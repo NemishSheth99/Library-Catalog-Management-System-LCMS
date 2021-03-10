@@ -16,13 +16,7 @@ namespace LCMS.Web.Controllers
         {
             _transactionHistoryServiceProxy = transactionHistoryServiceProxy;
         }
-
-
-        //public ActionResult TransactionHistoryIndex()
-        //{
-        //    List<TransactionHistoryDetail> historyList = _transactionHistoryServiceProxy.GetTransactionHistories();
-        //    return View(historyList);
-        //}
+        
 
         public ActionResult TransactionHistoryIndex()
         {
@@ -30,20 +24,26 @@ namespace LCMS.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetTransactionHistoryIndex(int pageNo,string searchISBN)
+        public ActionResult GetTransactionHistoryIndex(int pageNo,string search)
         {
-            TransactionHistoryResponse historyResponse = _transactionHistoryServiceProxy.GetTransactionHistories(pageNo,searchISBN);
+            TransactionHistoryResponse historyResponse = _transactionHistoryServiceProxy.GetTransactionHistories(pageNo,search);
             return Json(historyResponse, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult UserTransactionHistoryIndex()
         {
-            List<TransactionHistoryDetail> historyList = new List<TransactionHistoryDetail>();
+            return View();            
+        }
+
+        [HttpGet]
+        public ActionResult GetUserTransactionHistoryIndex(int pageNo, string searchISBN)
+        {
+            TransactionHistoryResponse historyResponse = new TransactionHistoryResponse();
             if (Session["auid"] != null)
             {
-                historyList = _transactionHistoryServiceProxy.GetUserTransactionHistories(Convert.ToInt32(Session["auid"]));
+                historyResponse= _transactionHistoryServiceProxy.GetUserTransactionHistories(Convert.ToInt32(Session["auid"]), pageNo, searchISBN);
             }
-            return View(historyList);
+            return Json(historyResponse, JsonRequestBehavior.AllowGet);
         }
     }
 }

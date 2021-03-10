@@ -23,124 +23,107 @@ namespace LCMS.BAL.Class
             _transactionHistoryRepository = transactionHistoryRepository;
         }
 
-        //public List<TransactionHistoryDetail> GetTransactionHistories()
-        //{
-        //    List<TransactionHistory> lst = _transactionHistoryRepository.GetTransactionHistories();
-        //    List<TransactionHistoryDetail> transactionHistoryDetailList = new List<TransactionHistoryDetail>();
-        //    if (lst != null)
-        //    {
-        //        foreach (var items in lst)
-        //        {
-        //            var config = new MapperConfiguration(cfg => cfg.CreateMap<TransactionHistory, TransactionHistoryDetail>().ForMember(x => x.ApplicationUser, y => y.Ignore()).ForMember(x => x.BookPlace, y => y.Ignore()));
-        //            var mapper = new Mapper(config);
-        //            TransactionHistoryDetail obj = mapper.Map<TransactionHistoryDetail>(items);
-        //            if(items.ApplicationUser!=null)
-        //            {
-        //                var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, ApplicationUserDetail>());
-        //                var mp = new Mapper(cnfg);
-        //                obj.ApplicationUser = mp.Map<ApplicationUserDetail>(items.ApplicationUser);
-        //            }
-        //            if (items.BookPlace != null)
-        //            {
-        //                var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<BookPlace, BookPlaceDetail>().ForMember(x => x.BookCatalog, y => y.Ignore()));
-        //                var mp = new Mapper(cnfg);
-        //                obj.BookPlace = mp.Map<BookPlaceDetail>(items.BookPlace);
-        //                if(obj.BookPlace!=null)
-        //                {
-        //                    var c = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
-        //                    var m = new Mapper(c);
-        //                    obj.BookPlace.BookCatalog = m.Map<BookCatalogDetail>(items.BookPlace.BookCatalog);
-        //                }
-        //            }
-        //            transactionHistoryDetailList.Add(obj);
-        //        }
-        //    }
-        //    return transactionHistoryDetailList;
-        //}
-
-        public TransactionHistoryResponse GetTransactionHistories(int pageNo,string search)
+        public TransactionHistoryResponse GetTransactionHistories(int pageNo, string search)
         {
             TransactionHistoryResponse thResponse = new TransactionHistoryResponse();
-            List<TransactionHistory> lst = _transactionHistoryRepository.GetTransactionHistories(pageNo,search);
-            List<TransactionHistoryDetail> transactionHistoryDetailList = new List<TransactionHistoryDetail>();
-            if (lst != null)
+            List<TransactionHistory> list = _transactionHistoryRepository.SearchTransactionHistories(search);
+            if (search != null && list.Count == 0)
             {
-                foreach (var items in lst)
+                return thResponse;
+            }
+            else
+            {
+                List<TransactionHistory> lst = _transactionHistoryRepository.GetTransactionHistories(list, pageNo);
+                List<TransactionHistoryDetail> transactionHistoryDetailList = new List<TransactionHistoryDetail>();
+                if (lst != null)
                 {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<TransactionHistory, TransactionHistoryDetail>().ForMember(x => x.ApplicationUser, y => y.Ignore()).ForMember(x => x.BookPlace, y => y.Ignore()));
-                    var mapper = new Mapper(config);
-                    TransactionHistoryDetail obj = mapper.Map<TransactionHistoryDetail>(items);
-                    if (items.ApplicationUser != null)
+                    foreach (var items in lst)
                     {
-                        var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, ApplicationUserDetail>());
-                        var mp = new Mapper(cnfg);
-                        obj.ApplicationUser = mp.Map<ApplicationUserDetail>(items.ApplicationUser);
-                    }
-                    if (items.BookPlace != null)
-                    {
-                        var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<BookPlace, BookPlaceDetail>().ForMember(x => x.BookCatalog, y => y.Ignore()));
-                        var mp = new Mapper(cnfg);
-                        obj.BookPlace = mp.Map<BookPlaceDetail>(items.BookPlace);
-                        if (obj.BookPlace != null)
+                        var config = new MapperConfiguration(cfg => cfg.CreateMap<TransactionHistory, TransactionHistoryDetail>().ForMember(x => x.ApplicationUser, y => y.Ignore()).ForMember(x => x.BookPlace, y => y.Ignore()));
+                        var mapper = new Mapper(config);
+                        TransactionHistoryDetail obj = mapper.Map<TransactionHistoryDetail>(items);
+                        if (items.ApplicationUser != null)
                         {
-                            var c = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
-                            var m = new Mapper(c);
-                            obj.BookPlace.BookCatalog = m.Map<BookCatalogDetail>(items.BookPlace.BookCatalog);
+                            var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, ApplicationUserDetail>());
+                            var mp = new Mapper(cnfg);
+                            obj.ApplicationUser = mp.Map<ApplicationUserDetail>(items.ApplicationUser);
                         }
+                        if (items.BookPlace != null)
+                        {
+                            var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<BookPlace, BookPlaceDetail>().ForMember(x => x.BookCatalog, y => y.Ignore()));
+                            var mp = new Mapper(cnfg);
+                            obj.BookPlace = mp.Map<BookPlaceDetail>(items.BookPlace);
+                            if (obj.BookPlace != null)
+                            {
+                                var c = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
+                                var m = new Mapper(c);
+                                obj.BookPlace.BookCatalog = m.Map<BookCatalogDetail>(items.BookPlace.BookCatalog);
+                            }
+                        }
+                        transactionHistoryDetailList.Add(obj);
                     }
-                    transactionHistoryDetailList.Add(obj);
+
+                    thResponse.TransactionHistoryList = transactionHistoryDetailList;
+                    thResponse.Count = _transactionHistoryRepository.GetCount(0,search);
                 }
-                thResponse.TransactionHistoryList = transactionHistoryDetailList;
-                thResponse.Count = _transactionHistoryRepository.GetTotalCount();
             }
             return thResponse;
         }
 
-        public List<TransactionHistoryDetail> GetTransactionHistoriesByUserId(int userId,int pageNo)
+        public TransactionHistoryResponse GetTransactionHistoriesByUserId(int userId, int pageNo,string search)
         {
-            List<TransactionHistory> lst = _transactionHistoryRepository.GetTransactionHistoriesByUserId(userId,pageNo);
-            List<TransactionHistoryDetail> transactionHistoryDetailList = new List<TransactionHistoryDetail>();
-            if (lst != null)
+            TransactionHistoryResponse thResponse = new TransactionHistoryResponse();
+            List<TransactionHistory> list = _transactionHistoryRepository.GetUserTransactionHistories(userId);
+            if (userId != 0 && list.Count == 0)
             {
-                foreach (var items in lst)
+                return thResponse;
+            }
+            else
+            {
+                List<TransactionHistory> searchList = _transactionHistoryRepository.SearchUserTransactionHistories(list,search);
+                if (search != null && searchList.Count == 0)
                 {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<TransactionHistory, TransactionHistoryDetail>().ForMember(x => x.ApplicationUser, y => y.Ignore()).ForMember(x => x.BookPlace, y => y.Ignore()));
-                    var mapper = new Mapper(config);
-                    TransactionHistoryDetail obj = mapper.Map<TransactionHistoryDetail>(items);
-                    if (items.ApplicationUser != null)
+                    return thResponse;
+                }
+                else
+                {
+                    List<TransactionHistory> lst = _transactionHistoryRepository.GetTransactionHistories(searchList, pageNo);
+                    List<TransactionHistoryDetail> transactionHistoryDetailList = new List<TransactionHistoryDetail>();
+                    if (lst != null)
                     {
-                        var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, ApplicationUserDetail>());
-                        var mp = new Mapper(cnfg);
-                        obj.ApplicationUser = mp.Map<ApplicationUserDetail>(items.ApplicationUser);
-                    }
-                    if (items.BookPlace != null)
-                    {
-                        var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<BookPlace, BookPlaceDetail>().ForMember(x => x.BookCatalog, y => y.Ignore()));
-                        var mp = new Mapper(cnfg);
-                        obj.BookPlace = mp.Map<BookPlaceDetail>(items.BookPlace);
-                        if (obj.BookPlace != null)
+                        foreach (var items in lst)
                         {
-                            var c = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
-                            var m = new Mapper(c);
-                            obj.BookPlace.BookCatalog = m.Map<BookCatalogDetail>(items.BookPlace.BookCatalog);
+                            var config = new MapperConfiguration(cfg => cfg.CreateMap<TransactionHistory, TransactionHistoryDetail>().ForMember(x => x.ApplicationUser, y => y.Ignore()).ForMember(x => x.BookPlace, y => y.Ignore()));
+                            var mapper = new Mapper(config);
+                            TransactionHistoryDetail obj = mapper.Map<TransactionHistoryDetail>(items);
+                            if (items.ApplicationUser != null)
+                            {
+                                var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, ApplicationUserDetail>());
+                                var mp = new Mapper(cnfg);
+                                obj.ApplicationUser = mp.Map<ApplicationUserDetail>(items.ApplicationUser);
+                            }
+                            if (items.BookPlace != null)
+                            {
+                                var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<BookPlace, BookPlaceDetail>().ForMember(x => x.BookCatalog, y => y.Ignore()));
+                                var mp = new Mapper(cnfg);
+                                obj.BookPlace = mp.Map<BookPlaceDetail>(items.BookPlace);
+                                if (obj.BookPlace != null)
+                                {
+                                    var c = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
+                                    var m = new Mapper(c);
+                                    obj.BookPlace.BookCatalog = m.Map<BookCatalogDetail>(items.BookPlace.BookCatalog);
+                                }
+                            }
+                            transactionHistoryDetailList.Add(obj);
                         }
+                        thResponse.TransactionHistoryList = transactionHistoryDetailList;
+                        thResponse.Count = _transactionHistoryRepository.GetCount(userId, search);
                     }
-                    transactionHistoryDetailList.Add(obj);
                 }
             }
-            return transactionHistoryDetailList;
+            return thResponse;
         }
-
-        //public List<TransactionHistory> GetTransactionHistoriesByDate(DateTime dt)
-        //{
-        //    return _transactionHistoryRepository.GetTransactionHistoriesByDate(dt);
-        //}
-
-        //public List<TransactionHistory> GetTransactionHistoriesByBook(int bookPlaceId)
-        //{
-        //    return _transactionHistoryRepository.GetTransactionHistoriesByBook(bookPlaceId);
-        //}
-
+        
         public string Create(AddTransactionHistory addTransactionHistory)
         {
             TransactionHistory transactionHistory = new TransactionHistory();

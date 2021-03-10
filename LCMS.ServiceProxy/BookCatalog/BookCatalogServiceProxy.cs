@@ -15,10 +15,14 @@ namespace LCMS.ServiceProxy.BookCatalog
             ServiceUrlPrefix = "api/BookCatalogAPI";
         }        
 
-        public List<BookCatalogDetail> GetBookCatalogs()
+        public BookCatalogResponse GetBookCatalogs(int pageNo, string search)
         {
-            var queryParam = new Dictionary<string, string>();
-            return GetRequest<List<BookCatalogDetail>>("GetBookCatalogs", queryParam);
+            var queryParam = new Dictionary<string, string>
+            {
+                {"pageNo", pageNo.ToString(CultureInfo.InvariantCulture)},
+                {"search", search.ToString(CultureInfo.InvariantCulture)}
+            };
+            return GetRequest<BookCatalogResponse>("GetBookCatalogs", queryParam);
         }
 
         public BookCatalogDetail GetBookCatalog(int id)

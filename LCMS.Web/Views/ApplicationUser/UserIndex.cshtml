@@ -8,62 +8,145 @@
 <section id="progress notes">
     <div class="content-box-md">
         <div class="container">
-            <h2>Application Users <span>(@ViewBag.UserCount)</span></h2>
-            <div class="table-box">
-                <div class=" table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>                                
-                                <th>Name</th>
-                                <th>Email Address</th>
-                                <th>Phone Number</th>
-                                <th width="10%">Active/Block</th>
-                                <th width="10%">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>     
+            <h2>Application Users </h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" id="txtSearch" name="txtSearch" class="form-control" placeholder="Search" />
+                </div>
+                <button id="btnSearch" class="btn-sm btn-primary" onclick="searchUser(1)"><i class="fa fa-search"></i> Serach</button>
+                <button id="btnClear" class="btn-sm btn-danger" onclick="clearSearch()"><i class="fa fa-eraser"></i> Clear</button>
+            </div>
+            <hr />
+            <div id="divMess">
+                <h6>No data found!!!</h6>
+            </div>
+            <div id="divData">
+                <div class="table-box">
+                    <div class=" table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email Address</th>
+                                    <th>Phone Number</th>
+                                    <th width="10%">Active/Block</th>
+                                    <th width="10%">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: list">
+                                <tr>
+                                    <td><span data-bind="text: Name"></span></td>
+                                    <td><span data-bind="text: EmailAddress"></span></td>
+                                    <td><span data-bind="text: PhoneNumber"></span></td>
+
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
+                                        <span data-bind="if: Status==='A'">
+                                            <a data-bind="attr: { href: '/ApplicationUser/ChangeActivity/' + $data.Id }" class="btn-sm btn-danger">Block</a>
+                                        </span>
+
+                                        <span data-bind="if: Status==='B'">
+                                            <a data-bind="attr: { href: '/ApplicationUser/ChangeActivity/' + $data.Id }" class="btn-sm btn-success">Active</a>
+                                        </span>
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.EmailAddress)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.PhoneNumber)
-                                    </td>
-                                    <td>
-                                        @if (item.Status.Equals("A"))
-                                        {
-                                            <a href="/ApplicationUser/ChangeActivity/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-danger">Block</a>
-                                        }
-                                        @if (item.Status.Equals("B"))
-                                        {
-                                            <a href="/ApplicationUser/ChangeActivity/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-success">Active</a>
-                                        }
-                                    </td>
-                                    <td>
-                                        <a href="/ApplicationUser/Edit/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
-                                        <a href="/ApplicationUser/Delete/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-danger"><i class="fa fa-trash"></i> </a>
+                                        <a data-bind="attr: { href: '/ApplicationUser/Edit/' + $data.Id }" class="btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+                                        <a data-bind="attr: { href: '/ApplicationUser/Delete/' + $data.Id }" class="btn-sm btn-danger"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+
+                            </tbody>
+                        </table>
+                        <div id="paging-area"></div>
+                    </div>
+
                 </div>
-
             </div>
-
         </div>
     </div>
 </section>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Assets/vendors/knockout/knockout-3.5.1.js"></script>
+    <script src="~/Assets/vendors/jquery.pagination/jquery.simplePagination.js"></script>
+    <link href="~/Assets/vendors/jquery.pagination/simplePagination.css" rel="stylesheet" />
+    <script>
+        var userListService = "";
+        window.userListService = "@Url.Action("GetApplicationUserIndex", "ApplicationUser")";
+
+        $(document).ready(function () {
+            $("#divMess").hide();
+            ko.applyBindings(userListVM);
+            loadUser();
+        });
+
+        var userListVM = {
+            list: ko.observableArray([]),
+            totalCount: ko.observable(0),
+            currentPageIndex: ko.observable(1),
+            getList: function (s) {
+                var vm = userListVM;
+                var pNo = vm.currentPageIndex();
+                var search = "";
+                if (s != undefined)
+                    search = s;
+                $.ajax({
+                    method: "GET",
+                    url: userListService,
+                    data: { pageNo: pNo, search: search }
+                }).done(function (response) {
+                    if (response != null) {
+                        if (response.ApplicationUserList != null) {
+                            $("#divData").show();
+                            $("#divMess").hide();
+                            vm.list(response.ApplicationUserList);
+                            vm.totalCount(response.Count);
+                            if (vm.currentPageIndex() === 1) {
+                                initPaging();
+                            }
+                        }
+                        else
+                        {
+                            $("#divData").hide();
+                            $("#divMess").show();
+                        }
+                    }
+                }).fail(function () {
+                        alert("error");
+                }).always(function () {
+                });
+            }
+        };
+
+        function loadUser() {
+            userListVM.getList();
+        }
+
+        function clearSearch()
+        {
+            $("#txtSearch").val('');
+            userListVM.currentPageIndex(1);
+            loadUser();
+        }
+
+        function searchUser(pageIndex)
+        {
+            var search = $("#txtSearch").val();
+            userListVM.currentPageIndex(pageIndex);
+            userListVM.getList(search);
+        }
+
+        function initPaging() {
+            $('#paging-area').pagination({
+                items: userListVM.totalCount(),
+                itemsOnPage: 15,
+                cssStyle: 'light-theme',
+                onPageClick: function (pageNumber) {
+                    userListVM.currentPageIndex(pageNumber);
+                    var search = $("#txtSearch").val();
+                    userListVM.getList(search);
+                }
+            });
+        }
+
+    </script>
 }
-
-
-
-

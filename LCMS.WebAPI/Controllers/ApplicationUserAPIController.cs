@@ -37,15 +37,9 @@ namespace LCMS.WebAPI.Controllers
 
         [Route("api/ApplicationUserAPI/GetApplicationUsers")]
         [HttpGet]
-        public IHttpActionResult GetApplicationUsers()
+        public IHttpActionResult GetApplicationUsers(int pageNo, string search)
         {
-            //return Ok(_applicationUserManager.GetApplicationUsers());
-            List<ApplicationUserDetail> userList = _applicationUserManager.GetApplicationUsers();
-            int count = userList.Count;
-            ApplicationUserResponse response = new ApplicationUserResponse();
-            response.ApplicationUserList = userList;
-            response.Count = count;
-            return Ok(response);
+            return Ok(_applicationUserManager.GetApplicationUsers(pageNo,search));            
         }
 
         [Route("api/ApplicationUserAPI/GetUser")]

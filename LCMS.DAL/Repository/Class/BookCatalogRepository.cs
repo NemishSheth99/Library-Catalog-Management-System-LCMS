@@ -17,10 +17,33 @@ namespace LCMS.DAL.Repository.Class
             _dbContext = new Database.LCMSDBEntities();
         }
 
-        public List<BookCatalog> GetBookCatalogs()
+        public List<BookCatalog> SearchBookCatalog(string search)
         {
-            var list = _dbContext.BookCatalogs.Where(x => x.IsDeleted == false).ToList();
-            return list;
+            List<BookCatalog> bookCatalogList = new List<BookCatalog>();
+            if (search != null)
+                bookCatalogList = _dbContext.BookCatalogs.Where(x => x.Name.Contains(search) || x.ISBN.Contains(search)).ToList();
+            else
+                bookCatalogList = _dbContext.BookCatalogs.ToList();
+            return bookCatalogList;
+        }
+
+        public List<BookCatalog> GetBookCatalogs(List<BookCatalog> bookCatalogList, int pageNo)
+        {
+            int NoOfRecordsPerPage = 15;
+            int NoOfRecordsToSkip = (pageNo - 1) * NoOfRecordsPerPage;
+            if (bookCatalogList.Count > 0)
+                bookCatalogList = bookCatalogList.Where(x=>x.IsDeleted==false).OrderBy(x => x.Name).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
+            else
+                bookCatalogList = _dbContext.BookCatalogs.Where(x => x.IsDeleted == false).OrderBy(x => x.Name).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
+            return bookCatalogList;
+        }
+
+        public int GetCount(string search)
+        {
+            List<BookCatalog> bookCatalogList = _dbContext.BookCatalogs.Where(x=>x.IsDeleted==false).ToList();
+            if (search != null)
+                bookCatalogList = bookCatalogList.Where(x => x.Name.Contains(search) || x.ISBN.Contains(search)).ToList();
+            return bookCatalogList.Count;
         }
 
         public BookCatalog GetBookCatalogById(int id)
