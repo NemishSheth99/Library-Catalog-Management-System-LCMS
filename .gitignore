@@ -9,11 +9,11 @@
 *.user
 *.userosscache
 *.sln.docstates
-LCMS.DAL/App.Config
-LCMS.Web/Web.config
-LCMS.DAL/Database/LibraryCatalogModel.Designer.cs
-LCMS.DAL/Database/LibraryCatalogModel.edmx.diagram
-LCMS.WebAPI/Web.config
+# LCMS.DAL/App.Config
+# LCMS.Web/Web.config
+# LCMS.DAL/Database/LibraryCatalogModel.Designer.cs
+# LCMS.DAL/Database/LibraryCatalogModel.edmx.diagram
+# LCMS.WebAPI/Web.config
 
 
 # User-specific files (MonoDevelop/Xamarin Studio)
