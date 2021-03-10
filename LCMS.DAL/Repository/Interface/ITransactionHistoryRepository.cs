@@ -9,12 +9,14 @@ namespace LCMS.DAL.Repository.Interface
 {
     public interface ITransactionHistoryRepository
     {
-        //List<TransactionHistory> GetTransactionHistories();
-        List<TransactionHistory> GetTransactionHistories(int pageNo,string search);
+        List<TransactionHistory> SearchTransactionHistories(string search);
+        List<TransactionHistory> GetTransactionHistories(List<TransactionHistory> transactionhistoryList, int pageNo);
+        
 
-        //List<TransactionHistory> GetTransactionHistoriesByUserId(int userId);
-        List<TransactionHistory> GetTransactionHistoriesByUserId(int userId, int pageNo);
+        List<TransactionHistory> GetUserTransactionHistories(int userId);
+        List<TransactionHistory> SearchUserTransactionHistories(List<TransactionHistory> transactionhistoryList, string search);
+
         string Create(TransactionHistory transactionHistory);
-        int GetTotalCount();
+        int GetCount(int userId,string search);
     }
 }

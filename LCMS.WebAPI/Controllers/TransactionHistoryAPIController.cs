@@ -29,9 +29,9 @@ namespace LCMS.WebAPI.Controllers
         // GET: api/TransactionHistoryAPI
         [Route("api/TransactionHistoryAPI/GetUserTransactionHistories")]
         [HttpGet]
-        public IHttpActionResult GetUserTransactionHistories(int id,int pageNo)
+        public IHttpActionResult GetUserTransactionHistories(int id,int pageNo,string search)
         {
-            return Ok(_transactionHistoryManager.GetTransactionHistoriesByUserId(id,pageNo));
+            return Ok(_transactionHistoryManager.GetTransactionHistoriesByUserId(id,pageNo,search));
         }
 
         [Route("api/TransactionHistoryAPI/AddTransactionhistory")]

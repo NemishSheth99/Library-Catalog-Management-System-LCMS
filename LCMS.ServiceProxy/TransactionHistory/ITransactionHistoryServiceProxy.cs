@@ -10,8 +10,7 @@ namespace LCMS.ServiceProxy.TransactionHistory
     public interface ITransactionHistoryServiceProxy
     {
         TransactionHistoryResponse GetTransactionHistories(int pageNo,string search);
-        //List<TransactionHistoryDetail> GetTransactionHistories();
-        List<TransactionHistoryDetail> GetUserTransactionHistories(int id);
+        TransactionHistoryResponse GetUserTransactionHistories(int id,int pageNo,string search);
         string Create(AddTransactionHistory addTransactionHistory);
     }
 }

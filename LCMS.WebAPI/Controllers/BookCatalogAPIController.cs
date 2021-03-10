@@ -20,9 +20,9 @@ namespace LCMS.WebAPI.Controllers
 
         [Route("api/BookCatalogAPI/GetBookCatalogs")]
         [HttpGet]
-        public IHttpActionResult GetBookCatalogs()
+        public IHttpActionResult GetBookCatalogs(int pageNo, string search)
         {
-            return Ok(_bookCatalogManager.GetBookCatalogs());
+            return Ok(_bookCatalogManager.GetBookCatalogs(pageNo,search));
         }
 
         [Route("api/BookCatalogAPI/GetBookCatalog")]

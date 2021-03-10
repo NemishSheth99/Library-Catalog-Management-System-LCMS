@@ -28,8 +28,14 @@ namespace LCMS.Web.Controllers
         // GET: BookCatalog
         public ActionResult BookCatalogIndex()
         {
-            List<BookCatalogDetail> bookCatalogDetailList = _bookCatalogServiceProxy.GetBookCatalogs();
-            return View(bookCatalogDetailList);
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult GetBookCatalogIndex(int pageNo, string search)
+        {
+            BookCatalogResponse catalogResponse = _bookCatalogServiceProxy.GetBookCatalogs(pageNo, search);
+            return Json(catalogResponse, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Create()
@@ -195,8 +201,14 @@ namespace LCMS.Web.Controllers
 
         public ActionResult ShowCatalog()
         {
-            List<BookCatalogDetail> bookCatalogDetailList = _bookCatalogServiceProxy.GetBookCatalogs();
-            return View(bookCatalogDetailList);
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult GetShowCatalog(int pageNo, string search)
+        {
+            BookCatalogResponse catalogResponse = _bookCatalogServiceProxy.GetBookCatalogs(pageNo, search);
+            return Json(catalogResponse, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ShowCatalogDetail(int id)

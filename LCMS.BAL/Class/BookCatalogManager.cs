@@ -23,43 +23,56 @@ namespace LCMS.BAL.Class
             _authorRepository = authorRepository;
         }
 
-        public List<BookCatalogDetail> GetBookCatalogs()
+        public BookCatalogResponse GetBookCatalogs(int pageNo, string search)
         {
-            List<BookCatalog> bookCataloglist = _bookCatalogRepository.GetBookCatalogs();
-            List<BookCatalogDetail> bookCatalogDetailList = new List<BookCatalogDetail>();
-            if (bookCataloglist != null)
+            BookCatalogResponse bcResponse = new BookCatalogResponse();
+            List<BookCatalog> list = _bookCatalogRepository.SearchBookCatalog(search);
+            if (search != null && list.Count == 0)
             {
-                foreach (var items in bookCataloglist)
-                {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
-                    var mapper = new Mapper(config);
-                    BookCatalogDetail bookCatalogDetail = mapper.Map<BookCatalogDetail>(items);
-                    if(bookCatalogDetail!=null)
-                    {
-                        List<Author> authorList = _authorRepository.GetAuthorByBookcatalog(items.Id);
-                        List<AuthorDetail> authorDetailList = new List<AuthorDetail>();
-                        if(authorList!=null)
-                        {
-                            foreach(var i in authorList)
-                            {
-                                var cnfg= new MapperConfiguration(cfg => cfg.CreateMap<Author, AuthorDetail>());
-                                var mp = new Mapper(cnfg);
-                                AuthorDetail authorDetail = mp.Map<AuthorDetail>(i);
-                                authorDetailList.Add(authorDetail);
-                            }
-                        }
-                        string author = "";
-                        foreach (var ath in authorDetailList)
-                        {                            
-                            author += ath.Name + ",";
-                        }
-                        bookCatalogDetail.Authors = author.Substring(0,author.Length-1);
-                    }
-                    bookCatalogDetailList.Add(bookCatalogDetail);
-                }
-                return bookCatalogDetailList;
+                return bcResponse;
             }
-            return bookCatalogDetailList;
+            else
+            {
+                List<BookCatalog> bookCataloglist = _bookCatalogRepository.GetBookCatalogs(list,pageNo);
+                List<BookCatalogDetail> bookCatalogDetailList = new List<BookCatalogDetail>();
+                if (bookCataloglist != null)
+                {
+                    foreach (var items in bookCataloglist)
+                    {
+                        var config = new MapperConfiguration(cfg => cfg.CreateMap<BookCatalog, BookCatalogDetail>());
+                        var mapper = new Mapper(config);
+                        BookCatalogDetail bookCatalogDetail = mapper.Map<BookCatalogDetail>(items);
+                        if (bookCatalogDetail != null)
+                        {
+                            List<Author> authorList = _authorRepository.GetAuthorByBookcatalog(items.Id);
+                            List<AuthorDetail> authorDetailList = new List<AuthorDetail>();
+                            if (authorList != null)
+                            {
+                                foreach (var i in authorList)
+                                {
+                                    var cnfg = new MapperConfiguration(cfg => cfg.CreateMap<Author, AuthorDetail>());
+                                    var mp = new Mapper(cnfg);
+                                    AuthorDetail authorDetail = mp.Map<AuthorDetail>(i);
+                                    authorDetailList.Add(authorDetail);
+                                }
+                            }
+                            string author = "";
+                            foreach (var ath in authorDetailList)
+                            {
+                                author += ath.Name + ",";
+                            }
+                            if (author.Length > 0)
+                                bookCatalogDetail.Authors = author.Substring(0, author.Length - 1);
+                            else
+                                bookCatalogDetail.Authors = author;
+                        }
+                        bookCatalogDetailList.Add(bookCatalogDetail);
+                    }
+                    bcResponse.BookCatalogList = bookCatalogDetailList;
+                    bcResponse.Count = _bookCatalogRepository.GetCount(search);
+                }
+            }
+            return bcResponse;
         }
 
         public BookCatalogDetail GetBookCatalogById(int id)

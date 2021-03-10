@@ -28,10 +28,33 @@ namespace LCMS.DAL.Repository.Class
 
         }
 
-        public List<ApplicationUser> GetApplicationUsers()
+        public List<ApplicationUser> SearchApplicationUser(string search)
         {
-            var list = _dbContext.ApplicationUsers.Where(x => x.IsDeleted == false).ToList();
-            return list;
+            List<ApplicationUser> applicationUserList = new List<ApplicationUser>();
+            if (search != null)
+                applicationUserList = _dbContext.ApplicationUsers.Where(x => x.Name.Contains(search)).ToList();
+            else
+                applicationUserList = _dbContext.ApplicationUsers.ToList();
+            return applicationUserList;
+        }
+
+        public List<ApplicationUser> GetApplicationUsers(List<ApplicationUser> applicationUserList, int pageNo)
+        {
+            int NoOfRecordsPerPage = 15;
+            int NoOfRecordsToSkip = (pageNo - 1) * NoOfRecordsPerPage;
+            if (applicationUserList.Count > 0)
+                applicationUserList = applicationUserList.OrderBy(x => x.Name).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
+            else
+                applicationUserList = _dbContext.ApplicationUsers.OrderBy(x => x.Name).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
+            return applicationUserList;
+        }
+
+        public int GetCount(string search)
+        {
+            List<ApplicationUser> applicationUserList = _dbContext.ApplicationUsers.ToList();           
+            if (search != null)
+                applicationUserList = applicationUserList.Where(x => x.Name.Contains(search)).ToList();
+            return applicationUserList.Count;
         }
 
         public ApplicationUser GetApplicationUserById(int id)

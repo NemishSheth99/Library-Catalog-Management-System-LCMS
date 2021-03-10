@@ -16,32 +16,45 @@ namespace LCMS.DAL.Repository.Class
         {
             _dbContext = new Database.LCMSDBEntities();
         }
-        
-        //public List<TransactionHistory> GetTransactionHistories()
-        //{
-        //    List<TransactionHistory> transactionhistoryList = _dbContext.TransactionHistories.ToList();
-        //    return transactionhistoryList;
-        //}
 
-        public List<TransactionHistory> GetTransactionHistories(int pageNo,string search)
+        public List<TransactionHistory> SearchTransactionHistories(string search)
+        {
+            List<TransactionHistory> transactionhistoryList = new List<TransactionHistory>();
+            if (search != null)
+                transactionhistoryList = _dbContext.TransactionHistories.Where(x => x.BookPlace.BookCatalog.ISBN.Contains(search) || x.ApplicationUser.Name.Contains(search)).ToList();
+            else
+                transactionhistoryList = _dbContext.TransactionHistories.ToList();
+            return transactionhistoryList;
+        }
+
+        public List<TransactionHistory> GetTransactionHistories(List<TransactionHistory> transactionhistoryList,int pageNo)
         {
             int NoOfRecordsPerPage = 15;
-            int NoOfRecordsToSkip = (pageNo - 1) * NoOfRecordsPerPage;
-            List<TransactionHistory> transactionhistoryList = new List<TransactionHistory>();
-            if (search!=null)
-                transactionhistoryList = _dbContext.TransactionHistories.Where(x=>x.BookPlace.BookCatalog.ISBN.Equals(search)).OrderByDescending(x=>x.TrasactionDate).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
+            int NoOfRecordsToSkip = (pageNo - 1) * NoOfRecordsPerPage; 
+            if(transactionhistoryList.Count>0)
+                transactionhistoryList= transactionhistoryList.OrderByDescending(x => x.TrasactionDate).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
             else
                 transactionhistoryList= _dbContext.TransactionHistories.OrderByDescending(x => x.TrasactionDate).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
             return transactionhistoryList;
-        }        
+        }
 
-        public List<TransactionHistory> GetTransactionHistoriesByUserId(int userId,int pageNo)
+
+        public List<TransactionHistory> GetUserTransactionHistories(int userId)
         {
-            int NoOfRecordsPerPage = 15;
-            int NoOfRecordsToSkip = (pageNo - 1) * NoOfRecordsPerPage;
-            List<TransactionHistory> transactionhistoryList = _dbContext.TransactionHistories.Where(x => x.ApplicationUserId == userId).OrderByDescending(x => x.TrasactionDate).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
+            List<TransactionHistory> transactionhistoryList = new List<TransactionHistory>();
+            if (userId != 0)
+                transactionhistoryList = _dbContext.TransactionHistories.Where(x => x.ApplicationUserId==userId).ToList();
             return transactionhistoryList;
-        }        
+        }
+
+        public List<TransactionHistory> SearchUserTransactionHistories(List<TransactionHistory> transactionhistoryList, string search)
+        {            
+            if (search != null)
+                transactionhistoryList = transactionhistoryList.Where(x => x.BookPlace.BookCatalog.ISBN.Contains(search)).ToList();
+            return transactionhistoryList;
+        }
+
+
 
         public string Create(TransactionHistory transactionHistory)
         {
@@ -54,9 +67,14 @@ namespace LCMS.DAL.Repository.Class
             return "Fail";
         }
 
-        public int GetTotalCount()
+        public int GetCount(int userId,string search)
         {
-            return _dbContext.TransactionHistories.Count();
+            List<TransactionHistory> transactionHistoryList = _dbContext.TransactionHistories.ToList();
+            if (userId != 0)
+                transactionHistoryList = transactionHistoryList.Where(x => x.ApplicationUserId == userId).ToList();
+            if (search != null)
+                transactionHistoryList=transactionHistoryList.Where(x => x.BookPlace.BookCatalog.ISBN.Contains(search) || x.ApplicationUser.Name.Contains(search)).ToList();
+            return transactionHistoryList.Count;
         }
     }
 }

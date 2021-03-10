@@ -4939,7 +4939,6 @@
     <Content Include="Views\BookPlace\MyCheckOuts.cshtml" />
     <Content Include="Views\BookPlace\Create.cshtml" />
     <Content Include="Views\BookCatalog\Create.cshtml" />
-    <Content Include="Views\ApplicationUser\TrialIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

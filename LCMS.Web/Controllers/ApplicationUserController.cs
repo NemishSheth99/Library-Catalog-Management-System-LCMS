@@ -187,9 +187,14 @@ namespace LCMS.Web.Controllers
 
         public ActionResult UserIndex()
         {
-            ApplicationUserResponse response= _applicationUserServiceProxy.GetApplicationUsers();
-            ViewBag.UserCount = response.Count;
-            return View(response.ApplicationUserList);
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult GetApplicationUserIndex(int pageNo, string search)
+        {
+            ApplicationUserResponse userResponse = _applicationUserServiceProxy.GetApplicationUsers(pageNo, search);
+            return Json(userResponse, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Create()
@@ -329,22 +334,7 @@ namespace LCMS.Web.Controllers
         }
 
         #endregion
-
-        #region TrialPagination
-
-        public ActionResult TrialIndex()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult GetUserList()
-        {
-            ApplicationUserResponse response = _applicationUserServiceProxy.GetApplicationUsers();
-            return Json(response, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
+        
 
     }
 }
