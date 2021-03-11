@@ -32,9 +32,9 @@ namespace LCMS.DAL.Repository.Class
             int NoOfRecordsPerPage = 15;
             int NoOfRecordsToSkip = (pageNo - 1) * NoOfRecordsPerPage; 
             if(transactionhistoryList.Count>0)
-                transactionhistoryList= transactionhistoryList.OrderByDescending(x => x.TrasactionDate).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
+                transactionhistoryList= transactionhistoryList.OrderByDescending(x => x.TransactionDate).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
             else
-                transactionhistoryList= _dbContext.TransactionHistories.OrderByDescending(x => x.TrasactionDate).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
+                transactionhistoryList= _dbContext.TransactionHistories.OrderByDescending(x => x.TransactionDate).Skip(NoOfRecordsToSkip).Take(NoOfRecordsPerPage).ToList();
             return transactionhistoryList;
         }
 
@@ -75,6 +75,11 @@ namespace LCMS.DAL.Repository.Class
             if (search != null)
                 transactionHistoryList=transactionHistoryList.Where(x => x.BookPlace.BookCatalog.ISBN.Contains(search) || x.ApplicationUser.Name.Contains(search)).ToList();
             return transactionHistoryList.Count;
+        }
+
+        public int UserTransactionCount(int userId)
+        {
+            return _dbContext.TransactionHistories.Where(x => x.ApplicationUserId == userId).Count();
         }
     }
 }

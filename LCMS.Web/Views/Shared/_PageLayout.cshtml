@@ -58,18 +58,14 @@
                                             <a href="/ApplicationUser/LibrarianDashboard"><i class="fa fa-dashboard"></i> Dashboard </a>
                                         </li>
                                         <li>
-                                            <a><i class="fa fa-user"></i> Application User <span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li><a href="/ApplicationUser/Create">Add Application User</a></li>
-                                                <li><a href="/ApplicationUser/UserIndex">Manage Application User</a></li>
-                                            </ul>
+                                            <a href="/ApplicationUser/UserIndex"><i class="fa fa-user"></i> Application User </a>
                                         </li>
                                         <li>
-                                            <a><i class="fa fa-book"></i> Book Catalog <span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
+                                            <a href="/Bookcatalog/BookCatalogIndex"><i class="fa fa-book"></i> Book Catalog </a>
+                                            @*<ul class="nav child_menu">
                                                 <li><a href="/Bookcatalog/Create">Add Book Catalog</a></li>
                                                 <li><a href="/Bookcatalog/BookCatalogIndex">Manage Book Catalog</a></li>
-                                            </ul>
+                                            </ul>*@
                                         </li>
                                         <li>
                                             <a href="/TransactionHistory/TransactionHistoryIndex"><i class="fa fa-history"></i> Transaction history </a>
@@ -115,15 +111,16 @@
                             @if (Session["auname"] != null)
                             {
                                 <li class="nav-item dropdown open" style="padding-left: 15px;padding-right: 15px;">
-                                    <a href="" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">@*<img src="~/Image/user.png" alt="">*@
-                                        @Session["auname"].ToString()
-                                    </a>
-                                    <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/ApplicationUser/EditProfile/@Session["auid"]"><i class="fa fa-pencil-square-o pull-left"></i> Edit Profile</a>
-                                        <a class="dropdown-item" href="/ApplicationUser/ChangePassword"><i class="fa fa-key pull-left"></i> Change Password</a>
-                                        <a class="dropdown-item" href="/ApplicationUser/LogOut"><i class="fa fa-sign-out pull-left"></i> Log Out</a>
-                                    </div>
-                                </li>
+                                    <a href="" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                        @*<img src="~/Image/user.png" alt="">*@
+                                    @Session["auname"].ToString()
+                                </a>
+                                <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/ApplicationUser/EditProfile/@Session["auid"]"><i class="fa fa-pencil-square-o pull-left"></i> Edit Profile</a>
+                                    <a class="dropdown-item" href="/ApplicationUser/ChangePassword"><i class="fa fa-key pull-left"></i> Change Password</a>
+                                    <a class="dropdown-item" href="/ApplicationUser/LogOut"><i class="fa fa-sign-out pull-left"></i> Log Out</a>
+                                </div>
+                            </li>
                             }
                         </ul>
                     </nav>

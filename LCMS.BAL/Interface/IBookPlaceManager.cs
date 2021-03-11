@@ -20,5 +20,7 @@ namespace LCMS.BAL.Interface
         List<BookPlaceDetail> GetUserCheckOutBooks(int userId);       
         string CheckInBook(int id);
         string CheckOutBook(int id, int userId);
+        int GetCheckOutCount();
+        int UserCheckOutCount(int userId);
     }
 }

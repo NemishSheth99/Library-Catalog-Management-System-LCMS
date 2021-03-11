@@ -12,6 +12,6 @@ namespace LCMS.Models.TransactionHistory
         public int BookId { get; set; }
         public string TransactionType { get; set; }
         public int ApplicationUserId { get; set; }
-        public DateTime TrasactionDate { get; set; }
+        public DateTime TransactionDate { get; set; }
     }
 }

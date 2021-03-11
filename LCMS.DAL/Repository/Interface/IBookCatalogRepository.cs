@@ -16,5 +16,6 @@ namespace LCMS.DAL.Repository.Interface
         int Create(BookCatalog bookCatalog);
         int Update(BookCatalog bookCatalog);
         string Delete(int id);
+        int ActiveCatalogCount();
     }
 }

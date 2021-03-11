@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace LCMS.Web.Models
 {
@@ -14,9 +15,10 @@ namespace LCMS.Web.Models
         [Display(Name = "Name")]
         public string Name { get; set; }
 
+        [AllowHtml]
         [Display(Name = "Summary")]
-        [Required(ErrorMessage = "Please Enter Summary")]
-        [MinLength(50, ErrorMessage = "Summary must contain atleast 50 characters"), MaxLength(350, ErrorMessage = "Summary can not contain more than 350 characters")]
+        [Required(ErrorMessage = "Please Enter Summary")]        
+        [MinLength(50, ErrorMessage = "Summary must contain atleast 50 characters")]
         public string Summary { get; set; }
 
         [Display(Name = "ISBN")]

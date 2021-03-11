@@ -11,10 +11,10 @@
         <div class="col-md-6">
             <input type="text" id="txtSearch" name="txtSearch" class="form-control" placeholder="Search" />
         </div>
-        <button id="btnSearch" class="btn-sm btn-primary" onclick="searchHistory(1)"><i class="fa fa-search"></i> Serach</button>
-        <button id="btnClear" class="btn-sm btn-danger" onclick="clearSearch()"><i class="fa fa-eraser"></i> Clear</button>
+        <button id="btnSearch" class="btn-sm btn-info" onclick="searchHistory(1)"><i class="fa fa-search"></i> Serach</button>
+        <button id="btnClear" class="btn-sm btn-secondary" onclick="clearSearch()"><i class="fa fa-eraser"></i> Clear</button>
     </div>
-    <hr/>
+    <br />
     <div id="divMess">
         <h6>No data found!!!</h6>
     </div>
@@ -39,7 +39,7 @@
                     <td><span data-bind="text: BookPlace.MaterialType"></span></td>
                     <td><span data-bind="text: TransactionType"></span></td>
                     <td><span data-bind="text: ApplicationUser.Name"></span></td>
-                    <td><span data-bind="text: TrasactionDate"></span></td>
+                    <td><span data-bind="date: TransactionDate"></span></td>
                 </tr>
             </tbody>
         </table>
@@ -49,6 +49,7 @@
 
 @section Scripts {
     <script src="~/Assets/vendors/knockout/knockout-3.5.1.js"></script>
+    <script src="~/Assets/vendors/moment/min/moment.min.js"></script>
     <script src="~/Assets/vendors/jquery.pagination/jquery.simplePagination.js"></script>
     <link href="~/Assets/vendors/jquery.pagination/simplePagination.css" rel="stylesheet" />
     <script>
@@ -59,6 +60,14 @@
             $("#divMess").hide();
             ko.applyBindings(historyListVM);
             loadHistory();
+            ko.bindingHandlers.date = {
+                update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                    var valueUnwrapped = ko.utils.unwrapObservable(valueAccessor());
+                    var textContent = moment(valueUnwrapped).format("DD/MM/YYYY");
+                    ko.bindingHandlers.text.update(element, function () { return textContent; });
+                }
+            };
+            
         });
 
         var historyListVM = {
@@ -80,7 +89,7 @@
                         if (response.TransactionHistoryList != null) {
                             $("#divData").show();
                             $("#divMess").hide();
-                            vm.list(response.TransactionHistoryList);
+                            vm.list(response.TransactionHistoryList);                            
                             vm.totalCount(response.Count);
                             if (vm.currentPageIndex() === 1) {
                                 initPaging();
@@ -97,6 +106,9 @@
                 }).always(function () {
                 });
             }
+            //formatDate: function (textValue) {
+            //    return moment(textValue).format("DD/MM/YYYY");
+            //}
         };
 
         function loadHistory() {
@@ -126,10 +138,11 @@
                     historyListVM.currentPageIndex(pageNumber);
                     var search = $("#txtSearch").val();
                     historyListVM.getList(search);
-                    //searchHistory(pageNumber);
                 }
             });
         }
+
+        
 
     </script>
 }

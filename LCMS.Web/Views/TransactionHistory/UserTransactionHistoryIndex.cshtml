@@ -6,15 +6,15 @@
 }
 
 <body>
-
+    <h2>Tranaction History</h2>
     <div class="row">
         <div class="col-md-6">
             <input type="text" id="txtSearch" name="txtSearch" class="form-control" placeholder="Search" />
         </div>
-        <button id="btnSearch" class="btn-sm btn-primary" onclick="searchHistory(1)"><i class="fa fa-search"></i> Serach</button>
-        <button id="btnClear" class="btn-sm btn-danger" onclick="clearSearch()"><i class="fa fa-eraser"></i> Clear</button>
+        <button id="btnSearch" class="btn-sm btn-info" onclick="searchHistory(1)"><i class="fa fa-search"></i> Serach</button>
+        <button id="btnClear" class="btn-sm btn-secondary" onclick="clearSearch()"><i class="fa fa-eraser"></i> Clear</button>
     </div>
-    <hr />
+    <br />
     <div id="divMess">
         <h6>No data found!!!</h6>
     </div>
@@ -37,7 +37,7 @@
                     <td><span data-bind="text: BookPlace.PlaceCode"></span></td>
                     <td><span data-bind="text: BookPlace.MaterialType"></span></td>
                     <td><span data-bind="text: TransactionType"></span></td>
-                    <td><span data-bind="text: TrasactionDate"></span></td>
+                    <td><span data-bind="date: TransactionDate"></span></td>
                 </tr>
             </tbody>
         </table>
@@ -56,6 +56,13 @@
         $(document).ready(function () {
             $("#divMess").hide();
             ko.applyBindings(historyListVM);
+            ko.bindingHandlers.date = {
+                update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                    var valueUnwrapped = ko.utils.unwrapObservable(valueAccessor());
+                    var textContent = moment(valueUnwrapped).format("DD/MM/YYYY");
+                    ko.bindingHandlers.text.update(element, function () { return textContent; });
+                }
+            };
             loadHistory();
         });
 

@@ -55,5 +55,12 @@ namespace LCMS.WebAPI.Controllers
             return Ok(_bookCatalogManager.Delete(id));
         }
 
+        [Route("api/BookCatalogAPI/ActiveCatalogCount")]
+        [HttpGet]
+        public IHttpActionResult ActiveCatalogCount()
+        {
+            return Ok(_bookCatalogManager.ActiveCatalogCount());
+        }
+
     }
 }

@@ -69,5 +69,10 @@ namespace LCMS.ServiceProxy.ApplicationUser
         {
             return MakeRequest<string, ChangePasswordApplicationUser>("ChangePassword", ServiceRequestType.Put, changePasswordApplicationUser);
         }
+        public int ActiveUserCount()
+        {
+            var queryParam = new Dictionary<string, string> { };
+            return GetRequest<int>("ActiveUserCount", queryParam);
+        }
     }
 }

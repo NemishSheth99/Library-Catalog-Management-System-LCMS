@@ -4,7 +4,43 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
-<h2>UserDashboard</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="">
+            <div class="x_content">
+                <div class="row">
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+                        <div class="tile-stats" style="padding-bottom:20px">
+                            <div class="icon">
+                                <i class="fa fa-book"></i>
+                            </div>
+                            <div class="count" style="color:#34495E ">@ViewBag.CatalogCount</div>
+                            <h3 style="color:#73879C">Total Book Catalogs</h3>
+                        </div>
+                    </div>
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+                        <div class="tile-stats" style="padding-bottom:20px">
+                            <div class="icon">
+                                <i class="fa fa-share-square-o"></i>
+                            </div>
+                            <div class="count" style="color:#34495E ">179</div>
+                            <h3 style="color:#73879C">Total Checked Out Books</h3>
+                        </div>
+                    </div>
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6  ">
+                        <div class="tile-stats" style="padding-bottom:20px">
+                            <div class="icon">
+                                <i class="fa fa-list"></i>
+                            </div>
+                            <div class="count" style="color:#34495E ">179</div>
+                            <h3 style="color:#73879C">Total Transactions</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

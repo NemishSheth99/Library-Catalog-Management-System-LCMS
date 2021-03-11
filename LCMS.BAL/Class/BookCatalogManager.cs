@@ -113,5 +113,10 @@ namespace LCMS.BAL.Class
         {
             return _bookCatalogRepository.Delete(id);
         }
+
+        public int ActiveCatalogCount()
+        {
+            return _bookCatalogRepository.ActiveCatalogCount();
+        }
     }
 }

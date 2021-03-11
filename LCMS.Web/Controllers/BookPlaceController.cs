@@ -8,6 +8,7 @@ using LCMS.ServiceProxy.TransactionHistory;
 using LCMS.Models.BookPlace;
 using LCMS.Models.TransactionHistory;
 using LCMS.Web.Models;
+using LCMS.Web.Filters;
 using AutoMapper;
 
 namespace LCMS.Web.Controllers
@@ -24,7 +25,8 @@ namespace LCMS.Web.Controllers
         }
 
         #region Librarian
-        // GET: BookPlace
+
+        [CustomAuthorization("Librarian")]
         public ActionResult BookPlaceIndex(int id)
         {
             Session["bcid"] = id;
@@ -32,11 +34,13 @@ namespace LCMS.Web.Controllers
             return View(listBookPlaceDetail);
         }
 
+        [CustomAuthorization("Librarian")]
         public ActionResult Create()
         {
             return View(new BookPlaceCreateVM());
         }
 
+        [CustomAuthorization("Librarian")]
         public ActionResult Edit(int id)
         {
             BookPlaceCreateVM bookPlaceCreateVM = new BookPlaceCreateVM();
@@ -49,58 +53,51 @@ namespace LCMS.Web.Controllers
 
         public ActionResult CreateOrEditBookPlace(BookPlaceCreateVM bookPlaceVM)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<BookPlaceCreateVM, AddBookPlace>());
+                var mapper = new Mapper(config);
+                AddBookPlace bookPlace = mapper.Map<AddBookPlace>(bookPlaceVM);
+                bookPlace.BookCatalogId = Convert.ToInt32(Session["bcid"]);
+                bookPlace.BorrowedBy = null;
+                bookPlace.BorrowedOn = null;
+                bookPlace.IsDeleted = false;
+                string transactionStatus;
+                int id = 0;
+                if (bookPlaceVM.Id == 0)
                 {
-                    var config = new MapperConfiguration(cfg => cfg.CreateMap<BookPlaceCreateVM, AddBookPlace>());
-                    var mapper = new Mapper(config);
-                    AddBookPlace bookPlace = mapper.Map<AddBookPlace>(bookPlaceVM);                    
-                    bookPlace.BookCatalogId = Convert.ToInt32(Session["bcid"]);
-                    bookPlace.BorrowedBy = null;
-                    bookPlace.BorrowedOn = null;
-                    bookPlace.IsDeleted = false;
-                    string transactionStatus;
-                    int id = 0;
-                    if (bookPlaceVM.Id == 0)
-                    {
-                        bookPlace.CreatedDate = DateTime.Now;
-                        bookPlace.UpdatedDate = null;
-                        id = _bookPlaceServiceProxy.Create(bookPlace);
-                        transactionStatus = "ADD";
-                    }
-                    else
-                    {
-                        bookPlace.CreatedDate = null;
-                        bookPlace.UpdatedDate = DateTime.Now;
-                        id = _bookPlaceServiceProxy.Update(bookPlace);
-                        transactionStatus = "UPDATE";
-                    }
-                                        
-                    if (id > 0)
-                    {
-                        AddTransactionHistory transactionHistory = new AddTransactionHistory();
-                        transactionHistory.BookId = id;
-                        transactionHistory.TransactionType = transactionStatus;
-                        transactionHistory.TrasactionDate = DateTime.Now;
-                        transactionHistory.ApplicationUserId = Convert.ToInt32(Session["auid"]);
-                        string r = _transactionHistoryServiceProxy.Create(transactionHistory);
-                        if (r == "Success")
-                            return RedirectToAction("BookPlaceIndex", "BookPlace", new { @id = Convert.ToInt32(Session["bcid"]) });
-                        else
-                            return RedirectToAction("ErrorPage");
-                    }
-
+                    bookPlace.CreatedDate = DateTime.Now;
+                    bookPlace.UpdatedDate = null;
+                    id = _bookPlaceServiceProxy.Create(bookPlace);
+                    transactionStatus = "ADD";
                 }
-                return RedirectToAction("ErrorPage");
-            }
-            catch (Exception ex)
-            {
-                return RedirectToAction("ErrorPage");
-            }
+                else
+                {
+                    bookPlace.CreatedDate = null;
+                    bookPlace.UpdatedDate = DateTime.Now;
+                    id = _bookPlaceServiceProxy.Update(bookPlace);
+                    transactionStatus = "UPDATE";
+                }
 
+                if (id > 0)
+                {
+                    AddTransactionHistory transactionHistory = new AddTransactionHistory();
+                    transactionHistory.BookId = id;
+                    transactionHistory.TransactionType = transactionStatus;
+                    transactionHistory.TransactionDate = DateTime.Now;
+                    transactionHistory.ApplicationUserId = Convert.ToInt32(Session["auid"]);
+                    string r = _transactionHistoryServiceProxy.Create(transactionHistory);
+                    if (r == "Success")
+                        return RedirectToAction("BookPlaceIndex", "BookPlace", new { @id = Convert.ToInt32(Session["bcid"]) });
+                    else
+                        return RedirectToAction("ErrorPage");
+                }
+
+            }
+            return RedirectToAction("ErrorPage");
         }
 
+        [CustomAuthorization("Librarian")]
         public ActionResult Delete(int id)
         {
             string result;
@@ -110,7 +107,7 @@ namespace LCMS.Web.Controllers
                 AddTransactionHistory transactionHistory = new AddTransactionHistory();
                 transactionHistory.BookId = id;
                 transactionHistory.TransactionType = "REMOVE";
-                transactionHistory.TrasactionDate = DateTime.Now;
+                transactionHistory.TransactionDate = DateTime.Now;
                 transactionHistory.ApplicationUserId = Convert.ToInt32(Session["auid"]);
                 string r = _transactionHistoryServiceProxy.Create(transactionHistory);
                 if (r == "Success")
@@ -123,12 +120,14 @@ namespace LCMS.Web.Controllers
 
         #region Other User
 
+        [CustomAuthorization("Lawyer", "Specialist")]
         public ActionResult ShowBookPlace(int id)
         {
             List<BookPlaceDetail> listBookPlaceDetail = _bookPlaceServiceProxy.GetAvailableBooksByCatalog(id);
             return View(listBookPlaceDetail);
         }
 
+        [CustomAuthorization("Lawyer", "Specialist")]
         public ActionResult CheckOutBook(int id)
         {
             BookPlaceCheckOut bookPlaceCheckOut = new BookPlaceCheckOut();
@@ -140,7 +139,7 @@ namespace LCMS.Web.Controllers
                 AddTransactionHistory transactionHistory = new AddTransactionHistory();
                 transactionHistory.BookId = id;
                 transactionHistory.TransactionType = "CHECK_OUT";
-                transactionHistory.TrasactionDate = DateTime.Now;
+                transactionHistory.TransactionDate = DateTime.Now;
                 transactionHistory.ApplicationUserId = Convert.ToInt32(Session["auid"]);
                 string r = _transactionHistoryServiceProxy.Create(transactionHistory);
                 if (r == "Success")
@@ -156,6 +155,7 @@ namespace LCMS.Web.Controllers
                 return RedirectToAction("ErrorPage");
         }
 
+        [CustomAuthorization("Lawyer", "Specialist")]
         public ActionResult MyCheckOuts()
         {
             int userId = Convert.ToInt32(Session["auid"]);
@@ -163,6 +163,7 @@ namespace LCMS.Web.Controllers
             return View(listBookPlaceDetail);
         }
 
+        
         public ActionResult CheckInBook(int id)
         {
             string result = _bookPlaceServiceProxy.CheckInBookPlace(id);
@@ -171,7 +172,7 @@ namespace LCMS.Web.Controllers
                 AddTransactionHistory transactionHistory = new AddTransactionHistory();
                 transactionHistory.BookId = id;
                 transactionHistory.TransactionType = "CHECK_IN";
-                transactionHistory.TrasactionDate = DateTime.Now;
+                transactionHistory.TransactionDate = DateTime.Now;
                 transactionHistory.ApplicationUserId = Convert.ToInt32(Session["auid"]);
                 string r = _transactionHistoryServiceProxy.Create(transactionHistory);
                 if (r == "Success")
@@ -180,13 +181,13 @@ namespace LCMS.Web.Controllers
                     {
                         TempData["toast"] = "Book checked-in successfully.";
                         TempData["type"] = "success";
-                        return RedirectToAction("ShowCatalog", "BookCatalog");
+                        return RedirectToAction("MyCheckOuts");
                     }
                     else
                     {
                         TempData["toast"] = "Book checked-in successfully.";
                         TempData["type"] = "success";
-                        return RedirectToAction("BookCatalogIndex", "BookCatalog");
+                        return RedirectToAction("BookPlaceIndex", "BookPlace", new { @id = Convert.ToInt32(Session["bcid"]) });                        
                     }
                 }
                 else

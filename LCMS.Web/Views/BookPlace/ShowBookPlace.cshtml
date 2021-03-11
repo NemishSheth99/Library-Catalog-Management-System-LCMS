@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
+<h2>Book Places </h2><br /><br />
 @if (Model != null && Model.Count() != 0)
 {
 <table class="table">
@@ -27,7 +28,7 @@
             @Html.DisplayFor(modelItem => item.MaterialType)
         </td>
         <td>
-            <a href="/BookPlace/CheckOutBook/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-primary">Chech Out</a>
+            <a href="/BookPlace/CheckOutBook/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-info">Check Out</a>
         </td>
         
     </tr>

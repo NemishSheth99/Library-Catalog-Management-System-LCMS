@@ -18,7 +18,7 @@ namespace LCMS.DAL.Database
         public Nullable<int> BookId { get; set; }
         public string TransactionType { get; set; }
         public Nullable<int> ApplicationUserId { get; set; }
-        public Nullable<System.DateTime> TrasactionDate { get; set; }
+        public Nullable<System.DateTime> TransactionDate { get; set; }
     
         public virtual ApplicationUser ApplicationUser { get; set; }
         public virtual BookPlace BookPlace { get; set; }

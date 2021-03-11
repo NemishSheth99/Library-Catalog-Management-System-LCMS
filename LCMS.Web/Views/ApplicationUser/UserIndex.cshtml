@@ -9,14 +9,15 @@
     <div class="content-box-md">
         <div class="container">
             <h2>Application Users </h2>
+            <a href="/ApplicationUser/Create" class="btn btn-primary"><i class="fa fa-plus"></i> Add User </a><br /><br />
             <div class="row">
                 <div class="col-md-6">
                     <input type="text" id="txtSearch" name="txtSearch" class="form-control" placeholder="Search" />
                 </div>
-                <button id="btnSearch" class="btn-sm btn-primary" onclick="searchUser(1)"><i class="fa fa-search"></i> Serach</button>
-                <button id="btnClear" class="btn-sm btn-danger" onclick="clearSearch()"><i class="fa fa-eraser"></i> Clear</button>
+                <button id="btnSearch" class="btn-sm btn-info" onclick="searchUser(1)"><i class="fa fa-search"></i> Serach</button>
+                <button id="btnClear" class="btn-sm btn-secondary" onclick="clearSearch()"><i class="fa fa-eraser"></i> Clear</button>
             </div>
-            <hr />
+            <br/>
             <div id="divMess">
                 <h6>No data found!!!</h6>
             </div>
@@ -49,7 +50,7 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <a data-bind="attr: { href: '/ApplicationUser/Edit/' + $data.Id }" class="btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+                                        <a data-bind="attr: { href: '/ApplicationUser/Edit/' + $data.Id }" class="btn-sm btn-info"><i class="fa fa-pencil"></i></a>
                                         <a data-bind="attr: { href: '/ApplicationUser/Delete/' + $data.Id }" class="btn-sm btn-danger"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>

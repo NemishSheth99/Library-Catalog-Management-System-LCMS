@@ -141,6 +141,10 @@ namespace LCMS.BAL.Class
             return _applicationUserRepository.ChangePassword(id, oldPassword,newPassword);
         }
 
-        
+        public int ActiveUserCount()
+        {
+            return _applicationUserRepository.ActiveUserCount();
+        }
+
     }
 }

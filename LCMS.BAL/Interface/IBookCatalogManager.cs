@@ -14,5 +14,6 @@ namespace LCMS.BAL.Interface
         int Create(AddBookCatalog addBookCatalog);
         int Update(AddBookCatalog addBookCatalog);
         string Delete(int id);
+        int ActiveCatalogCount();
     }
 }

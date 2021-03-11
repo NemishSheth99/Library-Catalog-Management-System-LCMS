@@ -71,7 +71,7 @@
           <Property Name="BookId" Type="int" />
           <Property Name="TransactionType" Type="varchar" MaxLength="50" />
           <Property Name="ApplicationUserId" Type="int" />
-          <Property Name="TrasactionDate" Type="datetime" />
+          <Property Name="TransactionDate" Type="datetime" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -283,7 +283,7 @@
           <Property Name="BookId" Type="Int32" />
           <Property Name="TransactionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ApplicationUserId" Type="Int32" />
-          <Property Name="TrasactionDate" Type="DateTime" Precision="3" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ApplicationUser" Relationship="Self.FK_TransactionHistory_ApplicationUser" FromRole="TransactionHistory" ToRole="ApplicationUser" />
           <NavigationProperty Name="BookPlace" Relationship="Self.FK_TransactionHistory_BookPlace" FromRole="TransactionHistory" ToRole="BookPlace" />
         </EntityType>
@@ -492,7 +492,7 @@
                 <ScalarProperty Name="BookId" ColumnName="BookId" />
                 <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
                 <ScalarProperty Name="ApplicationUserId" ColumnName="ApplicationUserId" />
-                <ScalarProperty Name="TrasactionDate" ColumnName="TrasactionDate" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

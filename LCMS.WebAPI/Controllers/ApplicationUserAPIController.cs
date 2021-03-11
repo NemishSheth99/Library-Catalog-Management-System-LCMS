@@ -25,14 +25,14 @@ namespace LCMS.WebAPI.Controllers
         public IHttpActionResult LoginUser(ApplicationUserLogin applicationUserLogin)
         {
             ApplicationUserDetail applicationUserDetail = _applicationUserManager.Login(applicationUserLogin);
-            if (applicationUserDetail.EmailAddress != null)
-            {               
+            //if (applicationUserDetail.EmailAddress != null)
+            //{               
                 return Ok(applicationUserDetail);
-            }
-            else
-            {                
-                return Ok("No User Found!!!");
-            }
+            //}
+            //else
+            //{                
+            //    return Ok("No User Found!!!");
+            //}
         }
 
         [Route("api/ApplicationUserAPI/GetApplicationUsers")]
@@ -119,6 +119,13 @@ namespace LCMS.WebAPI.Controllers
         public IHttpActionResult ChangePassword(ChangePasswordApplicationUser changePasswordApplicationUser)
         {
             return Ok(_applicationUserManager.ChangePassword(changePasswordApplicationUser.Id,changePasswordApplicationUser.OldPassword,changePasswordApplicationUser.NewPassword));
+        }
+
+        [Route("api/ApplicationUserAPI/ActiveUserCount")]
+        [HttpGet]
+        public IHttpActionResult ActiveUserCount()
+        {
+            return Ok(_applicationUserManager.ActiveUserCount());
         }
     }
 }

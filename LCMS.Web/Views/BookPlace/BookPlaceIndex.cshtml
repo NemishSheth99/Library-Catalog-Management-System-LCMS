@@ -5,8 +5,9 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
-<a href="/BookPlace/Create" class="btn-sm btn-primary"><i class="fa fa-plus"></i> Add</a>
-<hr />
+<h2>Book Places </h2>
+<a href="/BookPlace/Create" class="btn btn-primary"><i class="fa fa-plus"></i> Add Book </a>
+<br /><br/>
 @if (Model != null && Model.Count() != 0)
 {
 <table class="table">
@@ -69,7 +70,7 @@
                 </td>
             }
             <td>
-                <a href="/BookPlace/Edit/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-primary"><i class="fa fa-pencil"></i></a>
+                <a href="/BookPlace/Edit/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-info"><i class="fa fa-pencil"></i></a>
                 <a href="/BookPlace/Delete/@Html.DisplayFor(modelItem => item.Id)" class="btn-sm btn-danger"><i class="fa fa-trash"></i> </a>
             </td>
         </tr>

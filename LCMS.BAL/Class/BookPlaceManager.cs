@@ -145,6 +145,16 @@ namespace LCMS.BAL.Class
             return _bookPlaceRepository.CheckOutBook(id,userId);
         }
 
-        
+        public int GetCheckOutCount()
+        {
+            return _bookPlaceRepository.GetCheckOutCount();
+        }
+
+        public int UserCheckOutCount(int userId)
+        {
+            return _bookPlaceRepository.UserCheckOutCount(userId);
+        }
+
+
     }
 }

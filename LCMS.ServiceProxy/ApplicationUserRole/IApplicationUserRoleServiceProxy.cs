@@ -13,5 +13,6 @@ namespace LCMS.ServiceProxy.ApplicationUserRole
         string Create(AddApplicationUserRoleRequest applicationUserRoleRequest);
 
         string Update(AddApplicationUserRoleRequest applicationUserRoleRequest);
+        
     }
 }

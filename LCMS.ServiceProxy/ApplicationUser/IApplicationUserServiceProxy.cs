@@ -19,5 +19,6 @@ namespace LCMS.ServiceProxy.ApplicationUser
         string Delete(int id);
         string UpdateActiveStatus(int id);
         string ChangePassword(ChangePasswordApplicationUser changePasswordApplicationUser);
+        int ActiveUserCount();
     }
 }

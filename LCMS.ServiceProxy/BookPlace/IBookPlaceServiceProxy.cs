@@ -19,5 +19,7 @@ namespace LCMS.ServiceProxy.BookPlace
         List<BookPlaceDetail> GetUserCheckoutBooks(int userId);
         string CheckOutBookPlace(BookPlaceCheckOut bookPlaceCheckOut);
         string CheckInBookPlace(int id);
+        int GetCheckOutCount();
+        int UserCheckOutCount(int userId);
     }
 }

@@ -20,5 +20,7 @@ namespace LCMS.BAL.Interface
         string UpdateActiveStatus(int id);
         string Delete(int id);
         string ChangePassword(int id, string oldPassword, string newPassword);
+
+        int ActiveUserCount();
     }
 }
