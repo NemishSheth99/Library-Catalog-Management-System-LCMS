@@ -6,7 +6,7 @@
 }
 
 <body>
-    <h2>Tranaction History</h2>
+    <h2>Tranaction histories</h2>
     <div class="row">
         <div class="col-md-6">
             <input type="text" id="txtSearch" name="txtSearch" class="form-control" placeholder="Search" />
@@ -63,7 +63,7 @@
             ko.bindingHandlers.date = {
                 update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
                     var valueUnwrapped = ko.utils.unwrapObservable(valueAccessor());
-                    var textContent = moment(valueUnwrapped).format("DD/MM/YYYY");
+                    var textContent = moment(valueUnwrapped).format("DD-MM-YYYY hh:mm:ss A");
                     ko.bindingHandlers.text.update(element, function () { return textContent; });
                 }
             };

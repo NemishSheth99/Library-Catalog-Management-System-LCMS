@@ -79,6 +79,7 @@ namespace LCMS.Web.Controllers
                 TempData["CoverImage"] = bookCatalogDetail.CoverImage;
                 List<AuthorDetail> authorList = _authorServiceProxy.GetAuthorsByCatalog(id);
                 List<string> author = new List<string>();
+
                 foreach (var items in authorList)
                 {
                     author.Add(items.Name);
@@ -86,7 +87,7 @@ namespace LCMS.Web.Controllers
                 if (author != null)
                 {
                     bookCatalogCreateVM.Author = author;
-                    ViewBag.List = author;
+                    ViewBag.List = author.Select(x => new SelectListItem { Value=x, Text=x, Selected=true }).ToList();
                 }
             }
             return View(bookCatalogCreateVM);

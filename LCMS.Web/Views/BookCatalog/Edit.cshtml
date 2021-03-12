@@ -86,7 +86,7 @@
                                 <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6">
-                                @Html.DropDownListFor(model => model.Author, new MultiSelectList(ViewBag.List), new { @id = "Author", @class = "form-control js-example-basic-multiple", multiple = "mutliple" })
+                                @Html.DropDownListFor(model => model.Author, new SelectList(ViewBag.List,"Value","Text"), new { @id = "Author", @class = "form-control js-example-basic-multiple", multiple = "mutliple" })
                                 @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -136,7 +136,7 @@
             $('.js-example-basic-multiple').select2({
                 multiple: true,
                 tags: true,
-                tokenSeparators: [',', ' ']
+                tokenSeparators: [',', '|']
             });
 
         });

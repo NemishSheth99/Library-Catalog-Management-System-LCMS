@@ -331,8 +331,7 @@ namespace LCMS.Web.Controllers
             ViewBag.TransactionCount = _transactionHistoryServiceProxy.UserTransactionCount(Convert.ToInt32(Session["auid"]));
             return View();
         }
-
-        [ExceptionHandle]
+        
         public ActionResult TrialException()
         {
             int a,b,c;
