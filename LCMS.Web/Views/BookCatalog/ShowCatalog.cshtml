@@ -11,10 +11,10 @@
     <div class="col-md-6">
         <input type="text" id="txtSearch" name="txtSearch" class="form-control" placeholder="Search" />
     </div>
-    <button id="btnSearch" class="btn-sm btn-primary" onclick="searchUser(1)"><i class="fa fa-search"></i> Serach</button>
-    <button id="btnClear" class="btn-sm btn-danger" onclick="clearSearch()"><i class="fa fa-eraser"></i> Clear</button>
+    <button id="btnSearch" class="btn-sm btn-info" onclick="searchUser(1)"><i class="fa fa-search"></i> Serach</button>
+    <button id="btnClear" class="btn-sm btn-secondary" onclick="clearSearch()"><i class="fa fa-eraser"></i> Clear</button>
 </div>
-<hr />
+<br />
 <div id="divMess">
     <h6>No data found!!!</h6>
 </div>
@@ -24,7 +24,6 @@
             <tr>
                 <th width="5%">Image</th>
                 <th>Name</th>
-                <th>Summary</th>
                 <th>ISBN Number</th>
                 <th>Publication Year</th>
                 <th>Edition</th>
@@ -41,7 +40,6 @@
                     <img data-bind="attr: { src:'../BookCoverImages/'+ $data.CoverImage }" height="80" width="80" />
                 </td>
                 <td><span data-bind="text: Name"></span></td>
-                <td><span data-bind="text: Summary"></span></td>
                 <td><span data-bind="text: ISBN"></span></td>
                 <td><span data-bind="text: PublicationYear"></span></td>
                 <td><span data-bind="text: Edition"></span></td>

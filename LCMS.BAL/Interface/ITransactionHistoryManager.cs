@@ -12,5 +12,6 @@ namespace LCMS.BAL.Interface
         TransactionHistoryResponse GetTransactionHistories(int pageNo,string search);
         TransactionHistoryResponse GetTransactionHistoriesByUserId(int userId,int pageNo, string search);
         string Create(AddTransactionHistory addTransactionHistory);
+        int UserTransactionCount(int userId);
     }
 }

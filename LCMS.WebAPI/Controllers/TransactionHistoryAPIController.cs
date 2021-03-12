@@ -40,5 +40,12 @@ namespace LCMS.WebAPI.Controllers
         {
             return Ok(_transactionHistoryManager.Create(addTransactionHistory));
         }
+
+        [Route("api/TransactionHistoryAPI/UserTransactionCount")]
+        [HttpGet]
+        public IHttpActionResult UserTransactionCount(int userId)
+        {
+            return Ok(_transactionHistoryManager.UserTransactionCount(userId));
+        }
     }
 }

@@ -77,6 +77,21 @@ namespace LCMS.ServiceProxy.BookPlace
         public string CheckOutBookPlace(BookPlaceCheckOut bookPlaceCheckOut)
         {
             return MakeRequest<string, BookPlaceCheckOut>("CheckOutBookPlace", ServiceRequestType.Put, bookPlaceCheckOut);
-        }   
+        }
+
+        public int GetCheckOutCount()
+        {
+            var queryParam = new Dictionary<string, string> { };
+            return GetRequest<int>("GetCheckOutCount", queryParam);
+        }
+
+        public int UserCheckOutCount(int userId)
+        {
+            var queryParam = new Dictionary<string, string>
+            {
+                {"userId", userId.ToString(CultureInfo.InvariantCulture)}
+            };
+            return GetRequest<int>("UserCheckOutCount", queryParam);
+        }
     }
 }

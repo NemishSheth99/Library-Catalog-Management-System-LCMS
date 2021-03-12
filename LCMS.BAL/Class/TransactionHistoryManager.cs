@@ -132,5 +132,10 @@ namespace LCMS.BAL.Class
             transactionHistory = mapper.Map<TransactionHistory>(addTransactionHistory);
             return _transactionHistoryRepository.Create(transactionHistory);
         }
+
+        public int UserTransactionCount(int userId)
+        {
+            return _transactionHistoryRepository.UserTransactionCount(userId);
+        }
     }
 }

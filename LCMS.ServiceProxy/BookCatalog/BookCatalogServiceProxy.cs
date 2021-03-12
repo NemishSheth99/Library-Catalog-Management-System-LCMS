@@ -48,5 +48,11 @@ namespace LCMS.ServiceProxy.BookCatalog
         {
             return MakeRequest<string, int>("DeleteBookCatalog/" + id, ServiceRequestType.Delete, 0);
         }
+
+        public int ActiveCatalogCount()
+        {
+            var queryParam = new Dictionary<string, string> { };
+            return GetRequest<int>("ActiveCatalogCount", queryParam);
+        }
     }
 }

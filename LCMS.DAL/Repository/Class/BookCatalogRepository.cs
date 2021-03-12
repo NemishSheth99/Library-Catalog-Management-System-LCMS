@@ -100,5 +100,10 @@ namespace LCMS.DAL.Repository.Class
             }
             return "Fail";
         }
+
+        public int ActiveCatalogCount()
+        {
+            return _dbContext.BookCatalogs.Where(x => x.IsDeleted == false).Count();
+        }
     }
 }

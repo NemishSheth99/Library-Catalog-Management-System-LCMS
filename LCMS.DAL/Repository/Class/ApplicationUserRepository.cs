@@ -160,6 +160,11 @@ namespace LCMS.DAL.Repository.Class
             return "Fail";
         }
 
-        
+        public int ActiveUserCount()
+        {
+            return _dbContext.ApplicationUsers.Where(x=>x.IsDeleted==false && x.Status=="A").Count();            
+        }
+
+
     }
 }

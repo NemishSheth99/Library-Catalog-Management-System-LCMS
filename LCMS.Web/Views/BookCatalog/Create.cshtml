@@ -43,7 +43,7 @@
                                 <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6">
-                                @Html.TextAreaFor(model => model.Summary, new { @class = "form-control" })
+                                @Html.TextAreaFor(model => model.Summary, new { @class = "form-control textarea-editor" })
                                 @Html.ValidationMessageFor(model => model.Summary, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -122,11 +122,13 @@
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
-
+    <link href="~/Assets/vendors/summernote/summernote.css" rel="stylesheet" />
+    <script src="~/Assets/vendors/summernote/summernote.js"></script>
+    
     <script>
 
         $(document).ready(function () {
+            loadTextEditor();
             var id = $("#Id").val();
             if (id == 0)
                 $("#PublicationYear").val("");
@@ -136,7 +138,17 @@
                 tags: true,
                 tokenSeparators: [',', ' ']
             });
+
         });
+
+        function loadTextEditor() {
+            $('.textarea-editor').summernote({
+                height: 200, // set editor height
+                minHeight: 100, // set minimum height of editor
+                maxHeight: 300, // set maximum height of editor
+                focus: true // set focus to editable area after initializing summernote
+            });
+        }
 
         function clearData() {
             $("#Name").val('');

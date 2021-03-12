@@ -50,6 +50,9 @@
     <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -135,7 +138,9 @@
     <Compile Include="Controllers\ApplicationUserController.cs" />
     <Compile Include="Controllers\BookCatalogController.cs" />
     <Compile Include="Controllers\BookPlaceController.cs" />
+    <Compile Include="Controllers\PageHandleController.cs" />
     <Compile Include="Controllers\TransactionHistoryController.cs" />
+    <Compile Include="Filters\CustomAuthorization.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3808,6 +3813,154 @@
     <Content Include="Assets\vendors\starrr\dist\starrr.css" />
     <Content Include="Assets\vendors\starrr\dist\starrr.js" />
     <Content Include="Assets\vendors\starrr\index.html" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ar-AR.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ar-AR.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ar-AR.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-az-AZ.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-az-AZ.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-az-AZ.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-bg-BG.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-bg-BG.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-bg-BG.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ca-ES.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ca-ES.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ca-ES.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-cs-CZ.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-cs-CZ.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-cs-CZ.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-da-DK.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-da-DK.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-da-DK.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-de-DE.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-de-DE.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-de-DE.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-el-GR.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-el-GR.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-el-GR.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-es-ES.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-es-ES.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-es-ES.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-es-EU.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-es-EU.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-es-EU.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-fa-IR.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-fa-IR.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-fa-IR.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-fi-FI.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-fi-FI.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-fi-FI.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-fr-FR.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-fr-FR.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-fr-FR.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-gl-ES.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-gl-ES.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-gl-ES.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-he-IL.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-he-IL.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-he-IL.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-hr-HR.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-hr-HR.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-hr-HR.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-hu-HU.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-hu-HU.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-hu-HU.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-id-ID.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-id-ID.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-id-ID.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-it-IT.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-it-IT.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-it-IT.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ja-JP.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ja-JP.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ja-JP.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ko-KR.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ko-KR.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ko-KR.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-lt-LT.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-lt-LT.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-lt-LT.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-lt-LV.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-lt-LV.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-lt-LV.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-mn-MN.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-mn-MN.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-mn-MN.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-nb-NO.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-nb-NO.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-nb-NO.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-nl-NL.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-nl-NL.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-nl-NL.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-pl-PL.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-pl-PL.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-pl-PL.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-pt-BR.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-pt-BR.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-pt-BR.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-pt-PT.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-pt-PT.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-pt-PT.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ro-RO.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ro-RO.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ro-RO.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ru-RU.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ru-RU.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ru-RU.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sk-SK.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sk-SK.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sk-SK.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sl-SI.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sl-SI.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sl-SI.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sr-RS-Latin.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sr-RS-Latin.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sr-RS-Latin.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sr-RS.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sr-RS.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sr-RS.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sv-SE.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sv-SE.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-sv-SE.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ta-IN.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ta-IN.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-ta-IN.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-th-TH.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-th-TH.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-th-TH.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-tr-TR.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-tr-TR.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-tr-TR.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-uk-UA.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-uk-UA.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-uk-UA.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-uz-UZ.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-uz-UZ.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-uz-UZ.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-vi-VN.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-vi-VN.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-vi-VN.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-zh-CN.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-zh-CN.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-zh-CN.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-zh-TW.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-zh-TW.min.js" />
+    <Content Include="Assets\vendors\summernote\lang\summernote-zh-TW.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\plugin\databasic\summernote-ext-databasic.css" />
+    <Content Include="Assets\vendors\summernote\plugin\databasic\summernote-ext-databasic.js" />
+    <Content Include="Assets\vendors\summernote\plugin\hello\summernote-ext-hello.js" />
+    <Content Include="Assets\vendors\summernote\plugin\specialchars\summernote-ext-specialchars.js" />
+    <Content Include="Assets\vendors\summernote\summernote-bs4.css" />
+    <Content Include="Assets\vendors\summernote\summernote-bs4.js" />
+    <Content Include="Assets\vendors\summernote\summernote-bs4.min.css" />
+    <Content Include="Assets\vendors\summernote\summernote-bs4.min.js" />
+    <Content Include="Assets\vendors\summernote\summernote-bs4.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\summernote-lite.css" />
+    <Content Include="Assets\vendors\summernote\summernote-lite.js" />
+    <Content Include="Assets\vendors\summernote\summernote-lite.min.css" />
+    <Content Include="Assets\vendors\summernote\summernote-lite.min.js" />
+    <Content Include="Assets\vendors\summernote\summernote-lite.min.js.LICENSE.txt" />
+    <Content Include="Assets\vendors\summernote\summernote.css" />
+    <Content Include="Assets\vendors\summernote\summernote.js" />
     <Content Include="Assets\vendors\switchery\dist\switchery.css" />
     <Content Include="Assets\vendors\switchery\dist\switchery.js" />
     <Content Include="Assets\vendors\switchery\dist\switchery.min.css" />
@@ -4895,6 +5048,14 @@
     <Content Include="Assets\vendors\validator\.gitignore" />
     <Content Include="Assets\vendors\validator\package.json" />
     <Content Include="Assets\vendors\validator\README.md" />
+    <Content Include="Assets\vendors\summernote\font\summernote.eot" />
+    <Content Include="Assets\vendors\summernote\font\summernote.ttf" />
+    <Content Include="Assets\vendors\summernote\font\summernote.woff" />
+    <Content Include="Assets\vendors\summernote\font\summernote.woff2" />
+    <Content Include="Assets\vendors\summernote\summernote-bs4.js.map" />
+    <Content Include="Assets\vendors\summernote\summernote-bs4.min.js.map" />
+    <Content Include="Assets\vendors\summernote\summernote-lite.js.map" />
+    <Content Include="Assets\vendors\summernote\summernote-lite.min.js.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -4908,7 +5069,9 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Assets\Css\Create.css" />
     <Content Include="Assets\Css\responsive.css" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -4939,10 +5102,14 @@
     <Content Include="Views\BookPlace\MyCheckOuts.cshtml" />
     <Content Include="Views\BookPlace\Create.cshtml" />
     <Content Include="Views\BookCatalog\Create.cshtml" />
+    <Content Include="Views\Shared\InternalServerError.cshtml" />
+    <Content Include="Views\ApplicationUser\InternalServerError.cshtml" />
+    <Content Include="Views\PageHandle\UnAuthorized.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="BookCoverImages\" />
+    <Folder Include="Logs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

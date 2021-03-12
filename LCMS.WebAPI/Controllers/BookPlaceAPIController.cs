@@ -87,6 +87,20 @@ namespace LCMS.WebAPI.Controllers
             return Ok(_bookPlaceManager.CheckInBook(id));
         }
 
+        [Route("api/BookPlaceAPI/GetCheckOutCount")]
+        [HttpGet]
+        public IHttpActionResult GetCheckOutCount()
+        {
+            return Ok(_bookPlaceManager.GetCheckOutCount());
+        }
+
+        [Route("api/BookPlaceAPI/UserCheckOutCount")]
+        [HttpGet]
+        public IHttpActionResult UserCheckOutCount(int userId)
+        {
+            return Ok(_bookPlaceManager.UserCheckOutCount(userId));
+        }
+
         #endregion
     }
 }

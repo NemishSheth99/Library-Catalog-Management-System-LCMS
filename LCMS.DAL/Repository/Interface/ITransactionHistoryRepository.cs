@@ -18,5 +18,6 @@ namespace LCMS.DAL.Repository.Interface
 
         string Create(TransactionHistory transactionHistory);
         int GetCount(int userId,string search);
+        int UserTransactionCount(int userId);
     }
 }

@@ -128,6 +128,16 @@ namespace LCMS.DAL.Repository.Class
             }
         }
 
+        public int GetCheckOutCount()
+        {
+            return _dbContext.BookPlaces.Where(x => x.BorrowedBy != null && x.IsDeleted == false).Count();
+        }
+
+        public int UserCheckOutCount(int userId)
+        {
+            return _dbContext.BookPlaces.Where(x => x.BorrowedBy == userId && x.IsDeleted == false).Count();
+        }
+
 
     }
 }
