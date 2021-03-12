@@ -41,8 +41,26 @@ namespace LCMS.Web.Controllers
         }
 
         [CustomAuthorization("Librarian")]
+        public ActionResult BookCatalogDetails(int id)
+        {
+            BookCatalogDetail bookCatalogDetail = _bookCatalogServiceProxy.GetBookCatalog(id);
+            List<AuthorDetail> authorList = _authorServiceProxy.GetAuthorsByCatalog(id);
+            string author = "";
+            foreach (var items in authorList)
+            {
+                author += items.Name;
+            }
+            if (author != "")
+            {
+                bookCatalogDetail.Authors = author;
+            }
+            return View(bookCatalogDetail);
+        }
+
+        [CustomAuthorization("Librarian")]
         public ActionResult Create()
         {
+            ViewBag.CoverImage = "";
             ViewBag.List = new List<string>();
             return View(new BookCatalogCreateVM());
         }
@@ -57,6 +75,7 @@ namespace LCMS.Web.Controllers
             bookCatalogCreateVM = mapper.Map<BookCatalogCreateVM>(bookCatalogDetail);
             if (bookCatalogCreateVM != null)
             {
+                ViewBag.CoverImage= bookCatalogDetail.CoverImage;
                 TempData["CoverImage"] = bookCatalogDetail.CoverImage;
                 List<AuthorDetail> authorList = _authorServiceProxy.GetAuthorsByCatalog(id);
                 List<string> author = new List<string>();
@@ -70,7 +89,7 @@ namespace LCMS.Web.Controllers
                     ViewBag.List = author;
                 }
             }
-            return View("Create", bookCatalogCreateVM);
+            return View(bookCatalogCreateVM);
         }
 
         public ActionResult CreateOrEditBookCatalog(BookCatalogCreateVM bookcatalogVM)
@@ -168,14 +187,14 @@ namespace LCMS.Web.Controllers
                             else
                             {
                                 string r = _bookCatalogServiceProxy.Delete(id);
-                                return RedirectToAction("ErrorPage");
+                                return RedirectToAction("InternalServerError","PageHandle");
                             }
                         }
                     }
                 }
 
             }
-            return RedirectToAction("ErrorPage");
+            return RedirectToAction("InternalServerError", "PageHandle");
         }
 
         [CustomAuthorization("Librarian")]
@@ -215,6 +234,16 @@ namespace LCMS.Web.Controllers
         public ActionResult ShowCatalogDetail(int id)
         {
             BookCatalogDetail bookCatalogDetail = _bookCatalogServiceProxy.GetBookCatalog(id);
+            List<AuthorDetail> authorList = _authorServiceProxy.GetAuthorsByCatalog(id);
+            string author = "";
+            foreach (var items in authorList)
+            {
+                author+=items.Name;
+            }
+            if (author != "")
+            {
+                bookCatalogDetail.Authors = author;
+            }
             return View(bookCatalogDetail);
         }
 

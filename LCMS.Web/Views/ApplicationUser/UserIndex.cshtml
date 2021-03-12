@@ -28,8 +28,8 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Email Address</th>
-                                    <th>Phone Number</th>
+                                    <th>Email address</th>
+                                    <th>Phone number</th>
                                     <th width="10%">Active/Block</th>
                                     <th width="10%">Actions</th>
                                 </tr>
@@ -95,8 +95,8 @@
                     url: userListService,
                     data: { pageNo: pNo, search: search }
                 }).done(function (response) {
-                    if (response != null) {
-                        if (response.ApplicationUserList != null) {
+                        if (response != null) {
+                            if (response.Count>0) {
                             $("#divData").show();
                             $("#divMess").hide();
                             vm.list(response.ApplicationUserList);

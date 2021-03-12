@@ -9,6 +9,7 @@ using LCMS.ServiceProxy.ApplicationUserRole;
 using LCMS.ServiceProxy.BookCatalog;
 using LCMS.ServiceProxy.BookPlace;
 using LCMS.ServiceProxy.UserRole;
+using LCMS.ServiceProxy.TransactionHistory;
 using LCMS.Models.ApplicationUser;
 using LCMS.Models.ApplicationUserRole;
 using LCMS.Models.UserRole;
@@ -18,7 +19,7 @@ using AutoMapper;
 
 namespace LCMS.Web.Controllers
 {
-    
+
     public class ApplicationUserController : Controller
     {
         private readonly IApplicationUserServiceProxy _applicationUserServiceProxy;
@@ -26,40 +27,36 @@ namespace LCMS.Web.Controllers
         private readonly IApplicationUserRoleServiceProxy _applicationUserRoleServiceProxy;
         private readonly IBookCatalogServiceProxy _bookCatalogServiceProxy;
         private readonly IBookPlaceServiceProxy _bookPlaceServiceProxy;
+        private readonly ITransactionHistoryServiceProxy _transactionHistoryServiceProxy;
 
         public ApplicationUserController(IApplicationUserServiceProxy applicationUserServiceProxy,
             IUserRoleServiceProxy userRoleServiceProxy,
             IApplicationUserRoleServiceProxy applicationUserRoleServiceProxy,
             IBookCatalogServiceProxy bookCatalogServiceProxy,
-            IBookPlaceServiceProxy bookPlaceServiceProxy)
+            IBookPlaceServiceProxy bookPlaceServiceProxy,
+            ITransactionHistoryServiceProxy transactionHistoryServiceProxy)
         {
             _applicationUserServiceProxy = applicationUserServiceProxy;
             _userRoleServiceProxy = userRoleServiceProxy;
             _applicationUserRoleServiceProxy = applicationUserRoleServiceProxy;
             _bookCatalogServiceProxy = bookCatalogServiceProxy;
             _bookPlaceServiceProxy = bookPlaceServiceProxy;
+            _transactionHistoryServiceProxy = transactionHistoryServiceProxy;
         }
 
 
         #region Common
 
-        
+
         public ActionResult Login()
         {
-            //throw new Exception("Hello World");
             return View();
         }
-
-        //[Route("/ApplicationUser/Error")]
-        //public ActionResult Error()
-        //{
-        //    return View("InternalServerError", "Shared");
-        //}
 
         [HttpPost]
         public ActionResult LoginUser(LoginVM loginVM)
         {
-            
+
             if (ModelState.IsValid)
             {
                 //// TO DO : mapping login vie model to application user login
@@ -81,12 +78,12 @@ namespace LCMS.Web.Controllers
                         if (role != null)
                         {
                             Session["aurole"] = role;
-                            if (role == "Librarian")
-                                return RedirectToAction("LibrarianDashboard");
-                            else
-                                return RedirectToAction("UserDashboard");
+                            //if (role == "Librarian")
+                            //    return RedirectToAction("LibrarianDashboard");
+                            //else
+                            return RedirectToAction("Dashboard");
                         }
-                    }                    
+                    }
                 }
                 else
                 {
@@ -107,6 +104,9 @@ namespace LCMS.Web.Controllers
 
         public ActionResult Dashboard()
         {
+            //int a = 10;
+            //int b = 0;
+            //int c = a / b;
             if (Session["aurole"].ToString() == "Librarian")
                 return RedirectToAction("LibrarianDashboard");
             else
@@ -237,7 +237,7 @@ namespace LCMS.Web.Controllers
                             if (result != null && result == "Success")
                             {
                                 return RedirectToAction("UserIndex");
-                            }
+                            }                            
                         }
                     }
                     else
@@ -300,7 +300,7 @@ namespace LCMS.Web.Controllers
                     }
                 }
             }
-            return View("Login");
+            return RedirectToAction("Edit","ApplicationUser", new { @id = applicationUserVM.Id });
         }
 
         [CustomAuthorization("Librarian")]
@@ -327,6 +327,18 @@ namespace LCMS.Web.Controllers
         public ActionResult UserDashboard()
         {
             ViewBag.CatalogCount = _bookCatalogServiceProxy.ActiveCatalogCount();
+            ViewBag.CheckOutCount = _bookPlaceServiceProxy.UserCheckOutCount(Convert.ToInt32(Session["auid"]));
+            ViewBag.TransactionCount = _transactionHistoryServiceProxy.UserTransactionCount(Convert.ToInt32(Session["auid"]));
+            return View();
+        }
+
+        [ExceptionHandle]
+        public ActionResult TrialException()
+        {
+            int a,b,c;
+            a = 10;
+            b = 0;
+            c = a / b;
             return View();
         }
 

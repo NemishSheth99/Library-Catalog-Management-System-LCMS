@@ -31,6 +31,7 @@ namespace LCMS.Web.Controllers
         {
             Session["bcid"] = id;
             List<BookPlaceDetail> listBookPlaceDetail = _bookPlaceServiceProxy.GetBookPlacesByCatalog(id);
+            //ViewBag.BookName = listBookPlaceDetail.Select(x => x.BookCatalog.Name).ToString();
             return View(listBookPlaceDetail);
         }
 
@@ -90,11 +91,11 @@ namespace LCMS.Web.Controllers
                     if (r == "Success")
                         return RedirectToAction("BookPlaceIndex", "BookPlace", new { @id = Convert.ToInt32(Session["bcid"]) });
                     else
-                        return RedirectToAction("ErrorPage");
+                        return RedirectToAction("InternalServerError","PageHandle");
                 }
 
             }
-            return RedirectToAction("ErrorPage");
+            return RedirectToAction("InternalServerError", "PageHandle");
         }
 
         [CustomAuthorization("Librarian")]
@@ -113,7 +114,7 @@ namespace LCMS.Web.Controllers
                 if (r == "Success")
                     return RedirectToAction("BookPlaceIndex", "BookPlace", new { @id = Convert.ToInt32(Session["bcid"]) });
             }
-            return RedirectToAction("ErrorPage");
+            return RedirectToAction("InternalServerError", "PageHandle");
         }
 
         #endregion
@@ -149,10 +150,10 @@ namespace LCMS.Web.Controllers
                     return RedirectToAction("MyCheckOuts");
                 }
                 else
-                    return RedirectToAction("ErrorPage");
+                    return RedirectToAction("InternalServerError", "PageHandle");
             }
             else
-                return RedirectToAction("ErrorPage");
+                return RedirectToAction("InternalServerError", "PageHandle");
         }
 
         [CustomAuthorization("Lawyer", "Specialist")]
@@ -191,10 +192,10 @@ namespace LCMS.Web.Controllers
                     }
                 }
                 else
-                    return RedirectToAction("ErrorPage");
+                    return RedirectToAction("InternalServerError", "PageHandle");
             }
             else
-                return RedirectToAction("ErrorPage");
+                return RedirectToAction("InternalServerError", "PageHandle");
         }
 
         #endregion

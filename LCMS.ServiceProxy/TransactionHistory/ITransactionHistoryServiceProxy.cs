@@ -12,5 +12,6 @@ namespace LCMS.ServiceProxy.TransactionHistory
         TransactionHistoryResponse GetTransactionHistories(int pageNo,string search);
         TransactionHistoryResponse GetUserTransactionHistories(int id,int pageNo,string search);
         string Create(AddTransactionHistory addTransactionHistory);
+        int UserTransactionCount(int userId);
     }
 }

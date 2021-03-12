@@ -86,7 +86,7 @@
                     data: { pageNo: pNo, search: search }
                 }).done(function (response) {
                     if (response != null) {
-                        if (response.TransactionHistoryList != null) {
+                        if (response.Count >0) {
                             $("#divData").show();
                             $("#divMess").hide();
                             vm.list(response.TransactionHistoryList);                            

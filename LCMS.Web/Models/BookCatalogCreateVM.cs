@@ -34,10 +34,10 @@ namespace LCMS.Web.Models
         [Required(ErrorMessage = "Please Enter Edition")]
         public string Edition { get; set; }
 
+        [Required(ErrorMessage = "Please Add Author")]
         public List<string> Author { get; set; }
 
-        [Display(Name = "Cover Image")]
-        [Required(ErrorMessage = "Please Upload Cover Image")]
+        [Display(Name = "Cover Image")]        
         public HttpPostedFileBase CoverImage { get; set; }
 
         [FileExtensions(Extensions = "jpg,jpeg,png,gif", ErrorMessage = "Only image file can be uploaded")]

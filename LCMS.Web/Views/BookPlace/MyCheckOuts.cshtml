@@ -11,14 +11,20 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PlaceCode)
+                Book name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MaterialType)
+                ISBN
+            </th>
+            <th>
+                Place code
+            </th>
+            <th>
+                Material type
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.BorrowedOn)
+                Checkout date
             </th>
             <th></th>
         </tr>
@@ -27,6 +33,12 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookCatalog.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookCatalog.ISBN)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PlaceCode)
                 </td>

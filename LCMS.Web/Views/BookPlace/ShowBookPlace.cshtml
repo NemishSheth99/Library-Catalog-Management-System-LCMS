@@ -5,16 +5,16 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
-<h2>Book Places </h2><br /><br />
-@if (Model != null && Model.Count() != 0)
+<h2>Book Places </h2><br />
+@if (Model != null && Model.Count() >0)
 {
 <table class="table">
     <tr>        
         <th>
-            @Html.DisplayNameFor(model => model.PlaceCode)
+            Place code
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MaterialType)
+            Material type
         </th>        
         <th></th>
     </tr>

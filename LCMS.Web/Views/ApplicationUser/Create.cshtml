@@ -108,6 +108,12 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
+        $(document).ready(function () {
+            var msg = '@TempData["ErrorMessage"]';
+            if (msg != '') {
+                toastr.error(msg);                
+            }
+        });
         function clearData() {
             $("#Name").val("");
             $("#EmailAddress").val("");

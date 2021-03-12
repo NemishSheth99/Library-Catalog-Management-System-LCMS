@@ -19,7 +19,7 @@ namespace LCMS.DAL.Repository.Class
 
         public ApplicationUser Login(ApplicationUser applicationUser)
         {
-            var user = _dbContext.ApplicationUsers.Where(x => x.EmailAddress == applicationUser.EmailAddress && x.Password == applicationUser.Password && x.Status == "A" && x.IsDeleted == false).FirstOrDefault();            
+            var user = _dbContext.ApplicationUsers.Where(x => x.EmailAddress == applicationUser.EmailAddress && x.Password == applicationUser.Password && x.Status == "A" && x.IsDeleted == false).FirstOrDefault();
             if (user != null)
             {
                 return user;
@@ -32,9 +32,9 @@ namespace LCMS.DAL.Repository.Class
         {
             List<ApplicationUser> applicationUserList = new List<ApplicationUser>();
             if (search != null)
-                applicationUserList = _dbContext.ApplicationUsers.Where(x => x.Name.Contains(search)).ToList();
+                applicationUserList = _dbContext.ApplicationUsers.Where(x => x.Name.Contains(search) && x.IsDeleted==false).ToList();
             else
-                applicationUserList = _dbContext.ApplicationUsers.ToList();
+                applicationUserList = _dbContext.ApplicationUsers.Where(x=>x.IsDeleted==false).ToList();
             return applicationUserList;
         }
 
@@ -51,9 +51,9 @@ namespace LCMS.DAL.Repository.Class
 
         public int GetCount(string search)
         {
-            List<ApplicationUser> applicationUserList = _dbContext.ApplicationUsers.ToList();           
+            List<ApplicationUser> applicationUserList = _dbContext.ApplicationUsers.Where(x => x.IsDeleted == false).ToList();
             if (search != null)
-                applicationUserList = applicationUserList.Where(x => x.Name.Contains(search)).ToList();
+                applicationUserList = applicationUserList.Where(x => x.Name.Contains(search) && x.IsDeleted==false).ToList();
             return applicationUserList.Count;
         }
 
@@ -69,7 +69,7 @@ namespace LCMS.DAL.Repository.Class
 
         public ApplicationUser GetApplicationUserByEmail(string emailAddress)
         {
-            ApplicationUser applicationUser = _dbContext.ApplicationUsers.Where(x=>x.EmailAddress==emailAddress).FirstOrDefault();
+            ApplicationUser applicationUser = _dbContext.ApplicationUsers.Where(x => x.EmailAddress == emailAddress).FirstOrDefault();
             if (applicationUser != null)
             {
                 return applicationUser;
@@ -92,7 +92,7 @@ namespace LCMS.DAL.Repository.Class
 
         public string Update(ApplicationUser applicationUser)
         {
-            ApplicationUser user = _dbContext.ApplicationUsers.Where(x=>x.Id==applicationUser.Id).FirstOrDefault();
+            ApplicationUser user = _dbContext.ApplicationUsers.Where(x => x.Id == applicationUser.Id).FirstOrDefault();
             if (user != null)
             {
                 user.Name = applicationUser.Name;
@@ -122,7 +122,7 @@ namespace LCMS.DAL.Repository.Class
             ApplicationUser applicationUser = _dbContext.ApplicationUsers.Find(id);
             if (applicationUser != null)
             {
-                applicationUser.Status = applicationUser.Status=="A"?"B":"A";
+                applicationUser.Status = applicationUser.Status == "A" ? "B" : "A";
                 _dbContext.SaveChanges();
                 return "Success";
             }
@@ -135,10 +135,9 @@ namespace LCMS.DAL.Repository.Class
             if (applicationUser != null)
             {
                 applicationUser.IsDeleted = true;
-                if (_dbContext.SaveChanges() > 0)
-                    return "Success";
-                else
-                    return "Fail";
+                _dbContext.SaveChanges();
+                return "Success";
+
             }
             return "Fail";
         }
@@ -162,7 +161,7 @@ namespace LCMS.DAL.Repository.Class
 
         public int ActiveUserCount()
         {
-            return _dbContext.ApplicationUsers.Where(x=>x.IsDeleted==false && x.Status=="A").Count();            
+            return _dbContext.ApplicationUsers.Where(x => x.IsDeleted == false && x.Status == "A").Count();
         }
 
 

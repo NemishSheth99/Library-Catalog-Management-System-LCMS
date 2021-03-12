@@ -5,32 +5,26 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
-<h2>Book Places </h2>
+<h2>Book Places for @ViewBag.BookName </h2>
 <a href="/BookPlace/Create" class="btn btn-primary"><i class="fa fa-plus"></i> Add Book </a>
 <br /><br/>
-@if (Model != null && Model.Count() != 0)
+@if (Model != null && Model.Count() > 0)
 {
 <table class="table">
     <tr>
 
         <th>
-            @Html.DisplayNameFor(model => model.PlaceCode)
+            Place code
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MaterialType)
+            Material Type
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BorrowedBy)
+            Check out by
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BorrowedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdatedDate)
-        </th>
+            Check out date
+        </th>        
         <th>Checkout</th>
         <th width="10%">Actions</th>
     </tr>
@@ -51,12 +45,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.BorrowedOn)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDate)
-            </td>
+            
             @if (item.BorrowedBy.Equals(0))
             {
                 <td style="pointer-events: none;cursor: default; " >
