@@ -13,5 +13,20 @@ namespace LCMS.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult InternalServerError()
+        {
+            return View();
+        }
+
+        public ActionResult PageNotFount()
+        {
+            return View();
+        }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 }

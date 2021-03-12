@@ -1,7 +1,6 @@
 ﻿@model LCMS.Models.BookCatalog.BookCatalogDetail
-
 @{
-    ViewBag.Title = "Book Catalog Detail";
+    ViewBag.Title = "BookCatalogDetails";
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
@@ -60,12 +59,14 @@
                     </div>
                     <br />
                     <div class="">
-                        <a href="/BookPlace/ShowBookPlace/@Html.DisplayFor(model => model.Id)" class="btn btn-info">Show Books</a>
+                        <a href="/BookPlace/BookPlaceIndex/@Html.DisplayFor(model => model.Id)" class="btn btn-info">Show Books</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 

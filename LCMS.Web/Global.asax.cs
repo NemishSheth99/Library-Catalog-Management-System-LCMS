@@ -28,8 +28,8 @@ namespace LCMS.Web
         {
             Exception exception = Server.GetLastError();
             log.Error(exception);
-            Server.ClearError();
-            Response.Redirect("/ApplicationUser/InternalServerError");
+            //Server.ClearError();
+            Response.Redirect("/PageHandle/Error");
         }
     }
 }

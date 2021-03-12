@@ -24,12 +24,12 @@
             <tr>
                 <th width="5%">Image</th>
                 <th>Name</th>
-                <th>ISBN Number</th>
-                <th>Publication Year</th>
+                <th>ISBN number</th>
+                <th>Publication year</th>
                 <th>Edition</th>
                 <th>Authors</th>
                 <th width="10%">Details</th>
-                <th width="10%">Show Books</th>
+                <th width="10%">Show books</th>
             </tr>
         </thead>
 
@@ -86,7 +86,7 @@
                     data: { pageNo: pNo, search: search }
                 }).done(function (response) {
                     if (response != null) {
-                        if (response.BookCatalogList != null) {
+                        if (response.Count >0) {
                             $("#divData").show();
                             $("#divMess").hide();
                             vm.list(response.BookCatalogList);

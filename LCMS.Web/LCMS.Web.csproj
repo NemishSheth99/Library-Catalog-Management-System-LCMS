@@ -141,6 +141,7 @@
     <Compile Include="Controllers\PageHandleController.cs" />
     <Compile Include="Controllers\TransactionHistoryController.cs" />
     <Compile Include="Filters\CustomAuthorization.cs" />
+    <Compile Include="Filters\ExceptionHandle.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -5102,9 +5103,12 @@
     <Content Include="Views\BookPlace\MyCheckOuts.cshtml" />
     <Content Include="Views\BookPlace\Create.cshtml" />
     <Content Include="Views\BookCatalog\Create.cshtml" />
-    <Content Include="Views\Shared\InternalServerError.cshtml" />
-    <Content Include="Views\ApplicationUser\InternalServerError.cshtml" />
     <Content Include="Views\PageHandle\UnAuthorized.cshtml" />
+    <Content Include="Views\BookCatalog\BookCatalogDetails.cshtml" />
+    <Content Include="Views\PageHandle\InternalServerError.cshtml" />
+    <Content Include="Views\PageHandle\PageNotFount.cshtml" />
+    <Content Include="Views\PageHandle\Error.cshtml" />
+    <Content Include="Views\BookCatalog\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

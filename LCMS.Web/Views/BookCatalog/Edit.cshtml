@@ -1,7 +1,6 @@
 ﻿@model LCMS.Web.Models.BookCatalogCreateVM
-
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
@@ -94,23 +93,30 @@
 
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="Name">
-                                Cover image
-                                <span class="required">*</span>
                             </label>
                             <div class="col-md-6 col-sm-6">
-                                @Html.TextBoxFor(model => model.CoverImage, new { @type = "file" })
-                                @Html.ValidationMessageFor(model => model.CoverImage, "", new { @class = "text-danger" })
-                                @Html.ValidationMessageFor(model => model.coverImagePath, "", new { @class = "text-danger" })
+                                <img src="~/BookCoverImages/@ViewBag.CoverImage" height="100" id="cImage" />
                             </div>
                         </div>
 
-                        <div class="item form-group">
-                            <div class="col-md-6 col-sm-6 offset-md-3">
-                                <input type="submit" value="Save" class="btn btn-success" />
-                                <button class="btn btn-primary" type="reset" onclick="clearData()">Clear</button>
-                                <a href="/BookCatalog/BookCatalogIndex" class="btn btn-danger">Cancel</a>
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="Name">
+                                    Cover image
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6">
+                                    @Html.TextBoxFor(model => model.CoverImage, new { @type = "file" })
+                                    @Html.ValidationMessageFor(model => model.CoverImage, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.coverImagePath, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
+
+                            <div class="item form-group">
+                                <div class="col-md-6 col-sm-6 offset-md-3">
+                                    <input type="submit" value="Save" class="btn btn-success" />                                    
+                                    <a href="/BookCatalog/BookCatalogIndex" class="btn btn-danger">Cancel</a>
+                                </div>
+                            </div>
                     }
                 </div>
             </div>
@@ -125,8 +131,7 @@
     <script>
 
         $(document).ready(function () {
-            loadTextEditor();
-            $("#PublicationYear").val("");
+            loadTextEditor();           
 
             $('.js-example-basic-multiple').select2({
                 multiple: true,
@@ -144,14 +149,7 @@
                 focus: true // set focus to editable area after initializing summernote
             });
         }
-
-        function clearData() {
-            $("#Name").val('');
-            $("#Summary").val('');
-            $("#ISBN").val('');
-            $("#PublicationYear").val('');
-            $("#Edition").val('');
-            $("#Author").val('');
-        }
+        
     </script>
 }
+

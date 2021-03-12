@@ -46,5 +46,14 @@ namespace LCMS.ServiceProxy.TransactionHistory
         {
             return MakeRequest<string, AddTransactionHistory>("AddTransactionhistory", ServiceRequestType.Post, addTransactionHistory);
         }
+
+        public int UserTransactionCount(int userId)
+        {
+            var queryParam = new Dictionary<string, string>
+            {
+                {"userId", userId.ToString(CultureInfo.InvariantCulture)}
+            };
+            return GetRequest<int>("UserTransactionCount", queryParam);
+        }
     }
 }
