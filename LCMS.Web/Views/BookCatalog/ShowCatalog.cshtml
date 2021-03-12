@@ -6,7 +6,7 @@
 }
 
 
-<h2>Book Catalogs </h2>
+<h2>Book catalogs </h2>
 <div class="row">
     <div class="col-md-6">
         <input type="text" id="txtSearch" name="txtSearch" class="form-control" placeholder="Search" />
@@ -27,8 +27,7 @@
                 <th>ISBN number</th>
                 <th>Publication year</th>
                 <th>Edition</th>
-                <th>Authors</th>
-                <th width="10%">Details</th>
+                <th>Authors</th>                
                 <th width="10%">Show books</th>
             </tr>
         </thead>
@@ -39,16 +38,13 @@
                 <td>
                     <img data-bind="attr: { src:'../BookCoverImages/'+ $data.CoverImage }" height="80" width="80" />
                 </td>
-                <td><span data-bind="text: Name"></span></td>
+                <td><a data-bind="attr: { href: '/BookCatalog/ShowCatalogDetail/' + $data.Id }"><span data-bind="text: Name"></span></a></td>
                 <td><span data-bind="text: ISBN"></span></td>
                 <td><span data-bind="text: PublicationYear"></span></td>
                 <td><span data-bind="text: Edition"></span></td>
-                <td><span data-bind="text: Authors"></span></td>
+                <td><span data-bind="text: Authors"></span></td>                
                 <td>
-                    <a data-bind="attr: { href: '/BookCatalog/ShowCatalogDetail/' + $data.Id }" class="btn-sm btn-default"><i class="fa fa-info"></i></a>
-                </td>
-                <td>
-                    <a data-bind="attr: { href: '/BookPlace/ShowBookPlace/' + $data.Id }" class="btn-sm btn-info">Show Books</a>
+                    <a data-bind="attr: { href: '/BookPlace/ShowBookPlace/' + $data.Id }" class="btn-sm btn-info">Show Books
                 </td>
             </tr>
         </tbody>

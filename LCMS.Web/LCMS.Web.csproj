@@ -141,7 +141,6 @@
     <Compile Include="Controllers\PageHandleController.cs" />
     <Compile Include="Controllers\TransactionHistoryController.cs" />
     <Compile Include="Filters\CustomAuthorization.cs" />
-    <Compile Include="Filters\ExceptionHandle.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -170,6 +169,7 @@
     <Content Include="Assets\vendors\autosize\dist\autosize.min.js" />
     <Content Include="Assets\vendors\autosize\example\index.html" />
     <Content Include="Assets\vendors\autosize\src\autosize.js" />
+    <Content Include="Assets\vendors\bootbox\bootbox.min.js" />
     <Content Include="Assets\vendors\bootstrap-daterangepicker\daterangepicker.css" />
     <Content Include="Assets\vendors\bootstrap-daterangepicker\daterangepicker.js" />
     <Content Include="Assets\vendors\bootstrap-daterangepicker\demo.html" />

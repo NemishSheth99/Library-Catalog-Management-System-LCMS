@@ -24,7 +24,7 @@ namespace LCMS.Web
             ServiceProxy.ServiceProxySettings.SetSettings(ConfigurationManager.AppSettings["ServiceBaseAddress"], Convert.ToInt32(ConfigurationManager.AppSettings["Timeout"]));
         }
 
-        protected void Application_Error()
+        protected void Application_Error(object sender, EventArgs e)
         {
             Exception exception = Server.GetLastError();
             log.Error(exception);

@@ -5,8 +5,8 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
-<h2>Book Catalogs </h2>
-<a href="/BookCatalog/Create" class="btn btn-primary"><i class="fa fa-plus"></i> Add Book Catalog </a><br/><br />
+<h2>Book catalogs </h2>
+<a href="/BookCatalog/Create" class="btn btn-primary"><i class="fa fa-plus"></i> Add Book catalog </a><br/><br />
 <div class="row">
     <div class="col-md-6">
         <input type="text" id="txtSearch" name="txtSearch" class="form-control" placeholder="Search" />
@@ -28,7 +28,6 @@
                 <th>Publication year</th>
                 <th>Edition</th>
                 <th>Authors</th>
-                <th width="10%">Details</th>
                 <th width="10%">Show books</th>
                 <th width="10%">Actions</th>
             </tr>
@@ -38,14 +37,11 @@
                 <td>
                     <img data-bind="attr: { src:'../BookCoverImages/'+ $data.CoverImage }" height="80" width="80" />
                 </td>
-                <td><span data-bind="text: Name"></span></td>
+                <td><a data-bind="attr: { href: '/BookCatalog/BookCatalogDetails/' + $data.Id }"><span data-bind="text: Name"></span></a></td>
                 <td><span data-bind="text: ISBN"></span></td>
                 <td><span data-bind="text: PublicationYear"></span></td>
                 <td><span data-bind="text: Edition"></span></td>
-                <td><span data-bind="text: Authors"></span></td>
-                <td>
-                    <a data-bind="attr: { href: '/BookCatalog/BookCatalogDetails/' + $data.Id }" class="btn-sm btn-default"><i class="fa fa-info"></i></a>
-                </td>
+                <td><span data-bind="text: Authors"></span></td>                
                 <td>
                     <a data-bind="attr: { href: '/BookPlace/BookPlaceIndex/' + $data.Id }" class="btn-sm btn-success">Show Books</a>
                 </td>

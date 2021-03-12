@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_PageLayout.cshtml";
 }
 
-<h2>Book Places for @ViewBag.BookName </h2>
+<h2>Book places @*for @ViewBag.BookName*@ </h2>
 <a href="/BookPlace/Create" class="btn btn-primary"><i class="fa fa-plus"></i> Add Book </a>
 <br /><br/>
 @if (Model != null && Model.Count() > 0)
