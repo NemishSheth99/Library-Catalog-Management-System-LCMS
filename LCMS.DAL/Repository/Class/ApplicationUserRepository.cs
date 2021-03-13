@@ -17,6 +17,11 @@ namespace LCMS.DAL.Repository.Class
             _dbContext = new Database.LCMSDBEntities();
         }
 
+        public int ActiveUserCount()
+        {
+            return _dbContext.ApplicationUsers.Where(x => x.IsDeleted == false && x.Status == "A").Count();
+        }
+
         public ApplicationUser Login(ApplicationUser applicationUser)
         {
             var user = _dbContext.ApplicationUsers.Where(x => x.EmailAddress == applicationUser.EmailAddress && x.Password == applicationUser.Password && x.Status == "A" && x.IsDeleted == false).FirstOrDefault();
@@ -26,6 +31,50 @@ namespace LCMS.DAL.Repository.Class
             }
             return user;
 
+        }
+
+        //public int? GetInvalidAttemptCount(string emailAddress)
+        //{
+        //    return _dbContext.ApplicationUsers.Where(x => x.EmailAddress.Equals(emailAddress) && x.Status == "A" && x.IsDeleted == false).FirstOrDefault().InvalidAttemptCount;
+        //}
+
+        //public int? SetInvalidAttempt(string emailAddress, int attempt)
+        //{
+        //    ApplicationUser user = _dbContext.ApplicationUsers.Where(x => x.EmailAddress == emailAddress).FirstOrDefault();
+        //    user.InvalidAttemptCount = attempt;
+        //    if (_dbContext.SaveChanges() > 0)
+        //        return user.InvalidAttemptCount;
+        //    return null;
+        //}
+
+        public string EditProfile(ApplicationUser applicationUser)
+        {
+            ApplicationUser user = _dbContext.ApplicationUsers.Find(applicationUser.Id);
+            if (user != null)
+            {
+                user.Name = applicationUser.Name;
+                user.PhoneNumber = applicationUser.PhoneNumber;
+                _dbContext.SaveChanges();
+                return "Success";
+            }
+            return "Fail";
+        }
+
+        public string ChangePassword(int id, string oldPassword, string newPassword)
+        {
+            ApplicationUser applicationUser = _dbContext.ApplicationUsers.Find(id);
+            if (applicationUser != null)
+            {
+                if (applicationUser.Password == oldPassword)
+                {
+                    applicationUser.Password = newPassword;
+                    _dbContext.SaveChanges();
+                    return "Success";
+                }
+                else
+                    return "Old Password does not match!!!";
+            }
+            return "Fail";
         }
 
         public List<ApplicationUser> SearchApplicationUser(string search)
@@ -104,18 +153,7 @@ namespace LCMS.DAL.Repository.Class
             return "Fail";
         }
 
-        public string EditProfile(ApplicationUser applicationUser)
-        {
-            ApplicationUser user = _dbContext.ApplicationUsers.Find(applicationUser.Id);
-            if (user != null)
-            {
-                user.Name = applicationUser.Name;
-                user.PhoneNumber = applicationUser.PhoneNumber;
-                _dbContext.SaveChanges();
-                return "Success";
-            }
-            return "Fail";
-        }
+        
 
         public string UpdateActiveStatus(int id)
         {
@@ -141,29 +179,6 @@ namespace LCMS.DAL.Repository.Class
             }
             return "Fail";
         }
-
-        public string ChangePassword(int id, string oldPassword, string newPassword)
-        {
-            ApplicationUser applicationUser = _dbContext.ApplicationUsers.Find(id);
-            if (applicationUser != null)
-            {
-                if (applicationUser.Password == oldPassword)
-                {
-                    applicationUser.Password = newPassword;
-                    _dbContext.SaveChanges();
-                    return "Success";
-                }
-                else
-                    return "Old Password does not match!!!";
-            }
-            return "Fail";
-        }
-
-        public int ActiveUserCount()
-        {
-            return _dbContext.ApplicationUsers.Where(x => x.IsDeleted == false && x.Status == "A").Count();
-        }
-
 
     }
 }

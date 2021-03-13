@@ -25,21 +25,14 @@ namespace LCMS.WebAPI.Controllers
         public IHttpActionResult LoginUser(ApplicationUserLogin applicationUserLogin)
         {
             ApplicationUserDetail applicationUserDetail = _applicationUserManager.Login(applicationUserLogin);
-            //if (applicationUserDetail.EmailAddress != null)
-            //{               
-                return Ok(applicationUserDetail);
-            //}
-            //else
-            //{                
-            //    return Ok("No User Found!!!");
-            //}
+            return Ok(applicationUserDetail);
         }
 
         [Route("api/ApplicationUserAPI/GetApplicationUsers")]
         [HttpGet]
         public IHttpActionResult GetApplicationUsers(int pageNo, string search)
         {
-            return Ok(_applicationUserManager.GetApplicationUsers(pageNo,search));            
+            return Ok(_applicationUserManager.GetApplicationUsers(pageNo, search));
         }
 
         [Route("api/ApplicationUserAPI/GetUser")]
@@ -56,7 +49,7 @@ namespace LCMS.WebAPI.Controllers
             ApplicationUserDetail applicationUserDetail = _applicationUserManager.GetApplicationUserByEmailAddress(applicationUserRequest.EmailAddress);
             Result rs = new Result();
             if (applicationUserDetail.EmailAddress == null)
-            {                
+            {
                 int x = _applicationUserManager.Create(applicationUserRequest);
                 rs.Status = "Success";
                 rs.Message = "User successfully Added";
@@ -77,8 +70,8 @@ namespace LCMS.WebAPI.Controllers
             ApplicationUserDetail applicationUserDetail = _applicationUserManager.GetApplicationUserByEmailAddress(applicationUserRequest.EmailAddress);
             Result rs = new Result();
             if (applicationUserDetail.Id == applicationUserDetail.Id)
-            {                
-                if (applicationUserDetail.EmailAddress==applicationUserRequest.EmailAddress || applicationUserDetail.EmailAddress == null)
+            {
+                if (applicationUserDetail.EmailAddress == applicationUserRequest.EmailAddress || applicationUserDetail.EmailAddress == null)
                 {
                     string result = _applicationUserManager.Update(applicationUserRequest);
                     rs.Status = "Success";
@@ -118,7 +111,7 @@ namespace LCMS.WebAPI.Controllers
         [HttpPut]
         public IHttpActionResult ChangePassword(ChangePasswordApplicationUser changePasswordApplicationUser)
         {
-            return Ok(_applicationUserManager.ChangePassword(changePasswordApplicationUser.Id,changePasswordApplicationUser.OldPassword,changePasswordApplicationUser.NewPassword));
+            return Ok(_applicationUserManager.ChangePassword(changePasswordApplicationUser.Id, changePasswordApplicationUser.OldPassword, changePasswordApplicationUser.NewPassword));
         }
 
         [Route("api/ApplicationUserAPI/ActiveUserCount")]

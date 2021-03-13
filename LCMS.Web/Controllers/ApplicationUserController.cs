@@ -78,15 +78,13 @@ namespace LCMS.Web.Controllers
                         if (role != null)
                         {
                             Session["aurole"] = role;
-                            //if (role == "Librarian")
-                            //    return RedirectToAction("LibrarianDashboard");
-                            //else
                             return RedirectToAction("Dashboard");
                         }
                     }
                 }
                 else
                 {
+                    //// TO DO : Block User
                     TempData["invalidLogin"] = "Invalid Username or Password!!!";
                     return RedirectToAction("Login");
                 }

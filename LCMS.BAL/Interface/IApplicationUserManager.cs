@@ -10,17 +10,21 @@ namespace LCMS.BAL.Interface
 {
     public interface IApplicationUserManager
     {
+        int ActiveUserCount();
         ApplicationUserDetail Login(ApplicationUserLogin applicationUserLogin);
+        //int ManageInvalidAttempt(string emailAddress);
+        string EditProfile(EditProfileApplicationUser editProfileApplicationUser);
+        string ChangePassword(int id, string oldPassword, string newPassword);
         ApplicationUserResponse GetApplicationUsers(int pageNo, string search);
         ApplicationUserDetail GetApplicationUserById(int id);
         ApplicationUserDetail GetApplicationUserByEmailAddress(string emailAddress);
         int Create(AddApplicationUserRequest applicationUserRequest);
         string Update(UpdateApplicationUserRequest applicationUserRequest);
-        string EditProfile(EditProfileApplicationUser editProfileApplicationUser);
+        
         string UpdateActiveStatus(int id);
         string Delete(int id);
-        string ChangePassword(int id, string oldPassword, string newPassword);
+        
 
-        int ActiveUserCount();
+        
     }
 }

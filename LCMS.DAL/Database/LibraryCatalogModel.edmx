@@ -16,6 +16,7 @@
           <Property Name="Password" Type="varchar" MaxLength="100" />
           <Property Name="Status" Type="char" MaxLength="1" />
           <Property Name="IsDeleted" Type="bit" />
+          <Property Name="InvalidAttemptCount" Type="int" />
         </EntityType>
         <EntityType Name="ApplicationUserRole">
           <Key>
@@ -217,6 +218,7 @@
           <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="InvalidAttemptCount" Type="Int32" />
           <NavigationProperty Name="ApplicationUserRoles" Relationship="Self.FK_ApplicationUserRole_ApplicationUser" FromRole="ApplicationUser" ToRole="ApplicationUserRole" />
           <NavigationProperty Name="BookPlaces" Relationship="Self.FK_BookPlace_ApplicationUser" FromRole="ApplicationUser" ToRole="BookPlace" />
           <NavigationProperty Name="TransactionHistories" Relationship="Self.FK_TransactionHistory_ApplicationUser" FromRole="ApplicationUser" ToRole="TransactionHistory" />
@@ -432,6 +434,7 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="InvalidAttemptCount" ColumnName="InvalidAttemptCount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
