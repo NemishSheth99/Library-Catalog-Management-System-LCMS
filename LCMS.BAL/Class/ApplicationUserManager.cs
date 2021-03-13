@@ -21,6 +21,11 @@ namespace LCMS.BAL.Class
             _applicationUserRepository = applicationUserRepository;
         }
 
+        public int ActiveUserCount()
+        {
+            return _applicationUserRepository.ActiveUserCount();
+        }
+
         public ApplicationUserDetail Login(ApplicationUserLogin applicationUserLogin)
         {
             applicationUserLogin.Password = PasswordMD5.GetMD5(applicationUserLogin.Password);
@@ -38,6 +43,33 @@ namespace LCMS.BAL.Class
                 return applicationUserDetail;
             }
             return applicationUserDetail;
+        }
+
+        //public int ManageInvalidAttempt(string emailAddress)
+        //{
+        //    var count = _applicationUserRepository.GetInvalidAttemptCount(emailAddress);
+        //    var newCount=0;
+        //    if (count < 3)
+        //    {
+        //        count++;
+        //        newCount = _applicationUserRepository.SetInvalidAttempt(emailAddress);
+        //    }
+        //}
+
+        public string EditProfile(EditProfileApplicationUser editProfileApplicationUser)
+        {
+            ApplicationUser applicationUser = new ApplicationUser();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<EditProfileApplicationUser, ApplicationUser>());
+            var mapper = new Mapper(config);
+            applicationUser = mapper.Map<ApplicationUser>(editProfileApplicationUser);
+            return _applicationUserRepository.EditProfile(applicationUser);
+        }
+
+        public string ChangePassword(int id, string oldPassword, string newPassword)
+        {
+            oldPassword = PasswordMD5.GetMD5(oldPassword);
+            newPassword = PasswordMD5.GetMD5(newPassword);
+            return _applicationUserRepository.ChangePassword(id, oldPassword, newPassword);
         }
 
         public ApplicationUserResponse GetApplicationUsers(int pageNo, string search)
@@ -115,15 +147,7 @@ namespace LCMS.BAL.Class
             return _applicationUserRepository.Update(applicationUser);
         }
 
-        public string EditProfile(EditProfileApplicationUser editProfileApplicationUser)
-        {
-            ApplicationUser applicationUser = new ApplicationUser();
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<EditProfileApplicationUser, ApplicationUser>());
-            var mapper = new Mapper(config);
-            applicationUser = mapper.Map<ApplicationUser>(editProfileApplicationUser);
-            return _applicationUserRepository.EditProfile(applicationUser);
-        }
-
+        
         public string UpdateActiveStatus(int id)
         {
             return _applicationUserRepository.UpdateActiveStatus(id);
@@ -134,17 +158,6 @@ namespace LCMS.BAL.Class
             return _applicationUserRepository.Delete(id);
         }
 
-        public string ChangePassword(int id,string oldPassword, string newPassword)
-        {
-            oldPassword = PasswordMD5.GetMD5(oldPassword);
-            newPassword = PasswordMD5.GetMD5(newPassword);
-            return _applicationUserRepository.ChangePassword(id, oldPassword,newPassword);
-        }
-
-        public int ActiveUserCount()
-        {
-            return _applicationUserRepository.ActiveUserCount();
-        }
-
+        
     }
 }
